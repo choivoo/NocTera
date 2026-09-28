@@ -1,0 +1,251 @@
+{
+  "id": "kael",
+  "name": "KAEL",
+  "nameKo": "카엘",
+  "rarity": 5,
+  "element": "IGNIS",
+  "weapon": "GREATSWORD",
+  "role": [
+    "Burst DPS"
+  ],
+  "title": "Ember Mercenary",
+  "description": "HP를 연료로 삼아 폭발적인 화력을 쏟아내는 고위험 대검사.",
+  "base": {
+    "hp": 1140,
+    "atk": 26,
+    "def": 58
+  },
+  "ascensionStat": {
+    "stat": "atkPct",
+    "total": 28.8
+  },
+  "kit": {
+    "normal": {
+      "name": "Cinder Arc",
+      "hits": [
+        {
+          "mult": 0.82,
+          "range": 3.6,
+          "arc": 130,
+          "hitstop": 4,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 8,
+          "window": 18
+        },
+        {
+          "mult": 0.9,
+          "range": 3.6,
+          "arc": 130,
+          "hitstop": 4,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 8,
+          "window": 18
+        },
+        {
+          "mult": 1.05,
+          "range": 3.8,
+          "arc": 150,
+          "hitstop": 5,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 10,
+          "window": 18
+        },
+        {
+          "mult": 1.5,
+          "range": 4.2,
+          "arc": 180,
+          "hitstop": 7,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:fire_burst",
+          "animation": "finisher",
+          "breakDmg": 18,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Crimson Break",
+      "nameKo": "크림슨 브레이크",
+      "description": "화염을 두른 대검으로 내려찍는다.",
+      "cooldown": 9,
+      "energyGain": 20,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "hp_cost",
+          "pctCurrent": 10
+        },
+        {
+          "type": "gauge",
+          "amount": 30
+        },
+        {
+          "type": "damage",
+          "mult": 3,
+          "range": 0,
+          "radius": 4,
+          "element": "IGNIS",
+          "breakDmg": 30,
+          "launch": 0.3
+        },
+        {
+          "type": "fx",
+          "particle": "noct:fire_burst",
+          "sound": "noct.kael.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Solar Rupture",
+      "nameKo": "솔라 럽처",
+      "description": "대검에 초고열을 집중한 뒤 광역 폭발.",
+      "energyCost": 70,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "hp_cost",
+          "pctCurrent": 20
+        },
+        {
+          "type": "damage",
+          "mult": 7.5,
+          "range": 0,
+          "radius": 7,
+          "element": "IGNIS",
+          "breakDmg": 45
+        },
+        {
+          "type": "fx",
+          "particle": "noct:solar_blast",
+          "sound": "noct.kael.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Hot Entry",
+      "description": "등장하며 착지 폭발.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 1.1,
+          "range": 0,
+          "radius": 3,
+          "element": "IGNIS",
+          "breakDmg": 10
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Blood Heat",
+        "description": "HP 50% 미만일 때 피해 +25%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Overheat",
+        "description": "HP 소모 시 소모량만큼 Heat 획득.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Forge Hands",
+        "description": "무기 강화 비용 감소.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "blood_heat",
+    "name": "HEAT",
+    "max": 100,
+    "gainPerHit": 5,
+    "state": {
+      "name": "Incandescence",
+      "duration": 8,
+      "buffs": {
+        "atkPct": 30,
+        "critRate": 10
+      },
+      "normalElement": "IGNIS"
+    }
+  },
+  "qte": {
+    "trigger": "break",
+    "action": {
+      "name": "Execution Blaze",
+      "description": "Break 상태 적 처형 일격.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 3.4,
+          "range": 4,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 10
+        }
+      ]
+    }
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Heat 획득 +30%",
+      "effect": {
+        "heatGain": 0.3
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Crimson Break HP 소모 없음 (Incandescence 중)",
+      "effect": {
+        "freeSkill": 1
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Crimson Break Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "처치 시 HP 8% 회복",
+      "effect": {
+        "killHeal": 8
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Solar Rupture Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Solar Rupture 후 Incandescence 즉시 진입",
+      "effect": {
+        "ultState": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.kael",
+    "texture": "textures/placeholder/characters/kael",
+    "portrait": "textures/placeholder/portraits/kael",
+    "color": "#ff7a45",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.kael.attack",
+    "hurt": "noct.kael.hurt",
+    "skill": "noct.kael.skill",
+    "ultimate": "noct.kael.ultimate"
+  }
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "prologue",
+    "chapter": 1,
+    "title": "PROLOGUE — 깨어난 공명",
+    "steps": [
+      { "type": "dialogue", "dialogue": "prologue_wake", "hint": "세리아와 대화" },
+      { "type": "kill", "count": 3, "hint": "Astera 외곽의 Rift 개체 3체 처치" },
+      { "type": "switch", "count": 1, "hint": "린으로 캐릭터 교체" },
+      { "type": "beacon", "beacon": "silver_plains", "hint": "Silver Plains Nexus Beacon 활성화" },
+      { "type": "dialogue", "dialogue": "prologue_end", "hint": "보고" }
+    ],
+    "reward": { "astrum": 1600, "credit": 20000, "nexusExp": 800, "materials": { "talent_tome": 3 } },
+    "next": "act1_frost"
+  },
+  {
+    "id": "act1_frost",
+    "chapter": 1,
+    "title": "ACT I — 얼어붙은 숲",
+    "steps": [
+      { "type": "beacon", "beacon": "frozen_forest", "hint": "Frozen Forest 도착" },
+      { "type": "kill", "count": 10, "hint": "빙결 Rift 개체 10체 처치" },
+      { "type": "boss", "boss": "frost_devourer", "hint": "Frost Devourer 토벌" },
+      { "type": "dialogue", "dialogue": "act1_end", "hint": "보고" }
+    ],
+    "reward": { "astrum": 800, "credit": 30000, "nexusExp": 1500, "materials": { "rift_core": 6 } },
+    "next": null
+  }
+]

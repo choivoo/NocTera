@@ -1,0 +1,20 @@
+[
+  { "id": "event_seria_01", "type": "character", "name": "EVENT SIGNAL", "subtitle": "WINTER'S END",
+    "featured5": "seria", "featured4": ["rin", "mirel", "vela"],
+    "pool5": ["kael", "lumia", "nox"], "pool4": ["rin", "aria", "eiden", "mirel", "vela", "zeon"],
+    "pool3": ["traveler_blade", "militia_greatsword", "apprentice_tome", "scrap_daggers", "guard_spear", "sparring_wraps", "service_pistols", "hunting_rifle", "squire_sword"],
+    "rates": { "base5": 0.008, "base4": 0.06, "softPityStart": 65, "softPityStep": 0.06, "hardPity5": 80, "hardPity4": 10, "featuredChance": 0.5 },
+    "costPerPull": 160, "active": true },
+  { "id": "standard", "type": "standard", "name": "RESONANCE SIGNAL", "subtitle": "STANDARD",
+    "featured5": null, "featured4": [],
+    "pool5": ["kael", "lumia", "nox"], "pool4": ["rin", "aria", "eiden", "mirel", "vela", "zeon"],
+    "pool3": ["traveler_blade", "militia_greatsword", "apprentice_tome", "scrap_daggers", "guard_spear", "sparring_wraps", "service_pistols", "hunting_rifle", "squire_sword"],
+    "rates": { "base5": 0.008, "base4": 0.06, "softPityStart": 65, "softPityStep": 0.06, "hardPity5": 80, "hardPity4": 10, "featuredChance": 0 },
+    "costPerPull": 160, "active": true },
+  { "id": "weapon_eternal_snow", "type": "weapon", "name": "ARMORY SIGNAL", "subtitle": "ETERNAL SNOW",
+    "featured5": "eternal_snow", "featured4": ["relay_pistols", "frostline_rifle", "oathblade"],
+    "pool5": ["sunforged_ruin", "last_lamp", "twin_eclipse"], "pool4": ["relay_pistols", "gale_pike", "iron_knuckle", "frostline_rifle", "oathblade"],
+    "pool3": ["traveler_blade", "militia_greatsword", "apprentice_tome", "scrap_daggers", "guard_spear", "sparring_wraps", "service_pistols", "hunting_rifle", "squire_sword"],
+    "rates": { "base5": 0.009, "base4": 0.07, "softPityStart": 60, "softPityStep": 0.07, "hardPity5": 70, "hardPity4": 10, "featuredChance": 0.75 },
+    "costPerPull": 160, "active": true }
+]

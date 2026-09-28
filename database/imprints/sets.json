@@ -1,0 +1,17 @@
+[
+  { "id": "winter_dream", "name": "WINTER DREAM",
+    "twoPiece": { "description": "GLACIA DMG +15%", "stats": { "elementDmg": 15 } },
+    "fourPiece": { "description": "Skill 사용 후 8초간 CRIT RATE +20%", "trigger": "skill", "duration": 8, "stats": { "critRate": 20 } } },
+  { "id": "ember_vow", "name": "EMBER VOW",
+    "twoPiece": { "description": "IGNIS DMG +15%", "stats": { "elementDmg": 15 } },
+    "fourPiece": { "description": "Ultimate 사용 후 10초간 ATK +25%", "trigger": "ultimate", "duration": 10, "stats": { "atkPct": 25 } } },
+  { "id": "saints_hymn", "name": "SAINT'S HYMN",
+    "twoPiece": { "description": "HEAL BONUS +15%", "stats": { "healBonus": 15 } },
+    "fourPiece": { "description": "Ultimate 사용 후 12초간 파티 ATK +15%", "trigger": "ultimate", "duration": 12, "stats": { "atkPct": 15 } } },
+  { "id": "hollow_night", "name": "HOLLOW NIGHT",
+    "twoPiece": { "description": "CRIT RATE +8%", "stats": { "critRate": 8 } },
+    "fourPiece": { "description": "항상 CRIT DMG +20%", "trigger": "always", "duration": 0, "stats": { "critDmg": 20 } } },
+  { "id": "breaker_creed", "name": "BREAKER CREED",
+    "twoPiece": { "description": "BREAK +20%", "stats": { "breakPower": 20 } },
+    "fourPiece": { "description": "Skill 사용 후 6초간 ATK +18%", "trigger": "skill", "duration": 6, "stats": { "atkPct": 18 } } }
+]

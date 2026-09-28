@@ -1,0 +1,270 @@
+{
+  "id": "seria",
+  "name": "SERIA",
+  "nameKo": "세리아",
+  "rarity": 5,
+  "element": "GLACIA",
+  "weapon": "LONGSWORD",
+  "role": [
+    "Main DPS"
+  ],
+  "title": "Knight of the White North",
+  "description": "냉정하고 절제된 북부 기사. 공격마다 Frost를 쌓아 Winter State로 진입한다.",
+  "base": {
+    "hp": 1020,
+    "atk": 27,
+    "def": 62
+  },
+  "ascensionStat": {
+    "stat": "critDmg",
+    "total": 38.4
+  },
+  "kit": {
+    "normal": {
+      "name": "White Fang",
+      "hits": [
+        {
+          "mult": 0.52,
+          "range": 3.2,
+          "arc": 90,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.55,
+          "range": 3.2,
+          "arc": 90,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.68,
+          "range": 3.4,
+          "arc": 110,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.74,
+          "range": 3.4,
+          "arc": 110,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack4",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 1.18,
+          "range": 4,
+          "arc": 160,
+          "hitstop": 5,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:frost_burst",
+          "animation": "finisher",
+          "breakDmg": 10,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Frozen Divide",
+      "nameKo": "프로즌 디바이드",
+      "description": "전방으로 돌진하며 베어 얼음 흔적을 남기고 GLACIA를 부착한다.",
+      "cooldown": 8,
+      "energyGain": 20,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "dash",
+          "distance": 4
+        },
+        {
+          "type": "damage",
+          "mult": 2.1,
+          "range": 5,
+          "arc": 60,
+          "element": "GLACIA",
+          "breakDmg": 18
+        },
+        {
+          "type": "gauge",
+          "amount": 25
+        },
+        {
+          "type": "fx",
+          "particle": "noct:ice_trail",
+          "sound": "noct.seria.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "End of Winter",
+      "nameKo": "겨울의 끝",
+      "description": "넓은 영역을 빙결시키고 거대한 얼음검을 떨어뜨린다.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 1.4,
+          "range": 0,
+          "radius": 8,
+          "element": "GLACIA",
+          "breakDmg": 20
+        },
+        {
+          "type": "damage",
+          "mult": 5.2,
+          "range": 0,
+          "radius": 5,
+          "element": "GLACIA",
+          "breakDmg": 40,
+          "launch": 0.4
+        },
+        {
+          "type": "gauge",
+          "amount": 100
+        },
+        {
+          "type": "fx",
+          "particle": "noct:giant_ice_sword",
+          "sound": "noct.seria.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Rime Entry",
+      "description": "등장하며 주변을 베어 GLACIA 부착.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.9,
+          "range": 0,
+          "radius": 3.5,
+          "element": "GLACIA",
+          "breakDmg": 8
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Northern Discipline",
+        "description": "Winter State 동안 일반 공격이 GLACIA 피해로 변환.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Stillness",
+        "description": "빙결된 적에게 치명타 확률 +15%.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Snowbound Steps",
+        "description": "파티 이동 중 스태미나 소비 감소.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "frost_gauge",
+    "name": "FROST",
+    "max": 100,
+    "gainPerHit": 6,
+    "state": {
+      "name": "Winter State",
+      "duration": 10,
+      "buffs": {
+        "atkPct": 18,
+        "elementDmg": 20
+      },
+      "normalElement": "GLACIA"
+    }
+  },
+  "qte": {
+    "trigger": "frozen",
+    "action": {
+      "name": "Glacial Verdict",
+      "description": "빙결된 적에게 내려찍기.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 2.6,
+          "range": 0,
+          "radius": 4,
+          "element": "GLACIA",
+          "breakDmg": 25
+        }
+      ]
+    }
+  },
+  "resonance": [
+    {
+      "name": "R1 Hoarfrost",
+      "description": "Winter State 지속 +4초",
+      "effect": {
+        "winterDuration": 4
+      }
+    },
+    {
+      "name": "R2 Pale Edge",
+      "description": "Frozen Divide 2회 충전",
+      "effect": {
+        "skillCharges": 1
+      }
+    },
+    {
+      "name": "R3 Oath",
+      "description": "Frozen Divide Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4 Silent Snow",
+      "description": "Winter State 진입 시 에너지 +15",
+      "effect": {
+        "winterEnergy": 15
+      }
+    },
+    {
+      "name": "R5 Crown",
+      "description": "End of Winter Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6 Endless Winter",
+      "description": "Winter State 중 모든 공격이 얼음검 추가타 발생",
+      "effect": {
+        "winterEcho": 0.6
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.seria",
+    "texture": "textures/placeholder/characters/seria",
+    "portrait": "textures/placeholder/portraits/seria",
+    "color": "#9fd8ff",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.seria.attack",
+    "hurt": "noct.seria.hurt",
+    "skill": "noct.seria.skill",
+    "ultimate": "noct.seria.ultimate"
+  }
+}

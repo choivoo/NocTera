@@ -1,0 +1,6 @@
+[
+  { "id": "exp_dungeon", "name": "Data Archive", "type": "EXP", "flux": 20, "offset": [0, 0, -320], "waves": [["rift_hound", "rift_hound", "gale_wisp"], ["shade_husk", "ember_imp", "frost_mite", "volt_drone"]], "reward": { "credit": 6000, "materials": { "exp_data": 6 } } },
+  { "id": "weapon_dungeon", "name": "Forge Relay", "type": "WEAPON", "flux": 20, "offset": [80, 0, -320], "waves": [["volt_drone", "ember_imp", "ember_imp"], ["ruin_sentinel", "volt_drone", "volt_drone"]], "reward": { "credit": 4000, "materials": { "weapon_alloy": 5 } } },
+  { "id": "talent_dungeon", "name": "Echo Library", "type": "TALENT", "flux": 20, "offset": [160, 0, -320], "waves": [["lumen_moth", "shade_husk", "gale_wisp"], ["ruin_sentinel", "shade_husk"], ["rift_knight"]], "reward": { "credit": 4000, "materials": { "talent_tome": 4 } } },
+  { "id": "imprint_dungeon", "name": "Memory Vault", "type": "IMPRINT", "flux": 40, "offset": [240, 0, -320], "waves": [["shade_husk", "frost_mite", "rift_hound"], ["glacier_brute"]], "reward": { "credit": 3000, "imprints": 2 } }
+]

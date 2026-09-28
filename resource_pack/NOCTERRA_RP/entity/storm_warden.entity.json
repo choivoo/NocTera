@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "noct:storm_warden",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/noct/entity/storm_warden"
+      },
+      "geometry": {
+        "default": "geometry.noct.enemy_humanoid"
+      },
+      "animations": {
+        "idle": "animation.noct.enemy.idle"
+      },
+      "scripts": {
+        "animate": [
+          "idle"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#ffe04a",
+        "overlay_color": "#10121a"
+      }
+    }
+  }
+}

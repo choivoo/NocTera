@@ -1,0 +1,7 @@
+[
+  { "id": "MELT", "name": "MELT", "nameKo": "융해", "pair": ["IGNIS", "GLACIA"], "mult": 1.75, "consumes": true, "description": "화염과 빙결: 해당 타격 피해 배율 증가." },
+  { "id": "BREAK_CURRENT", "name": "BREAK CURRENT", "nameKo": "과전류", "pair": ["VOLT", "GLACIA"], "mult": 1.0, "flatScale": 1.2, "breakBonus": 25, "consumes": true, "description": "전격과 빙결: 추가 피해 + 큰 Break 피해." },
+  { "id": "SPREAD", "name": "SPREAD", "nameKo": "확산", "pair": ["AER", "*"], "mult": 1.0, "flatScale": 0.8, "consumes": true, "description": "풍압과 속성: 주변 적에게 부착 원소 확산 피해." },
+  { "id": "COLLAPSE", "name": "COLLAPSE", "nameKo": "붕괴", "pair": ["LUX", "UMBRA"], "mult": 1.5, "flatScale": 0.6, "breakBonus": 15, "consumes": true, "description": "광휘와 공허: 방어 무시 붕괴 피해." },
+  { "id": "OVERDRIVE", "name": "OVERDRIVE", "nameKo": "과부하", "pair": ["IGNIS", "VOLT"], "mult": 1.0, "flatScale": 1.6, "consumes": true, "description": "화염과 전격: 폭발 광역 피해." }
+]

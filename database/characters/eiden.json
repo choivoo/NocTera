@@ -1,0 +1,270 @@
+{
+  "id": "eiden",
+  "name": "EIDEN",
+  "nameKo": "에이든",
+  "rarity": 4,
+  "element": "IGNIS",
+  "weapon": "GAUNTLET",
+  "role": [
+    "Breaker"
+  ],
+  "title": "Iron Fist of Astera",
+  "description": "맨주먹으로 적의 균형을 무너뜨리는 브레이커.",
+  "base": {
+    "hp": 1010,
+    "atk": 18,
+    "def": 66
+  },
+  "ascensionStat": {
+    "stat": "breakPower",
+    "total": 30
+  },
+  "kit": {
+    "normal": {
+      "name": "Furnace Combo",
+      "hits": [
+        {
+          "mult": 0.38,
+          "range": 2.4,
+          "arc": 70,
+          "hitstop": 2,
+          "sound": "noct.hit.punch",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 6,
+          "window": 9
+        },
+        {
+          "mult": 0.38,
+          "range": 2.4,
+          "arc": 70,
+          "hitstop": 2,
+          "sound": "noct.hit.punch",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 6,
+          "window": 9
+        },
+        {
+          "mult": 0.44,
+          "range": 2.4,
+          "arc": 70,
+          "hitstop": 2,
+          "sound": "noct.hit.punch",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 7,
+          "window": 9
+        },
+        {
+          "mult": 0.44,
+          "range": 2.4,
+          "arc": 70,
+          "hitstop": 2,
+          "sound": "noct.hit.punch",
+          "particle": "noct:slash_arc",
+          "animation": "attack4",
+          "breakDmg": 7,
+          "window": 9
+        },
+        {
+          "mult": 1,
+          "range": 2.8,
+          "arc": 120,
+          "hitstop": 5,
+          "sound": "noct.hit.heavy",
+          "particle": "noct:slash_arc",
+          "animation": "finisher",
+          "breakDmg": 16,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Meteor Knuckle",
+      "nameKo": "메테오 너클",
+      "description": "강력한 돌진 펀치. Break 게이지에 큰 피해.",
+      "cooldown": 7,
+      "energyGain": 18,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "dash",
+          "distance": 6
+        },
+        {
+          "type": "damage",
+          "mult": 2.2,
+          "range": 3,
+          "arc": 90,
+          "element": "IGNIS",
+          "breakDmg": 55,
+          "knockback": 1.2
+        },
+        {
+          "type": "fx",
+          "particle": "noct:fire_burst",
+          "sound": "noct.eiden.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Blast Furnace",
+      "nameKo": "블래스트 퍼니스",
+      "description": "연속 난타 후 화염 어퍼컷.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.6,
+          "range": 3,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 12
+        },
+        {
+          "type": "damage",
+          "mult": 0.6,
+          "range": 3,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 12
+        },
+        {
+          "type": "damage",
+          "mult": 0.6,
+          "range": 3,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 12
+        },
+        {
+          "type": "damage",
+          "mult": 3.6,
+          "range": 3.5,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 40,
+          "launch": 0.9
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Shoulder Check",
+      "description": "돌진 태클.",
+      "effects": [
+        {
+          "type": "dash",
+          "distance": 3
+        },
+        {
+          "type": "damage",
+          "mult": 0.8,
+          "range": 2.5,
+          "arc": 90,
+          "element": "IGNIS",
+          "breakDmg": 20
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Crusher",
+        "description": "Break 상태 적에게 피해 +20%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Grit",
+        "description": "HP 30% 이하 시 방어 +40%.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Heavy Lifter",
+        "description": "운반 가능 무게 증가.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "qte": {
+    "trigger": "break",
+    "action": {
+      "name": "Knockout",
+      "description": "Break된 적에게 어퍼컷.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 2.8,
+          "range": 3,
+          "arc": 120,
+          "element": "IGNIS",
+          "breakDmg": 0,
+          "launch": 1
+        }
+      ]
+    }
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Meteor Knuckle Break +20%",
+      "effect": {
+        "skillBreak": 0.2
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Break 유발 시 에너지 +10",
+      "effect": {
+        "breakEnergy": 10
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Meteor Knuckle Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "Break 지속 +2초",
+      "effect": {
+        "breakDuration": 2
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Blast Furnace Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Break된 적에게 모든 공격 Break 추가 피해",
+      "effect": {
+        "breakEcho": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.eiden",
+    "texture": "textures/placeholder/characters/eiden",
+    "portrait": "textures/placeholder/portraits/eiden",
+    "color": "#ff9d5c",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.eiden.attack",
+    "hurt": "noct.eiden.hurt",
+    "skill": "noct.eiden.skill",
+    "ultimate": "noct.eiden.ultimate"
+  }
+}

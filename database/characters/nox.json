@@ -1,0 +1,280 @@
+{
+  "id": "nox",
+  "name": "NOX",
+  "nameKo": "녹스",
+  "rarity": 5,
+  "element": "UMBRA",
+  "weapon": "DUAL_BLADE",
+  "role": [
+    "Main DPS"
+  ],
+  "title": "Rift Walker",
+  "description": "그림자 속을 걷는 암살자. Shadow Gauge로 공허 연격을 해방한다.",
+  "base": {
+    "hp": 960,
+    "atk": 28,
+    "def": 56
+  },
+  "ascensionStat": {
+    "stat": "critRate",
+    "total": 19.2
+  },
+  "kit": {
+    "normal": {
+      "name": "Umbral Rend",
+      "hits": [
+        {
+          "mult": 0.35,
+          "range": 2.8,
+          "arc": 80,
+          "hitstop": 1,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 10
+        },
+        {
+          "mult": 0.35,
+          "range": 2.8,
+          "arc": 80,
+          "hitstop": 1,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 10
+        },
+        {
+          "mult": 0.42,
+          "range": 2.8,
+          "arc": 90,
+          "hitstop": 1,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 10
+        },
+        {
+          "mult": 0.42,
+          "range": 2.8,
+          "arc": 90,
+          "hitstop": 1,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack4",
+          "breakDmg": 4,
+          "window": 10
+        },
+        {
+          "mult": 0.5,
+          "range": 3,
+          "arc": 120,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack4",
+          "breakDmg": 4,
+          "window": 10
+        },
+        {
+          "mult": 0.95,
+          "range": 3.2,
+          "arc": 200,
+          "hitstop": 4,
+          "sound": "noct.hit.slash",
+          "particle": "noct:void_slash",
+          "animation": "finisher",
+          "breakDmg": 8,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Shadow Step",
+      "nameKo": "섀도 스텝",
+      "description": "적 뒤로 순간이동하며 벤다.",
+      "cooldown": 6,
+      "energyGain": 15,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "teleport_behind",
+          "range": 10
+        },
+        {
+          "type": "damage",
+          "mult": 1.9,
+          "range": 3,
+          "arc": 180,
+          "element": "UMBRA",
+          "breakDmg": 12
+        },
+        {
+          "type": "gauge",
+          "amount": 20
+        },
+        {
+          "type": "fx",
+          "particle": "noct:shadow_puff",
+          "sound": "noct.nox.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Event Horizon",
+      "nameKo": "이벤트 호라이즌",
+      "description": "공허 영역을 생성해 적을 중앙으로 끌어당긴다.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "field",
+          "radius": 7,
+          "duration": 5,
+          "interval": 0.5,
+          "mult": 0.45,
+          "pull": 0.35,
+          "element": "UMBRA"
+        },
+        {
+          "type": "damage",
+          "mult": 3.2,
+          "range": 0,
+          "radius": 7,
+          "element": "UMBRA",
+          "breakDmg": 30
+        },
+        {
+          "type": "fx",
+          "particle": "noct:void_field",
+          "sound": "noct.nox.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Ambush",
+      "description": "가장 가까운 적 뒤에서 등장.",
+      "effects": [
+        {
+          "type": "teleport_behind",
+          "range": 8
+        },
+        {
+          "type": "damage",
+          "mult": 1,
+          "range": 3,
+          "arc": 180,
+          "element": "UMBRA"
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Nightborn",
+        "description": "적 뒤에서 공격 시 치명타 피해 +30%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Hollow",
+        "description": "Shadow 상태 중 회피 쿨타임 감소.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Silent",
+        "description": "탐험 중 적 탐지 범위 감소.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "shadow_gauge",
+    "name": "SHADOW",
+    "max": 100,
+    "gainPerHit": 5,
+    "state": {
+      "name": "Shadow Veil",
+      "duration": 8,
+      "buffs": {
+        "critDmg": 40,
+        "atkPct": 10
+      },
+      "normalElement": "UMBRA"
+    }
+  },
+  "qte": {
+    "trigger": "airborne",
+    "action": {
+      "name": "Eclipse Fall",
+      "description": "공중의 적을 끌어내려 벤다.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 2.4,
+          "range": 4,
+          "arc": 360,
+          "element": "UMBRA",
+          "breakDmg": 14
+        }
+      ]
+    }
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Shadow Step 2회 충전",
+      "effect": {
+        "skillCharges": 1
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Shadow Veil 중 받는 피해 -20%",
+      "effect": {
+        "veilDr": 20
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Shadow Step Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "Perfect Dodge 시 Shadow +30",
+      "effect": {
+        "dodgeGauge": 30
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Event Horizon Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Event Horizon 종료 시 공허 붕괴 추가타",
+      "effect": {
+        "horizonCollapse": 4
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.nox",
+    "texture": "textures/placeholder/characters/nox",
+    "portrait": "textures/placeholder/portraits/nox",
+    "color": "#8a5cff",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.nox.attack",
+    "hurt": "noct.nox.hurt",
+    "skill": "noct.nox.skill",
+    "ultimate": "noct.nox.ultimate"
+  }
+}

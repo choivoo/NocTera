@@ -1,0 +1,218 @@
+{
+  "id": "lumia",
+  "name": "LUMIA",
+  "nameKo": "루미아",
+  "rarity": 5,
+  "element": "LUX",
+  "weapon": "CATALYST",
+  "role": [
+    "Support",
+    "Sustain"
+  ],
+  "title": "Saint of the Last Lamp",
+  "description": "빛의 촉매로 파티를 회복하고 강화하는 성녀.",
+  "base": {
+    "hp": 1180,
+    "atk": 18,
+    "def": 64
+  },
+  "ascensionStat": {
+    "stat": "healBonus",
+    "total": 22.2
+  },
+  "kit": {
+    "normal": {
+      "name": "Lumen Orbs",
+      "hits": [
+        {
+          "mult": 0.45,
+          "range": 9,
+          "arc": 20,
+          "hitstop": 2,
+          "sound": "noct.hit.magic",
+          "particle": "noct:light_orb",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.48,
+          "range": 9,
+          "arc": 20,
+          "hitstop": 2,
+          "sound": "noct.hit.magic",
+          "particle": "noct:light_orb",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.7,
+          "range": 10,
+          "arc": 30,
+          "hitstop": 2,
+          "sound": "noct.hit.magic",
+          "particle": "noct:light_orb",
+          "animation": "attack3",
+          "breakDmg": 6,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Halo",
+      "nameKo": "헤일로",
+      "description": "주변 아군을 회복한다.",
+      "cooldown": 12,
+      "energyGain": 15,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "heal",
+          "pctAtk": 180,
+          "flat": 120,
+          "target": "party"
+        },
+        {
+          "type": "damage",
+          "mult": 0.9,
+          "range": 0,
+          "radius": 5,
+          "element": "LUX",
+          "breakDmg": 6
+        },
+        {
+          "type": "fx",
+          "particle": "noct:halo",
+          "sound": "noct.lumia.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Eden",
+      "nameKo": "에덴",
+      "description": "파티 공격력·지속 회복·경직 저항 증가.",
+      "energyCost": 70,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "buff",
+          "stat": "atkPct",
+          "value": 25,
+          "duration": 12,
+          "target": "party"
+        },
+        {
+          "type": "field",
+          "radius": 7,
+          "duration": 12,
+          "interval": 2,
+          "mult": 0,
+          "element": null,
+          "healPctAtk": 25
+        },
+        {
+          "type": "heal",
+          "pctAtk": 80,
+          "target": "party"
+        },
+        {
+          "type": "fx",
+          "particle": "noct:eden",
+          "sound": "noct.lumia.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Grace",
+      "description": "교체 시 활성 캐릭터 회복.",
+      "effects": [
+        {
+          "type": "heal",
+          "pctAtk": 60,
+          "target": "self"
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Mercy",
+        "description": "Eden 필드 내 경직 저항.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Afterglow",
+        "description": "과회복량의 20%가 보호막.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Candle",
+        "description": "야간 탐험 시 시야 증가.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Halo 쿨타임 -2초",
+      "effect": {
+        "skillCdr": 2
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Eden 중 치명타 피해 +20%",
+      "effect": {
+        "edenCritDmg": 20
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Halo Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "전투불능 방지 1회",
+      "effect": {
+        "revive": 1
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Eden Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Eden 공격력 증가가 루미아 HP 비례 추가",
+      "effect": {
+        "edenScaling": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.lumia",
+    "texture": "textures/placeholder/characters/lumia",
+    "portrait": "textures/placeholder/portraits/lumia",
+    "color": "#ffe9a6",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.lumia.attack",
+    "hurt": "noct.lumia.hurt",
+    "skill": "noct.lumia.skill",
+    "ultimate": "noct.lumia.ultimate"
+  }
+}

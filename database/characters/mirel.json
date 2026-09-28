@@ -1,0 +1,206 @@
+{
+  "id": "mirel",
+  "name": "MIREL",
+  "nameKo": "미렐",
+  "rarity": 4,
+  "element": "GLACIA",
+  "weapon": "RIFLE",
+  "role": [
+    "Sub DPS"
+  ],
+  "title": "Frostline Marksman",
+  "description": "원거리 저격 특화 사수.",
+  "base": {
+    "hp": 850,
+    "atk": 20,
+    "def": 50
+  },
+  "ascensionStat": {
+    "stat": "critRate",
+    "total": 16
+  },
+  "kit": {
+    "normal": {
+      "name": "Frostline",
+      "hits": [
+        {
+          "mult": 0.6,
+          "range": 22,
+          "arc": 6,
+          "hitstop": 1,
+          "sound": "noct.hit.rifle",
+          "particle": "noct:ice_tracer",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 16
+        },
+        {
+          "mult": 0.62,
+          "range": 22,
+          "arc": 6,
+          "hitstop": 1,
+          "sound": "noct.hit.rifle",
+          "particle": "noct:ice_tracer",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 16
+        },
+        {
+          "mult": 1.1,
+          "range": 24,
+          "arc": 6,
+          "hitstop": 3,
+          "sound": "noct.hit.rifle",
+          "particle": "noct:ice_tracer",
+          "animation": "finisher",
+          "breakDmg": 8,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Cryo Round",
+      "nameKo": "크라이오 라운드",
+      "description": "빙결 탄환.",
+      "cooldown": 6,
+      "energyGain": 15,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 2.4,
+          "range": 24,
+          "arc": 8,
+          "element": "GLACIA",
+          "breakDmg": 14
+        },
+        {
+          "type": "fx",
+          "particle": "noct:ice_burst",
+          "sound": "noct.mirel.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Deadeye",
+      "nameKo": "데드아이",
+      "description": "조준 모드: 약점 피해 증가.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "buff",
+          "stat": "critDmg",
+          "value": 60,
+          "duration": 8,
+          "target": "self"
+        },
+        {
+          "type": "buff",
+          "stat": "normalDmg",
+          "value": 40,
+          "duration": 8,
+          "target": "self"
+        },
+        {
+          "type": "fx",
+          "particle": "noct:scope",
+          "sound": "noct.mirel.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Snap Shot",
+      "description": "등장 즉시 저격.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 1,
+          "range": 22,
+          "arc": 8,
+          "element": "GLACIA"
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Steady",
+        "description": "정지 상태 2초 이상 시 치명타 +15%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Cold Read",
+        "description": "GLACIA 부착 적 약점 노출.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Scout",
+        "description": "미니맵 적 표시 범위 증가.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Cryo Round 관통",
+      "effect": {
+        "pierce": 1
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Deadeye 지속 +3초",
+      "effect": {
+        "deadeyeDuration": 3
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Cryo Round Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "치명타 시 에너지 +2",
+      "effect": {
+        "critEnergy": 2
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Deadeye Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Deadeye 중 사격이 빙결 폭발",
+      "effect": {
+        "deadeyeBurst": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.mirel",
+    "texture": "textures/placeholder/characters/mirel",
+    "portrait": "textures/placeholder/portraits/mirel",
+    "color": "#bfe6ff",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.mirel.attack",
+    "hurt": "noct.mirel.hurt",
+    "skill": "noct.mirel.skill",
+    "ultimate": "noct.mirel.ultimate"
+  }
+}

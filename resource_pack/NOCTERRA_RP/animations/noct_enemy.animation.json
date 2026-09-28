@@ -1,0 +1,31 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.noct.enemy.idle": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "position": [
+            0,
+            "math.sin(query.anim_time * 180) * 0.4",
+            0
+          ]
+        },
+        "leg_l": {
+          "rotation": [
+            "math.sin(query.modified_distance_moved * 38) * 35 * query.modified_move_speed",
+            0,
+            0
+          ]
+        },
+        "leg_r": {
+          "rotation": [
+            "-math.sin(query.modified_distance_moved * 38) * 35 * query.modified_move_speed",
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

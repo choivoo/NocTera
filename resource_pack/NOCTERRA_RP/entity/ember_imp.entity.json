@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "noct:ember_imp",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/noct/entity/ember_imp"
+      },
+      "geometry": {
+        "default": "geometry.noct.enemy_humanoid"
+      },
+      "animations": {
+        "idle": "animation.noct.enemy.idle"
+      },
+      "scripts": {
+        "animate": [
+          "idle"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#ff6a3d",
+        "overlay_color": "#10121a"
+      }
+    }
+  }
+}

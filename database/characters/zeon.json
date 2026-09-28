@@ -1,0 +1,230 @@
+{
+  "id": "zeon",
+  "name": "ZEON",
+  "nameKo": "제온",
+  "rarity": 4,
+  "element": "VOLT",
+  "weapon": "SPEAR",
+  "role": [
+    "Hybrid"
+  ],
+  "title": "Stormlance",
+  "description": "번개를 두른 창술가. 필드 안에서 낙뢰를 부른다.",
+  "base": {
+    "hp": 960,
+    "atk": 19,
+    "def": 56
+  },
+  "ascensionStat": {
+    "stat": "atkPct",
+    "total": 24
+  },
+  "kit": {
+    "normal": {
+      "name": "Stormlance",
+      "hits": [
+        {
+          "mult": 0.46,
+          "range": 4.2,
+          "arc": 40,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.5,
+          "range": 4.2,
+          "arc": 40,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.58,
+          "range": 4.2,
+          "arc": 60,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.66,
+          "range": 4.4,
+          "arc": 60,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack4",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.9,
+          "range": 4.8,
+          "arc": 100,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:spark_burst",
+          "animation": "finisher",
+          "breakDmg": 8,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Lightning Rush",
+      "nameKo": "라이트닝 러시",
+      "description": "번개 돌진.",
+      "cooldown": 7,
+      "energyGain": 18,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "dash",
+          "distance": 7
+        },
+        {
+          "type": "damage",
+          "mult": 1.8,
+          "range": 3,
+          "arc": 120,
+          "element": "VOLT",
+          "breakDmg": 14
+        },
+        {
+          "type": "fx",
+          "particle": "noct:lightning",
+          "sound": "noct.zeon.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Thunder Field",
+      "nameKo": "썬더 필드",
+      "description": "필드 안에서 공격 시 추가 낙뢰.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "field",
+          "radius": 7,
+          "duration": 12,
+          "interval": 2,
+          "mult": 0.3,
+          "element": "VOLT",
+          "onAttackBonusMult": 0.35
+        },
+        {
+          "type": "damage",
+          "mult": 1.6,
+          "range": 0,
+          "radius": 7,
+          "element": "VOLT",
+          "breakDmg": 20
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Arc Entry",
+      "description": "낙뢰와 함께 등장.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.8,
+          "range": 0,
+          "radius": 3,
+          "element": "VOLT"
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Conductor",
+        "description": "Thunder Field 중 낙뢰 확률 치명타 적용.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Grounded",
+        "description": "필드 안 받는 피해 -10%.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Storm Sense",
+        "description": "날씨 예측.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Lightning Rush 2회 충전",
+      "effect": {
+        "skillCharges": 1
+      }
+    },
+    {
+      "name": "R2",
+      "description": "낙뢰 피해 +30%",
+      "effect": {
+        "boltDmg": 0.3
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Lightning Rush Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "필드 지속 +4초",
+      "effect": {
+        "fieldDuration": 4
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Thunder Field Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "필드가 제온을 따라 이동",
+      "effect": {
+        "fieldFollow": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.zeon",
+    "texture": "textures/placeholder/characters/zeon",
+    "portrait": "textures/placeholder/portraits/zeon",
+    "color": "#9db8ff",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.zeon.attack",
+    "hurt": "noct.zeon.hurt",
+    "skill": "noct.zeon.skill",
+    "ultimate": "noct.zeon.ultimate"
+  }
+}

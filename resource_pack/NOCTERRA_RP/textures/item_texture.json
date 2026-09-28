@@ -1,0 +1,33 @@
+{
+  "resource_pack_name": "NOCTERRA_RP",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "noct_ctl_attack": {
+      "textures": "textures/noct/items/ctl_attack"
+    },
+    "noct_ctl_skill": {
+      "textures": "textures/noct/items/ctl_skill"
+    },
+    "noct_ctl_ultimate": {
+      "textures": "textures/noct/items/ctl_ultimate"
+    },
+    "noct_ctl_dodge": {
+      "textures": "textures/noct/items/ctl_dodge"
+    },
+    "noct_ctl_char1": {
+      "textures": "textures/noct/items/ctl_char1"
+    },
+    "noct_ctl_char2": {
+      "textures": "textures/noct/items/ctl_char2"
+    },
+    "noct_ctl_char3": {
+      "textures": "textures/noct/items/ctl_char3"
+    },
+    "noct_ctl_char4": {
+      "textures": "textures/noct/items/ctl_char4"
+    },
+    "noct_ctl_menu": {
+      "textures": "textures/noct/items/ctl_menu"
+    }
+  }
+}

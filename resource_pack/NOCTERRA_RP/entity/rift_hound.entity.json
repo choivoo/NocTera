@@ -1,0 +1,32 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "noct:rift_hound",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/noct/entity/rift_hound"
+      },
+      "geometry": {
+        "default": "geometry.noct.enemy_beast"
+      },
+      "animations": {
+        "idle": "animation.noct.enemy.idle"
+      },
+      "scripts": {
+        "animate": [
+          "idle"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "base_color": "#b0b6c8",
+        "overlay_color": "#10121a"
+      }
+    }
+  }
+}

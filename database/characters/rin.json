@@ -1,0 +1,253 @@
+{
+  "id": "rin",
+  "name": "RIN",
+  "nameKo": "린",
+  "rarity": 4,
+  "element": "VOLT",
+  "weapon": "DUAL_PISTOL",
+  "role": [
+    "Sub DPS"
+  ],
+  "title": "Spark Courier",
+  "description": "쌍권총과 드론을 다루는 발 빠른 운반책.",
+  "base": {
+    "hp": 880,
+    "atk": 19,
+    "def": 52
+  },
+  "ascensionStat": {
+    "stat": "atkPct",
+    "total": 24
+  },
+  "kit": {
+    "normal": {
+      "name": "Twin Spark",
+      "hits": [
+        {
+          "mult": 0.28,
+          "range": 14,
+          "arc": 10,
+          "hitstop": 0,
+          "sound": "noct.hit.shot",
+          "particle": "noct:spark_tracer",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 8
+        },
+        {
+          "mult": 0.28,
+          "range": 14,
+          "arc": 10,
+          "hitstop": 0,
+          "sound": "noct.hit.shot",
+          "particle": "noct:spark_tracer",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 8
+        },
+        {
+          "mult": 0.3,
+          "range": 14,
+          "arc": 10,
+          "hitstop": 0,
+          "sound": "noct.hit.shot",
+          "particle": "noct:spark_tracer",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 8
+        },
+        {
+          "mult": 0.62,
+          "range": 14,
+          "arc": 16,
+          "hitstop": 2,
+          "sound": "noct.hit.shot",
+          "particle": "noct:spark_burst",
+          "animation": "finisher",
+          "breakDmg": 6,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Volt Barrage",
+      "nameKo": "볼트 배라지",
+      "description": "전기 탄환을 연속 발사한다.",
+      "cooldown": 7,
+      "energyGain": 20,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.55,
+          "range": 14,
+          "arc": 25,
+          "element": "VOLT",
+          "breakDmg": 4
+        },
+        {
+          "type": "damage",
+          "mult": 0.55,
+          "range": 14,
+          "arc": 25,
+          "element": "VOLT",
+          "breakDmg": 4
+        },
+        {
+          "type": "damage",
+          "mult": 0.55,
+          "range": 14,
+          "arc": 25,
+          "element": "VOLT",
+          "breakDmg": 4
+        },
+        {
+          "type": "damage",
+          "mult": 0.9,
+          "range": 14,
+          "arc": 25,
+          "element": "VOLT",
+          "breakDmg": 8
+        },
+        {
+          "type": "fx",
+          "particle": "noct:spark_burst",
+          "sound": "noct.rin.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Drone Swarm",
+      "nameKo": "드론 스웜",
+      "description": "드론 3기를 소환해 자동 공격.",
+      "energyCost": 50,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "summon",
+          "kind": "drone",
+          "count": 3,
+          "duration": 12,
+          "interval": 1,
+          "mult": 0.4,
+          "range": 12
+        },
+        {
+          "type": "fx",
+          "particle": "noct:drone_deploy",
+          "sound": "noct.rin.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Quick Draw",
+      "description": "등장 즉시 사격.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.7,
+          "range": 14,
+          "arc": 30,
+          "element": "VOLT"
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Relay",
+        "description": "드론이 있는 동안 교체 쿨타임 -30%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Static",
+        "description": "VOLT 부착 적에게 피해 +12%.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Courier",
+        "description": "질주 속도 증가.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "qte": {
+    "trigger": "shocked",
+    "action": {
+      "name": "Overcharge Shot",
+      "description": "감전된 적에게 관통탄.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 2,
+          "range": 16,
+          "arc": 15,
+          "element": "VOLT",
+          "breakDmg": 12
+        }
+      ]
+    }
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "드론 +1",
+      "effect": {
+        "droneCount": 1
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Volt Barrage 탄수 +2",
+      "effect": {
+        "extraShots": 2
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Volt Barrage Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "드론 공격 시 에너지 +1",
+      "effect": {
+        "droneEnergy": 1
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Drone Swarm Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "드론이 활성 캐릭터를 따라 다니며 협공",
+      "effect": {
+        "droneAssist": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.rin",
+    "texture": "textures/placeholder/characters/rin",
+    "portrait": "textures/placeholder/portraits/rin",
+    "color": "#ffe04a",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.rin.attack",
+    "hurt": "noct.rin.hurt",
+    "skill": "noct.rin.skill",
+    "ultimate": "noct.rin.ultimate"
+  }
+}

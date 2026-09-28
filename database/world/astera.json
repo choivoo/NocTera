@@ -1,0 +1,29 @@
+{
+  "id": "astera",
+  "name": "ASTERA",
+  "note": "Offsets are relative to the region origin (set with /noct setup; defaults to world spawn). REPLACE_ME with hand-built map coordinates.",
+  "beacons": [
+    { "id": "astera_city", "name": "Astera City", "offset": [0, 0, 0], "unlockedByDefault": true },
+    { "id": "silver_plains", "name": "Silver Plains", "offset": [60, 0, 20] },
+    { "id": "old_facility", "name": "Old Research Facility", "offset": [110, 0, -40] },
+    { "id": "frozen_forest", "name": "Frozen Forest", "offset": [-80, 0, 70] },
+    { "id": "underground_ruins", "name": "Underground Ruins", "offset": [-40, 0, -110] },
+    { "id": "void_scar", "name": "Void Scar", "offset": [150, 0, 120] }
+  ],
+  "zones": [
+    { "id": "plains_pack", "area": "silver_plains", "offset": [70, 0, 30], "radius": 12, "cap": 5, "enemies": ["rift_hound", "gale_wisp", "lumen_moth"], "respawnTicks": 400 },
+    { "id": "plains_ruins", "area": "silver_plains", "offset": [45, 0, 45], "radius": 10, "cap": 4, "enemies": ["ruin_sentinel", "shade_husk"], "respawnTicks": 500 },
+    { "id": "facility", "area": "old_facility", "offset": [115, 0, -45], "radius": 12, "cap": 5, "enemies": ["volt_drone", "ruin_sentinel", "ember_imp"], "respawnTicks": 400 },
+    { "id": "forest", "area": "frozen_forest", "offset": [-85, 0, 75], "radius": 12, "cap": 5, "enemies": ["frost_mite", "rift_hound"], "respawnTicks": 400 },
+    { "id": "forest_elite", "area": "frozen_forest", "offset": [-100, 0, 95], "radius": 6, "cap": 1, "enemies": ["glacier_brute"], "respawnTicks": 2400 },
+    { "id": "ruins", "area": "underground_ruins", "offset": [-45, 0, -115], "radius": 10, "cap": 5, "enemies": ["shade_husk", "ember_imp"], "respawnTicks": 400 },
+    { "id": "ruins_elite", "area": "underground_ruins", "offset": [-55, 0, -130], "radius": 6, "cap": 1, "enemies": ["rift_knight"], "respawnTicks": 2400 },
+    { "id": "scar", "area": "void_scar", "offset": [155, 0, 125], "radius": 12, "cap": 6, "enemies": ["shade_husk", "volt_drone", "rift_hound"], "respawnTicks": 400 },
+    { "id": "scar_elite", "area": "void_scar", "offset": [170, 0, 140], "radius": 6, "cap": 1, "enemies": ["storm_warden"], "respawnTicks": 2400 },
+    { "id": "prologue", "area": "astera_city", "offset": [18, 0, 0], "radius": 6, "cap": 3, "enemies": ["rift_hound", "shade_husk"], "respawnTicks": 200 }
+  ],
+  "bosses": [
+    { "id": "frost_devourer", "offset": [-120, 0, 120] },
+    { "id": "void_seraph", "offset": [190, 0, 170] }
+  ]
+}

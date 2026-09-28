@@ -1,0 +1,224 @@
+{
+  "id": "vela",
+  "name": "VELA",
+  "nameKo": "벨라",
+  "rarity": 4,
+  "element": "LUX",
+  "weapon": "SWORD",
+  "role": [
+    "Sustain",
+    "Buffer"
+  ],
+  "title": "Aegis Squire",
+  "description": "보호막으로 동료를 지키는 기사 견습생.",
+  "base": {
+    "hp": 1100,
+    "atk": 16,
+    "def": 70
+  },
+  "ascensionStat": {
+    "stat": "hpPct",
+    "total": 24
+  },
+  "kit": {
+    "normal": {
+      "name": "Aegis Cuts",
+      "hits": [
+        {
+          "mult": 0.44,
+          "range": 3,
+          "arc": 90,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.48,
+          "range": 3,
+          "arc": 90,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.56,
+          "range": 3,
+          "arc": 100,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.82,
+          "range": 3.2,
+          "arc": 140,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "finisher",
+          "breakDmg": 8,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Bulwark",
+      "nameKo": "벌워크",
+      "description": "보호막 생성.",
+      "cooldown": 12,
+      "energyGain": 15,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "shield",
+          "pctAtk": 300,
+          "duration": 15
+        },
+        {
+          "type": "damage",
+          "mult": 1,
+          "range": 0,
+          "radius": 4,
+          "element": "LUX",
+          "breakDmg": 10
+        },
+        {
+          "type": "fx",
+          "particle": "noct:shield",
+          "sound": "noct.vela.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Oath of Dawn",
+      "nameKo": "여명의 맹세",
+      "description": "파티 피해 감소 + 공격력 증가.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "buff",
+          "stat": "dmgReduction",
+          "value": 25,
+          "duration": 12,
+          "target": "party"
+        },
+        {
+          "type": "buff",
+          "stat": "atkPct",
+          "value": 20,
+          "duration": 12,
+          "target": "party"
+        },
+        {
+          "type": "damage",
+          "mult": 2,
+          "range": 0,
+          "radius": 6,
+          "element": "LUX",
+          "breakDmg": 20
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Guard Up",
+      "description": "등장 시 짧은 보호막.",
+      "effects": [
+        {
+          "type": "shield",
+          "pctAtk": 120,
+          "duration": 6
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Resolve",
+        "description": "보호막 중 공격력 +15%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Sanctuary",
+        "description": "보호막 파괴 시 회복.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Escort",
+        "description": "호위 퀘스트 NPC 피해 감소.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "보호막 흡수량 +20%",
+      "effect": {
+        "shieldPct": 20
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Oath 중 에너지 회복 +15%",
+      "effect": {
+        "oathEr": 15
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Bulwark Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "보호막 중 경직 무효",
+      "effect": {
+        "shieldPoise": 1
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Oath Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "보호막 파괴 시 광휘 폭발",
+      "effect": {
+        "shieldBurst": 1.5
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.vela",
+    "texture": "textures/placeholder/characters/vela",
+    "portrait": "textures/placeholder/portraits/vela",
+    "color": "#fff3c4",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.vela.attack",
+    "hurt": "noct.vela.hurt",
+    "skill": "noct.vela.skill",
+    "ultimate": "noct.vela.ultimate"
+  }
+}

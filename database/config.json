@@ -1,0 +1,9 @@
+{
+  "save": { "flushIntervalTicks": 100, "chunkSize": 30000, "schemaVersion": 1 },
+  "account": { "maxNexusRank": 60, "startingAstrum": 1600, "startingCredit": 5000, "starterCharacters": ["seria", "rin"] },
+  "flux": { "max": 180, "regenMinutes": 8 },
+  "character": { "maxLevel": 90, "ascensionCaps": [20, 40, 50, 60, 70, 80, 90], "baseCritRate": 5, "baseCritDmg": 50, "baseEnergyRegen": 100 },
+  "combat": { "switchCooldownTicks": 20, "switchIframes": 8, "dodgeIframes": 10, "perfectDodgeWindowTicks": 6, "dodgeCooldownTicks": 16, "energyPerHit": 1.5, "breakDurationTicks": 100, "breakDamageTaken": 1.3, "elementAuraTicks": 200, "defConstant": 400, "maxHitsPerTick": 24 },
+  "gacha": { "historyLimit": 200, "resonanceMaterialPerDupe4": 1, "resonanceMaterialPerDupe5": 1 },
+  "performance": { "hudIntervalTicks": 4, "aiNearIntervalTicks": 2, "aiFarIntervalTicks": 10, "aiFarDistance": 32, "particleBudgetPerTick": 40 }
+}

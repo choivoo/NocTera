@@ -1,0 +1,232 @@
+{
+  "id": "aria",
+  "name": "ARIA",
+  "nameKo": "아리아",
+  "rarity": 4,
+  "element": "AER",
+  "weapon": "SPEAR",
+  "role": [
+    "Support"
+  ],
+  "title": "Windcaller",
+  "description": "창끝으로 바람을 부리는 서포터.",
+  "base": {
+    "hp": 920,
+    "atk": 18,
+    "def": 55
+  },
+  "ascensionStat": {
+    "stat": "energyRegen",
+    "total": 26.7
+  },
+  "kit": {
+    "normal": {
+      "name": "Gale Thrusts",
+      "hits": [
+        {
+          "mult": 0.45,
+          "range": 4,
+          "arc": 40,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack1",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.48,
+          "range": 4,
+          "arc": 40,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack2",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.6,
+          "range": 4.4,
+          "arc": 60,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "attack3",
+          "breakDmg": 4,
+          "window": 14
+        },
+        {
+          "mult": 0.88,
+          "range": 4.8,
+          "arc": 90,
+          "hitstop": 2,
+          "sound": "noct.hit.slash",
+          "particle": "noct:slash_arc",
+          "animation": "finisher",
+          "breakDmg": 8,
+          "window": 14
+        }
+      ]
+    },
+    "skill": {
+      "name": "Cyclone",
+      "nameKo": "사이클론",
+      "description": "적을 띄우는 회오리 생성.",
+      "cooldown": 8,
+      "energyGain": 20,
+      "animation": "skill",
+      "effects": [
+        {
+          "type": "pull",
+          "radius": 5,
+          "strength": 0.3
+        },
+        {
+          "type": "damage",
+          "mult": 1.4,
+          "range": 0,
+          "radius": 5,
+          "element": "AER",
+          "breakDmg": 12,
+          "launch": 0.8
+        },
+        {
+          "type": "fx",
+          "particle": "noct:cyclone",
+          "sound": "noct.aria.skill"
+        }
+      ]
+    },
+    "ultimate": {
+      "name": "Tempest Domain",
+      "nameKo": "폭풍 영역",
+      "description": "폭풍 영역: 파티 이동속도 및 공격속도 증가.",
+      "energyCost": 60,
+      "animation": "ultimate",
+      "effects": [
+        {
+          "type": "field",
+          "radius": 8,
+          "duration": 10,
+          "interval": 1,
+          "mult": 0.35,
+          "element": "AER"
+        },
+        {
+          "type": "buff",
+          "stat": "moveSpeed",
+          "value": 20,
+          "duration": 10,
+          "target": "party"
+        },
+        {
+          "type": "buff",
+          "stat": "atkSpeed",
+          "value": 15,
+          "duration": 10,
+          "target": "party"
+        },
+        {
+          "type": "fx",
+          "particle": "noct:tempest",
+          "sound": "noct.aria.ultimate"
+        }
+      ]
+    },
+    "switchIn": {
+      "name": "Updraft",
+      "description": "주변 적을 띄운다.",
+      "effects": [
+        {
+          "type": "damage",
+          "mult": 0.6,
+          "range": 0,
+          "radius": 3,
+          "element": "AER",
+          "launch": 0.5
+        }
+      ]
+    },
+    "passives": [
+      {
+        "name": "Tailwind",
+        "description": "Tempest 중 확산 피해 +40%.",
+        "unlockAscension": 1
+      },
+      {
+        "name": "Eye of Storm",
+        "description": "Cyclone 명중 시 에너지 회복.",
+        "unlockAscension": 4
+      },
+      {
+        "name": "Glide",
+        "description": "활공 스태미나 감소.",
+        "unlockAscension": 0
+      }
+    ]
+  },
+  "mechanic": {
+    "type": "none",
+    "name": "",
+    "max": 0,
+    "gainPerHit": 0
+  },
+  "resonance": [
+    {
+      "name": "R1",
+      "description": "Cyclone 흡입 범위 +30%",
+      "effect": {
+        "pullRadius": 0.3
+      }
+    },
+    {
+      "name": "R2",
+      "description": "Tempest 적 AER 저항 -20%",
+      "effect": {
+        "aerShred": 20
+      }
+    },
+    {
+      "name": "R3",
+      "description": "Cyclone Lv+3",
+      "effect": {
+        "skillLevel": 3
+      }
+    },
+    {
+      "name": "R4",
+      "description": "교체 시 다음 캐릭터 공격속도 +10%",
+      "effect": {
+        "handoff": 10
+      }
+    },
+    {
+      "name": "R5",
+      "description": "Tempest Lv+3",
+      "effect": {
+        "ultLevel": 3
+      }
+    },
+    {
+      "name": "R6",
+      "description": "Tempest 속 확산 반응이 연쇄",
+      "effect": {
+        "chainSpread": 1
+      }
+    }
+  ],
+  "visual": {
+    "model": "geometry.noct.aria",
+    "texture": "textures/placeholder/characters/aria",
+    "portrait": "textures/placeholder/portraits/aria",
+    "color": "#7fffd4",
+    "placeholder": true
+  },
+  "sounds": {
+    "attack": "noct.aria.attack",
+    "hurt": "noct.aria.hurt",
+    "skill": "noct.aria.skill",
+    "ultimate": "noct.aria.ultimate"
+  }
+}
