@@ -8,6 +8,7 @@ import { dist } from "../core/Vec";
 import { particle, sound } from "../audio/Fx";
 import { Enemies } from "../data/registry";
 import { logger } from "../core/Logger";
+import { groupSize } from "../coop/CoopManager";
 
 const log = logger("world");
 export const Region = astera;
@@ -22,6 +23,8 @@ export function origin(): Vector3 {
 
 export function setOrigin(v: Vector3): void {
   world.setDynamicProperty("noct:origin", { x: Math.floor(v.x), y: Math.floor(v.y), z: Math.floor(v.z) });
+  world.setDynamicProperty("noct:city_built", undefined);
+  invalidateWorldCache();
 }
 
 function overworld(): Dimension {
@@ -29,13 +32,30 @@ function overworld(): Dimension {
 }
 
 /** Resolves a region offset to a standable surface position (falls back to origin height). */
+// Surface heights are cached (per column) so proximity checks stay cheap on phones.
+const heightCache = new Map<string, { y: number; at: number }>();
+let originCache: { v: Vector3; at: number } | null = null;
+
+export function invalidateWorldCache(): void {
+  heightCache.clear();
+  originCache = null;
+}
+
 export function resolve(offset: number[] | readonly number[], dim: Dimension = overworld()): Vector3 {
-  const o = origin();
+  const now = system.currentTick;
+  if (!originCache || now - originCache.at > 200) originCache = { v: origin(), at: now };
+  const o = originCache.v;
   const x = o.x + offset[0] + 0.5;
   const z = o.z + offset[2] + 0.5;
+  const key = `${Math.floor(x)},${Math.floor(z)}`;
+  const c = heightCache.get(key);
+  if (c && now - c.at < 1200) return { x, y: c.y, z };
   try {
     const top = dim.getTopmostBlock({ x, z });
-    if (top) return { x, y: top.location.y + 1, z };
+    if (top) {
+      heightCache.set(key, { y: top.location.y + 1, at: now });
+      return { x, y: top.location.y + 1, z };
+    }
   } catch {
     /* chunk not loaded */
   }
@@ -162,7 +182,7 @@ export function spawnBoss(id: string, s: Session): boolean {
   const pos = b ? resolve(b.offset, dim) : { x: s.player.location.x + 6, y: s.player.location.y, z: s.player.location.z };
   const e = dim.spawnEntity(def.entity, pos);
   e.addTag("boss");
-  const players = [...game().sessions.values()].filter((x) => dist(x.player.location, pos) < 64).length;
+  const players = Math.max(groupSize(s), [...game().sessions.values()].filter((x) => dist(x.player.location, pos) < 64).length);
   enemies.register(e, 1 + Math.max(0, players - 1) * 0.6 + (s.profile.nexusRank - 1) * 0.05);
   return true;
 }

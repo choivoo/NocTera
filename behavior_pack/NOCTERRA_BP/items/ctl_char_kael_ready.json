@@ -1,0 +1,32 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:item": {
+    "description": {
+      "identifier": "noct:ctl_char_kael_ready",
+      "menu_category": {
+        "category": "none",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:icon": {
+        "textures": {
+          "default": "noct_ctl_char_kael_ready"
+        }
+      },
+      "minecraft:display_name": {
+        "value": "§lKAEL §6✦"
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": false,
+      "minecraft:use_modifiers": {
+        "use_duration": 0.05,
+        "movement_modifier": 1
+      },
+      "minecraft:can_destroy_in_creative": false,
+      "noct:control": {
+        "action": "char"
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.noct.npc": {
+      "arrays": {
+        "textures": {
+          "Array.tex": [
+            "Texture.guild",
+            "Texture.weapon_lab",
+            "Texture.upgrade",
+            "Texture.artifact_lab",
+            "Texture.shop",
+            "Texture.gacha",
+            "Texture.craft",
+            "Texture.training",
+            "Texture.coop"
+          ]
+        }
+      },
+      "geometry": "Geometry.default",
+      "materials": [
+        {
+          "*": "Material.default"
+        }
+      ],
+      "textures": [
+        "Array.tex[math.clamp(q.property('noct:look'), 0, 8)]"
+      ]
+    }
+  }
+}

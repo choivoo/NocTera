@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.0.0 — Release build: Character design + Mobile UI/UX
+
+Built on top of 0.2 without resetting anything. Save schema 1 → 2 migrates automatically. See docs/AUDIT.md.
+
+### Characters (Part A)
+- **Playable 3D characters:** a player-entity override adds `noct:char` / `noct:anim`. There are 10 generated silhouettes with individual body scale, hair, coat, accessories and weapon models, per-character palette textures, and **213 animations** (≈21 each: idle, idle2, run posture, air, secondary cloth/hair, 3–6 combo hits, skill, ultimate, dodge, perfect, switch in/out, hurt, knockback, death, victory, select, qte), plus one animation controller per character.
+- **Ultimate cinematics** from data. They are ≤ 3 s and include a tinted flash, relative camera shots, particles, rings and shake. Seria (9-beat End of Winter), Kael, Lumia and Nox have multi-shot cuts; the other six have shorter cuts.
+- **Showcase:** the player's avatar serves as the "3D model" for the character screen, the gacha reveal and dialogue close-ups, with each character's Selection Animation and element FX.
+- **Passives are now functional:** 20 machine-readable effects (conditional crit/damage/defense, overheal → shield, shield-break heal, skill energy, switch cooldown, dodge cooldown in state, exploration speed).
+
+### UI/UX (Part B)
+- Title screen (TAP TO START, Astera night, Rift, version), a loading screen with a bar and tips, and a first-entry cutscene.
+- Combat HUD in a glass JSON-UI panel on the left edge, quest marker (arrow and distance), round glass touch buttons, portrait party buttons with ULT/QTE glow and a co-op lock.
+- Damage numbers (normal / crit / reaction / BREAK), BREAK and PERFECT center feedback, boss bar synced to scripted HP with phase and Break meter.
+- Redesigned screens: character (2-column on Fold), weapon, Memory Imprint constellation, talent node graph, party table with Element Resonance, gacha banner/pull/5★ reveal/results, dialogue, settings.
+- Presets: COVER (Fold cover), COMPACT, PHONE, FOLD_EXPANDED, WINDOWS. Settings for HUD scale, touch button size/opacity, damage numbers, camera sensitivity, aim assist, ult cinematic, and HUD edit-mode layout data.
+
+### Content to 1.0
+- **Chapter 1 complete:** Prologue → Act I (Frost Devourer) → Act II (facility, dungeon, Rift Knight) → Act III (Void Seraph) → Epilogue, with a chapter-end cutscene. Story-gated unlocks: GACHA, DUNGEON, CO-OP, WEEKLY.
+- **Astera City:** procedural plaza, 9 facility NPCs (Quest Guild, Weapon Lab, Character Upgrade, Artifact Lab, Shop, Signal Terminal, Crafting, Training with an immortal dummy, Co-op Lobby), and beacon pillars.
+- **Exploration:** 8 treasure caches (3 tiers), 15 Astral Motes, 2 resonance-pad puzzles, a Rift Trial, and roaming Rift Surge world events.
+- **Co-op:** groups of up to 4, character allowance 4/2/1, boss scaling by group, shared rewards.
+- **Weekly:** 3 boss reward claims per week after Chapter 1.
+
+### Verified
+- 36 automated tests. New ones: **Vertical Slice C** (the whole Chapter 1 end to end across a restart), **UI QA** (HUD fits every preset at 80–120% scale; touch-slot layout; damage text width), v1→v2 migration, co-op allowance, and art/cinematic coverage.
+- The validator now checks the character rig wiring (controllers ↔ animations ↔ geometry ↔ textures ↔ BP properties).
+
+### Known limits (not fixable from an add-on, or needing a real device)
+- Not yet run on a physical Galaxy Z Fold 8 Ultra or a live BDS. Everything above is verified in the simulated engine and by static validation only.
+- Character models and animations are generated block art (the silhouettes, palettes and motion differ per character). Hand-authored Blockbench art can replace them 1:1 (docs/ART_DIRECTION.md).
+- Particles and sounds still map to vanilla stand-ins (`audio/Fx.ts`, docs/REPLACE_ME.md).
+- Touch buttons are hotbar items. Bedrock gives scripts no custom on-screen buttons, and there is no minimap renderer (the quest marker replaces it).
+- HUD edit mode stores full layout data, but only the party panel position is applied by the 1.0 JSON UI.
+
+
 ## 0.2.0 — Foundation + Character + Vertical Slice A (verified)
 
 ### 0.1 Foundation ✅

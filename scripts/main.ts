@@ -17,7 +17,11 @@ import { registerDungeons } from "./dungeon/DungeonManager";
 import { Characters, Banners, Enemies } from "./data/registry";
 import { logger } from "./core/Logger";
 
-export const VERSION = "0.2.0";
+import { VERSION } from "./version";
+import { registerCity } from "./world/City";
+import { registerExploration } from "./world/Exploration";
+import { registerDamageNumbers } from "./ui/DamageNumbers";
+export { VERSION };
 const log = logger("boot");
 
 system.beforeEvents.startup.subscribe((ev) => {
@@ -32,6 +36,9 @@ world.afterEvents.worldLoad.subscribe(() => {
   registerWorld();
   registerQuestRuntime();
   registerDungeons();
+  registerCity();
+  registerExploration();
+  registerDamageNumbers();
   registerLifecycle();
   registerHud(() => game().sessions.values());
   log.info(`NOCTERRA ${VERSION} — ${Characters.size} characters, ${Banners.size} banners, ${Enemies.size} enemies`);

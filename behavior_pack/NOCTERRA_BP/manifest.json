@@ -4,15 +4,15 @@
     "name": "NOCTERRA BP",
     "description": "NOCTERRA — Bedrock Subculture Action RPG (behavior)",
     "uuid": "b1fe7241-6df4-4b75-85f7-d7f9c1c294bd",
-    "version": [0, 2, 0],
-    "min_engine_version": [1, 21, 90]
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 30]
   },
   "modules": [
-    { "type": "data", "uuid": "a93db8d9-7a9e-47e2-b5f0-5ae66fec64df", "version": [0, 2, 0] },
-    { "type": "script", "language": "javascript", "entry": "scripts/main.js", "uuid": "2d97e3f4-bb21-417e-8b57-b24b648919a1", "version": [0, 2, 0] }
+    { "type": "data", "uuid": "a93db8d9-7a9e-47e2-b5f0-5ae66fec64df", "version": [1, 0, 0] },
+    { "type": "script", "language": "javascript", "entry": "scripts/main.js", "uuid": "2d97e3f4-bb21-417e-8b57-b24b648919a1", "version": [1, 0, 0] }
   ],
   "dependencies": [
-    { "uuid": "f3fa2c3c-4044-4995-80a3-c3c3d11a23da", "version": [0, 2, 0] },
+    { "uuid": "f3fa2c3c-4044-4995-80a3-c3c3d11a23da", "version": [1, 0, 0] },
     { "module_name": "@minecraft/server", "version": "2.10.0" },
     { "module_name": "@minecraft/server-ui", "version": "2.2.0" }
   ]

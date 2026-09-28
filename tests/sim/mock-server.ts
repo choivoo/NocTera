@@ -87,6 +87,19 @@ export class Entity {
   tags = new Set<string>();
   effects: string[] = [];
   families: string[] = [];
+  props = new Map<string, any>();
+  getProperty(k: string) {
+    return this.props.get(k) ?? 0;
+  }
+  setProperty(k: string, v: any) {
+    this.props.set(k, v);
+  }
+  getTags() {
+    return [...this.tags];
+  }
+  getViewDirection() {
+    return { x: -1, y: 0, z: 0 };
+  }
   constructor(public typeId: string, public location: any, public dimension: Dimension) {}
   addTag(t: string) {
     this.tags.add(t);
@@ -137,13 +150,14 @@ export class Player extends Entity {
   clientSystemInfo = { platformType: "Mobile" };
   inputInfo = { lastInputModeUsed: "Touch" };
   inventory = new Container();
+  selectedSlotIndex = 0;
   view = { x: 1, y: 0, z: 0 };
   constructor(id: string, name: string, dim: Dimension) {
     super("minecraft:player", { x: 0, y: 64, z: 0 }, dim);
     this.id = id;
     this.name = name;
   }
-  getViewDirection() {
+  override getViewDirection() {
     return this.view;
   }
   getVelocity() {
@@ -168,6 +182,7 @@ export class Dimension {
   getEntities(q: any = {}) {
     return [...this.entities].filter((e) => {
       if (!e.isValid) return false;
+      if (q.type && e.typeId !== q.type) return false;
       if (q.families && !q.families.every((f: string) => e.families.includes(f))) return false;
       if (q.tags && !q.tags.every((t: string) => e.tags.has(t))) return false;
       if (q.location && q.maxDistance !== undefined) {
@@ -186,6 +201,11 @@ export class Dimension {
   }
   spawnParticle() {}
   playSound() {}
+  fills = 0;
+  fillBlocks() {
+    this.fills++;
+    return {};
+  }
   getTopmostBlock(p: any) {
     return { location: { x: Math.floor(p.x), y: 63, z: Math.floor(p.z) } };
   }
@@ -203,7 +223,7 @@ export function dumpDynamic(file: string) {
   fs.writeFileSync(file, JSON.stringify(Object.fromEntries(dyn)));
 }
 
-const after = ["worldLoad", "playerSpawn", "playerLeave", "entitySpawn", "entityHurt", "entityHitEntity", "itemUse"];
+const after = ["worldLoad", "playerSpawn", "playerLeave", "entitySpawn", "entityHurt", "entityHitEntity", "itemUse", "playerInteractWithEntity"];
 export const world = {
   afterEvents: Object.fromEntries(after.map((k) => [k, new Signal()])) as Record<string, Signal>,
   beforeEvents: { playerLeave: new Signal(), entityRemove: new Signal() } as Record<string, Signal>,
@@ -215,6 +235,10 @@ export const world = {
   getDefaultSpawnLocation: () => ({ x: 0, y: 64, z: 0 }),
   playSound() {},
 };
+
+export class BlockVolume {
+  constructor(public from: any, public to: any) {}
+}
 
 export class ItemStack {
   lockMode = "none";
@@ -236,6 +260,13 @@ export function joinPlayer(id: string, name: string) {
   overworld.entities.add(p);
   world.afterEvents.playerSpawn.fire({ player: p, initialSpawn: true });
   return p;
+}
+/** Tap the hotbar slot (uses the item currently in that slot, like a touch press). */
+export function tapSlot(p: Player, slot: number) {
+  p.selectedSlotIndex = slot;
+  const it = p.inventory.getItem(slot);
+  const action = it.typeId.includes("ctl_char") ? "char" : it.typeId.replace("noct:ctl_", "").replace("_ready", "");
+  registries.components.get("noct:control").onUse({ source: p }, { params: { action } });
 }
 export function tap(p: Player, action: string) {
   registries.components.get("noct:control").onUse({ source: p }, { params: { action } });

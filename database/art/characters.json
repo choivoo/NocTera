@@ -1,0 +1,73 @@
+{
+  "_doc": "Art direction per character. tools/gen-assets.mjs builds geometry, palette textures and ~20 individual animations from this data. Colors are hex; body scales are relative to a 32px humanoid. REPLACE_ME: hand-authored Blockbench models/animations can replace generated files 1:1 (same identifiers).",
+  "seria": {
+    "concept": "Northern snow knight · cold noble · futuristic fantasy swordswoman",
+    "palette": { "hair": "#e8eef6", "skin": "#f3dccb", "coat": "#f4f7fb", "inner": "#1b2a4a", "metal": "#b9c6d6", "accent": "#7fd3ff", "glow": "#c8f0ff", "eye": "#8fd8ff" },
+    "body": { "height": 1.0, "width": 0.9, "hair": "long", "coat": "long_split", "extras": ["waist_cloth", "crystal_pauldron", "floating_hair"] },
+    "weapon": { "model": "longsword", "hold": "low_right" },
+    "motion": { "tempo": 1.0, "idle": "sword_lowered_breath", "run": "low_blade_back", "combo": ["h_slash_r", "h_slash_l", "dash_thrust", "spin", "rising_slash"], "skill": "iai_dash", "ultimate": "raise_and_strike", "select": "raise_blade_crystal", "victory": "sheath" }
+  },
+  "kael": {
+    "concept": "Flame mercenary · destructive battle maniac",
+    "palette": { "hair": "#151515", "skin": "#d9a98a", "coat": "#1e1e22", "inner": "#8c1d1d", "metal": "#7d8088", "accent": "#ff5a1f", "glow": "#ffb347", "eye": "#ff7a45" },
+    "body": { "height": 1.08, "width": 1.15, "hair": "spiky", "coat": "asym_jacket", "extras": ["arm_guard", "waist_reactor"] },
+    "weapon": { "model": "greatsword", "hold": "shoulder" },
+    "motion": { "tempo": 0.7, "idle": "shoulder_rest", "run": "heavy_drag", "combo": ["heavy_diag", "heavy_diag_back", "overhead", "slam"], "skill": "drag_charge_slam", "ultimate": "heat_raise_slam", "select": "blade_on_shoulder", "victory": "plant_blade" }
+  },
+  "lumia": {
+    "concept": "Saint of light · astronomer",
+    "palette": { "hair": "#f7e7b4", "skin": "#f6e2d3", "coat": "#fbf6ea", "inner": "#c9a94a", "metal": "#e8c870", "accent": "#fff1a8", "glow": "#fff8d6", "eye": "#9bc4ff" },
+    "body": { "height": 0.94, "width": 0.85, "hair": "long", "coat": "robe", "extras": ["halo_ring", "star_charm"] },
+    "weapon": { "model": "catalyst_orb", "hold": "float_front" },
+    "motion": { "tempo": 0.9, "idle": "hover_orb", "run": "robe_glide", "combo": ["cast_r", "cast_l", "cast_both"], "skill": "circle_cast", "ultimate": "arms_to_sky", "select": "halo_bloom", "victory": "prayer" }
+  },
+  "nox": {
+    "concept": "Void assassin",
+    "palette": { "hair": "#1a1024", "skin": "#e2cfd6", "coat": "#0d0a12", "inner": "#3c1a5c", "metal": "#5b4a6e", "accent": "#ff3fd2", "glow": "#b36bff", "eye": "#c07bff" },
+    "body": { "height": 0.98, "width": 0.88, "hair": "short_hood", "coat": "tattered_shadow", "extras": ["shadow_tatters", "mask"] },
+    "weapon": { "model": "dual_blades", "hold": "reverse_grip" },
+    "motion": { "tempo": 1.35, "idle": "crouch_ready", "run": "ninja_lean", "combo": ["x_slash", "x_slash_back", "spin_low", "spin_high", "flurry", "cross_finish"], "skill": "vanish_cross", "ultimate": "eye_glow_sphere", "select": "rise_from_shadow", "victory": "blades_crossed" }
+  },
+  "rin": {
+    "concept": "Electric hacker · drone specialist",
+    "palette": { "hair": "#ffd23f", "skin": "#f4d7c2", "coat": "#2b2f3a", "inner": "#ffe04a", "metal": "#4a5160", "accent": "#35e0ff", "glow": "#fff27a", "eye": "#35e0ff" },
+    "body": { "height": 0.9, "width": 0.85, "hair": "twin_tail", "coat": "short_jacket", "extras": ["goggles", "tail_cable"] },
+    "weapon": { "model": "dual_pistols", "hold": "gun_up" },
+    "motion": { "tempo": 1.4, "idle": "spin_pistol", "run": "light_sprint", "combo": ["shot_r", "shot_l", "shot_r", "double_shot"], "skill": "dodge_fire", "ultimate": "drone_call", "select": "twirl_guns", "victory": "peace" }
+  },
+  "aria": {
+    "concept": "Wind traveler · aerial combat",
+    "palette": { "hair": "#7ed9c3", "skin": "#f2dbc8", "coat": "#e9f7f2", "inner": "#2c7a6a", "metal": "#a6c7bd", "accent": "#6fffc8", "glow": "#d2fff0", "eye": "#3fd6a8" },
+    "body": { "height": 0.96, "width": 0.86, "hair": "ponytail", "coat": "short_skirt", "extras": ["long_scarf"] },
+    "weapon": { "model": "spear", "hold": "spear_side" },
+    "motion": { "tempo": 1.1, "idle": "scarf_wind", "run": "spear_back_run", "combo": ["thrust", "thrust", "sweep", "vault_strike"], "skill": "spear_twirl", "ultimate": "tornado_raise", "select": "wind_twirl", "victory": "spear_plant" }
+  },
+  "eiden": {
+    "concept": "Street fighter · flame mech gauntlets",
+    "palette": { "hair": "#c0542a", "skin": "#c98f6c", "coat": "#2a2a2a", "inner": "#f2f2f2", "metal": "#6b6f78", "accent": "#ff7a2a", "glow": "#ffc07a", "eye": "#ffae5c" },
+    "body": { "height": 1.03, "width": 1.08, "hair": "spiky", "coat": "tank_hoodie", "extras": ["big_gauntlets"] },
+    "weapon": { "model": "gauntlets", "hold": "boxing" },
+    "motion": { "tempo": 1.5, "idle": "bounce_guard", "run": "boxer_run", "combo": ["jab", "cross", "hook", "body", "uppercut"], "skill": "charge_straight", "ultimate": "rush_uppercut", "select": "knuckle_crack", "victory": "fist_raise" }
+  },
+  "mirel": {
+    "concept": "Calm sniper",
+    "palette": { "hair": "#a7c7e7", "skin": "#efdccf", "coat": "#3a4a5e", "inner": "#dfe9f5", "metal": "#58606c", "accent": "#8fd6ff", "glow": "#d6f1ff", "eye": "#b8e4ff" },
+    "body": { "height": 0.95, "width": 0.84, "hair": "bob", "coat": "long_military", "extras": ["scarf_short", "monocle_scope"] },
+    "weapon": { "model": "rifle", "hold": "rifle_port" },
+    "motion": { "tempo": 0.85, "idle": "rifle_rest", "run": "rifle_run", "combo": ["aim_shot", "aim_shot", "charged_shot"], "skill": "kneel_shot", "ultimate": "scope_in", "select": "bolt_cycle", "victory": "rifle_shoulder" }
+  },
+  "vela": {
+    "concept": "Paladin · guardian",
+    "palette": { "hair": "#d8a45a", "skin": "#f1d6c1", "coat": "#f6efe0", "inner": "#3a5ba8", "metal": "#d8d2c0", "accent": "#fff1a8", "glow": "#fffbe0", "eye": "#6c8cff" },
+    "body": { "height": 0.97, "width": 0.95, "hair": "braid", "coat": "tabard_armor", "extras": ["shield_back"] },
+    "weapon": { "model": "sword_shield", "hold": "guard" },
+    "motion": { "tempo": 1.0, "idle": "shield_guard", "run": "shield_run", "combo": ["cut", "cut_back", "shield_bash", "rising_cut"], "skill": "shield_raise", "ultimate": "oath_plant", "select": "shield_salute", "victory": "salute" }
+  },
+  "zeon": {
+    "concept": "Lightning lancer",
+    "palette": { "hair": "#e6ecff", "skin": "#e8cdb8", "coat": "#1f2744", "inner": "#6f86ff", "metal": "#8e98b8", "accent": "#9db8ff", "glow": "#e5ecff", "eye": "#b8c8ff" },
+    "body": { "height": 1.04, "width": 0.95, "hair": "swept", "coat": "long_coat", "extras": ["shoulder_cape"] },
+    "weapon": { "model": "spear", "hold": "spear_forward" },
+    "motion": { "tempo": 1.2, "idle": "spear_spark", "run": "lance_charge", "combo": ["thrust", "thrust", "sweep", "sweep_back", "lightning_thrust"], "skill": "flash_dash", "ultimate": "spear_to_sky", "select": "spark_spin", "victory": "spear_raise" }
+  }
+}

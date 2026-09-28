@@ -3,27 +3,589 @@
   "name": "ASTERA",
   "note": "Offsets are relative to the region origin (set with /noct setup; defaults to world spawn). REPLACE_ME with hand-built map coordinates.",
   "beacons": [
-    { "id": "astera_city", "name": "Astera City", "offset": [0, 0, 0], "unlockedByDefault": true },
-    { "id": "silver_plains", "name": "Silver Plains", "offset": [60, 0, 20] },
-    { "id": "old_facility", "name": "Old Research Facility", "offset": [110, 0, -40] },
-    { "id": "frozen_forest", "name": "Frozen Forest", "offset": [-80, 0, 70] },
-    { "id": "underground_ruins", "name": "Underground Ruins", "offset": [-40, 0, -110] },
-    { "id": "void_scar", "name": "Void Scar", "offset": [150, 0, 120] }
+    {
+      "id": "astera_city",
+      "name": "Astera City",
+      "offset": [
+        0,
+        0,
+        0
+      ],
+      "unlockedByDefault": true
+    },
+    {
+      "id": "silver_plains",
+      "name": "Silver Plains",
+      "offset": [
+        60,
+        0,
+        20
+      ]
+    },
+    {
+      "id": "old_facility",
+      "name": "Old Research Facility",
+      "offset": [
+        110,
+        0,
+        -40
+      ]
+    },
+    {
+      "id": "frozen_forest",
+      "name": "Frozen Forest",
+      "offset": [
+        -80,
+        0,
+        70
+      ]
+    },
+    {
+      "id": "underground_ruins",
+      "name": "Underground Ruins",
+      "offset": [
+        -40,
+        0,
+        -110
+      ]
+    },
+    {
+      "id": "void_scar",
+      "name": "Void Scar",
+      "offset": [
+        150,
+        0,
+        120
+      ]
+    }
   ],
   "zones": [
-    { "id": "plains_pack", "area": "silver_plains", "offset": [70, 0, 30], "radius": 12, "cap": 5, "enemies": ["rift_hound", "gale_wisp", "lumen_moth"], "respawnTicks": 400 },
-    { "id": "plains_ruins", "area": "silver_plains", "offset": [45, 0, 45], "radius": 10, "cap": 4, "enemies": ["ruin_sentinel", "shade_husk"], "respawnTicks": 500 },
-    { "id": "facility", "area": "old_facility", "offset": [115, 0, -45], "radius": 12, "cap": 5, "enemies": ["volt_drone", "ruin_sentinel", "ember_imp"], "respawnTicks": 400 },
-    { "id": "forest", "area": "frozen_forest", "offset": [-85, 0, 75], "radius": 12, "cap": 5, "enemies": ["frost_mite", "rift_hound"], "respawnTicks": 400 },
-    { "id": "forest_elite", "area": "frozen_forest", "offset": [-100, 0, 95], "radius": 6, "cap": 1, "enemies": ["glacier_brute"], "respawnTicks": 2400 },
-    { "id": "ruins", "area": "underground_ruins", "offset": [-45, 0, -115], "radius": 10, "cap": 5, "enemies": ["shade_husk", "ember_imp"], "respawnTicks": 400 },
-    { "id": "ruins_elite", "area": "underground_ruins", "offset": [-55, 0, -130], "radius": 6, "cap": 1, "enemies": ["rift_knight"], "respawnTicks": 2400 },
-    { "id": "scar", "area": "void_scar", "offset": [155, 0, 125], "radius": 12, "cap": 6, "enemies": ["shade_husk", "volt_drone", "rift_hound"], "respawnTicks": 400 },
-    { "id": "scar_elite", "area": "void_scar", "offset": [170, 0, 140], "radius": 6, "cap": 1, "enemies": ["storm_warden"], "respawnTicks": 2400 },
-    { "id": "prologue", "area": "astera_city", "offset": [18, 0, 0], "radius": 6, "cap": 3, "enemies": ["rift_hound", "shade_husk"], "respawnTicks": 200 }
+    {
+      "id": "plains_pack",
+      "area": "silver_plains",
+      "offset": [
+        70,
+        0,
+        30
+      ],
+      "radius": 12,
+      "cap": 5,
+      "enemies": [
+        "rift_hound",
+        "gale_wisp",
+        "lumen_moth"
+      ],
+      "respawnTicks": 400
+    },
+    {
+      "id": "plains_ruins",
+      "area": "silver_plains",
+      "offset": [
+        45,
+        0,
+        45
+      ],
+      "radius": 10,
+      "cap": 4,
+      "enemies": [
+        "ruin_sentinel",
+        "shade_husk"
+      ],
+      "respawnTicks": 500
+    },
+    {
+      "id": "facility",
+      "area": "old_facility",
+      "offset": [
+        115,
+        0,
+        -45
+      ],
+      "radius": 12,
+      "cap": 5,
+      "enemies": [
+        "volt_drone",
+        "ruin_sentinel",
+        "ember_imp"
+      ],
+      "respawnTicks": 400
+    },
+    {
+      "id": "forest",
+      "area": "frozen_forest",
+      "offset": [
+        -85,
+        0,
+        75
+      ],
+      "radius": 12,
+      "cap": 5,
+      "enemies": [
+        "frost_mite",
+        "rift_hound"
+      ],
+      "respawnTicks": 400
+    },
+    {
+      "id": "forest_elite",
+      "area": "frozen_forest",
+      "offset": [
+        -100,
+        0,
+        95
+      ],
+      "radius": 6,
+      "cap": 1,
+      "enemies": [
+        "glacier_brute"
+      ],
+      "respawnTicks": 2400
+    },
+    {
+      "id": "ruins",
+      "area": "underground_ruins",
+      "offset": [
+        -45,
+        0,
+        -115
+      ],
+      "radius": 10,
+      "cap": 5,
+      "enemies": [
+        "shade_husk",
+        "ember_imp"
+      ],
+      "respawnTicks": 400
+    },
+    {
+      "id": "ruins_elite",
+      "area": "underground_ruins",
+      "offset": [
+        -55,
+        0,
+        -130
+      ],
+      "radius": 6,
+      "cap": 1,
+      "enemies": [
+        "rift_knight"
+      ],
+      "respawnTicks": 2400
+    },
+    {
+      "id": "scar",
+      "area": "void_scar",
+      "offset": [
+        155,
+        0,
+        125
+      ],
+      "radius": 12,
+      "cap": 6,
+      "enemies": [
+        "shade_husk",
+        "volt_drone",
+        "rift_hound"
+      ],
+      "respawnTicks": 400
+    },
+    {
+      "id": "scar_elite",
+      "area": "void_scar",
+      "offset": [
+        170,
+        0,
+        140
+      ],
+      "radius": 6,
+      "cap": 1,
+      "enemies": [
+        "storm_warden"
+      ],
+      "respawnTicks": 2400
+    },
+    {
+      "id": "prologue",
+      "area": "astera_city",
+      "offset": [
+        18,
+        0,
+        0
+      ],
+      "radius": 6,
+      "cap": 3,
+      "enemies": [
+        "rift_hound",
+        "shade_husk"
+      ],
+      "respawnTicks": 200
+    }
   ],
   "bosses": [
-    { "id": "frost_devourer", "offset": [-120, 0, 120] },
-    { "id": "void_seraph", "offset": [190, 0, 170] }
-  ]
+    {
+      "id": "frost_devourer",
+      "offset": [
+        -120,
+        0,
+        120
+      ]
+    },
+    {
+      "id": "void_seraph",
+      "offset": [
+        190,
+        0,
+        170
+      ]
+    }
+  ],
+  "treasures": [
+    {
+      "id": "t_plains_1",
+      "offset": [
+        52,
+        0,
+        8
+      ],
+      "tier": "common",
+      "reward": {
+        "astrum": 20,
+        "credit": 3000
+      }
+    },
+    {
+      "id": "t_plains_2",
+      "offset": [
+        82,
+        0,
+        44
+      ],
+      "tier": "exquisite",
+      "reward": {
+        "astrum": 40,
+        "credit": 5000,
+        "materials": {
+          "exp_data": 2
+        }
+      }
+    },
+    {
+      "id": "t_facility_1",
+      "offset": [
+        124,
+        0,
+        -58
+      ],
+      "tier": "exquisite",
+      "reward": {
+        "astrum": 40,
+        "credit": 5000,
+        "materials": {
+          "weapon_alloy": 2
+        }
+      }
+    },
+    {
+      "id": "t_forest_1",
+      "offset": [
+        -92,
+        0,
+        58
+      ],
+      "tier": "common",
+      "reward": {
+        "astrum": 20,
+        "credit": 3000
+      }
+    },
+    {
+      "id": "t_forest_2",
+      "offset": [
+        -110,
+        0,
+        82
+      ],
+      "tier": "luxurious",
+      "reward": {
+        "astrum": 60,
+        "credit": 8000,
+        "materials": {
+          "talent_tome": 2
+        }
+      }
+    },
+    {
+      "id": "t_ruins_1",
+      "offset": [
+        -30,
+        0,
+        -124
+      ],
+      "tier": "exquisite",
+      "reward": {
+        "astrum": 40,
+        "credit": 5000,
+        "materials": {
+          "rift_core": 1
+        }
+      }
+    },
+    {
+      "id": "t_scar_1",
+      "offset": [
+        140,
+        0,
+        132
+      ],
+      "tier": "luxurious",
+      "reward": {
+        "astrum": 60,
+        "credit": 8000,
+        "materials": {
+          "rift_core": 2
+        }
+      }
+    },
+    {
+      "id": "t_city_1",
+      "offset": [
+        -14,
+        0,
+        -12
+      ],
+      "tier": "common",
+      "reward": {
+        "astrum": 20,
+        "credit": 2000
+      }
+    }
+  ],
+  "motes": [
+    {
+      "id": "m0",
+      "offset": [
+        30,
+        0,
+        -20
+      ]
+    },
+    {
+      "id": "m1",
+      "offset": [
+        40,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "m2",
+      "offset": [
+        65,
+        0,
+        -5
+      ]
+    },
+    {
+      "id": "m3",
+      "offset": [
+        95,
+        0,
+        -30
+      ]
+    },
+    {
+      "id": "m4",
+      "offset": [
+        100,
+        0,
+        -60
+      ]
+    },
+    {
+      "id": "m5",
+      "offset": [
+        -60,
+        0,
+        40
+      ]
+    },
+    {
+      "id": "m6",
+      "offset": [
+        -75,
+        0,
+        90
+      ]
+    },
+    {
+      "id": "m7",
+      "offset": [
+        -20,
+        0,
+        -80
+      ]
+    },
+    {
+      "id": "m8",
+      "offset": [
+        -55,
+        0,
+        -100
+      ]
+    },
+    {
+      "id": "m9",
+      "offset": [
+        120,
+        0,
+        100
+      ]
+    },
+    {
+      "id": "m10",
+      "offset": [
+        170,
+        0,
+        110
+      ]
+    },
+    {
+      "id": "m11",
+      "offset": [
+        160,
+        0,
+        150
+      ]
+    },
+    {
+      "id": "m12",
+      "offset": [
+        20,
+        0,
+        60
+      ]
+    },
+    {
+      "id": "m13",
+      "offset": [
+        -30,
+        0,
+        20
+      ]
+    },
+    {
+      "id": "m14",
+      "offset": [
+        75,
+        0,
+        70
+      ]
+    }
+  ],
+  "moteReward": {
+    "astrum": 5,
+    "credit": 500
+  },
+  "puzzles": [
+    {
+      "id": "pz_plains",
+      "name": "Resonance Pads",
+      "offset": [
+        58,
+        0,
+        24
+      ],
+      "pads": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          4,
+          0,
+          3
+        ],
+        [
+          -3,
+          0,
+          4
+        ]
+      ],
+      "timeLimit": 20,
+      "reward": {
+        "astrum": 40,
+        "materials": {
+          "talent_tome": 1
+        }
+      }
+    },
+    {
+      "id": "pz_forest",
+      "name": "Frozen Chimes",
+      "offset": [
+        -88,
+        0,
+        64
+      ],
+      "pads": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          5,
+          0,
+          0
+        ],
+        [
+          5,
+          0,
+          5
+        ],
+        [
+          0,
+          0,
+          5
+        ]
+      ],
+      "timeLimit": 25,
+      "reward": {
+        "astrum": 40,
+        "materials": {
+          "crystal_glacia": 3
+        }
+      }
+    }
+  ],
+  "trials": [
+    {
+      "id": "trial_ruins",
+      "name": "Rift Trial",
+      "offset": [
+        -48,
+        0,
+        -104
+      ],
+      "kills": 6,
+      "timeLimit": 60,
+      "enemies": [
+        "shade_husk",
+        "rift_hound"
+      ],
+      "reward": {
+        "astrum": 50,
+        "credit": 6000
+      }
+    }
+  ],
+  "surgeIntervalTicks": 12000,
+  "city": {
+    "plazaRadius": 14,
+    "floor": "minecraft:polished_deepslate",
+    "trim": "minecraft:quartz_block",
+    "light": "minecraft:sea_lantern",
+    "pillar": "minecraft:polished_blackstone_bricks"
+  }
 }

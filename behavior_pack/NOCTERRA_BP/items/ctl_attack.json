@@ -4,7 +4,7 @@
     "description": {
       "identifier": "noct:ctl_attack",
       "menu_category": {
-        "category": "items",
+        "category": "none",
         "is_hidden_in_commands": false
       }
     },
@@ -18,7 +18,7 @@
         "value": "§lATTACK"
       },
       "minecraft:max_stack_size": 1,
-      "minecraft:hand_equipped": true,
+      "minecraft:hand_equipped": false,
       "minecraft:use_modifiers": {
         "use_duration": 0.05,
         "movement_modifier": 1

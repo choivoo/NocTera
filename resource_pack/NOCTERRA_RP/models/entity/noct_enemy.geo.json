@@ -3,6 +3,23 @@
   "minecraft:geometry": [
     {
       "description": {
+        "identifier": "geometry.noct.empty",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "root",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
         "identifier": "geometry.noct.enemy_humanoid",
         "texture_width": 64,
         "texture_height": 64,

@@ -44,6 +44,7 @@ const PARTICLES: Record<string, string> = {
   "noct:gacha_gold": "minecraft:totem_particle",
   "noct:beacon": "minecraft:end_chest",
   "noct:heal": "minecraft:heart_particle",
+  "noct:lava_pillar": "minecraft:lava_particle",
 };
 
 // REPLACE_ME: custom noct.* sound events in NOCTERRA_RP/sounds/sound_definitions.json.

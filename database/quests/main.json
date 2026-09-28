@@ -1,29 +1,64 @@
 [
   {
-    "id": "prologue",
-    "chapter": 1,
-    "title": "PROLOGUE — 깨어난 공명",
+    "id": "prologue", "chapter": 1, "title": "PROLOGUE — 깨어난 공명",
     "steps": [
       { "type": "dialogue", "dialogue": "prologue_wake", "hint": "세리아와 대화" },
-      { "type": "kill", "count": 3, "hint": "Astera 외곽의 Rift 개체 3체 처치" },
+      { "type": "kill", "count": 3, "hint": "외곽의 Rift 개체 처치", "target": "zone:prologue" },
       { "type": "switch", "count": 1, "hint": "린으로 캐릭터 교체" },
-      { "type": "beacon", "beacon": "silver_plains", "hint": "Silver Plains Nexus Beacon 활성화" },
+      { "type": "beacon", "beacon": "silver_plains", "hint": "Silver Plains 비콘 활성화" },
       { "type": "dialogue", "dialogue": "prologue_end", "hint": "보고" }
     ],
-    "reward": { "astrum": 1600, "credit": 20000, "nexusExp": 800, "materials": { "talent_tome": 3 } },
+    "reward": { "astrum": 1600, "credit": 20000, "nexusExp": 800, "materials": { "talent_tome": 3, "exp_data": 4 } },
+    "unlocks": ["gacha"],
     "next": "act1_frost"
   },
   {
-    "id": "act1_frost",
-    "chapter": 1,
-    "title": "ACT I — 얼어붙은 숲",
+    "id": "act1_frost", "chapter": 1, "title": "ACT I — 얼어붙은 숲",
     "steps": [
       { "type": "beacon", "beacon": "frozen_forest", "hint": "Frozen Forest 도착" },
-      { "type": "kill", "count": 10, "hint": "빙결 Rift 개체 10체 처치" },
-      { "type": "boss", "boss": "frost_devourer", "hint": "Frost Devourer 토벌" },
+      { "type": "kill", "count": 8, "hint": "빙결 Rift 개체 처치", "target": "zone:forest" },
+      { "type": "dialogue", "dialogue": "act1_mid", "hint": "세리아의 경고" },
+      { "type": "boss", "boss": "frost_devourer", "hint": "Frost Devourer 토벌", "target": "boss:frost_devourer" },
       { "type": "dialogue", "dialogue": "act1_end", "hint": "보고" }
     ],
     "reward": { "astrum": 800, "credit": 30000, "nexusExp": 1500, "materials": { "rift_core": 6 } },
+    "unlocks": ["dungeon"],
+    "next": "act2_facility"
+  },
+  {
+    "id": "act2_facility", "chapter": 1, "title": "ACT II — 폐쇄된 연구소",
+    "steps": [
+      { "type": "beacon", "beacon": "old_facility", "hint": "Old Research Facility 진입" },
+      { "type": "kill", "count": 10, "hint": "폭주한 경비 드론 정리", "target": "zone:facility" },
+      { "type": "dialogue", "dialogue": "act2_log", "hint": "연구 기록 확인" },
+      { "type": "dungeon", "count": 1, "hint": "던전 1회 클리어 (MAP > DUNGEON)" },
+      { "type": "beacon", "beacon": "underground_ruins", "hint": "Underground Ruins 도착" },
+      { "type": "kill", "count": 1, "enemy": "rift_knight", "hint": "Rift Knight 처치", "target": "zone:ruins_elite" },
+      { "type": "dialogue", "dialogue": "act2_end", "hint": "보고" }
+    ],
+    "reward": { "astrum": 800, "credit": 40000, "nexusExp": 2200, "materials": { "talent_tome": 6, "weapon_alloy": 6 } },
+    "unlocks": ["coop"],
+    "next": "act3_scar"
+  },
+  {
+    "id": "act3_scar", "chapter": 1, "title": "ACT III — 공허의 흉터",
+    "steps": [
+      { "type": "beacon", "beacon": "void_scar", "hint": "Void Scar 도착" },
+      { "type": "kill", "count": 15, "hint": "공허 개체 처치", "target": "zone:scar" },
+      { "type": "dialogue", "dialogue": "act3_before", "hint": "결전 전야" },
+      { "type": "boss", "boss": "void_seraph", "hint": "Void Seraph 토벌", "target": "boss:void_seraph" }
+    ],
+    "reward": { "astrum": 1200, "credit": 60000, "nexusExp": 3000, "materials": { "rift_core": 10 } },
+    "next": "epilogue"
+  },
+  {
+    "id": "epilogue", "chapter": 1, "title": "EPILOGUE — 밤의 끝에서",
+    "steps": [
+      { "type": "dialogue", "dialogue": "epilogue", "hint": "Astera로 귀환" }
+    ],
+    "reward": { "astrum": 1600, "credit": 50000, "nexusExp": 2000, "signal": 5 },
+    "unlocks": ["weekly"],
+    "chapterEnd": 1,
     "next": null
   }
 ]

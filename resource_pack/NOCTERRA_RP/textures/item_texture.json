@@ -11,23 +11,80 @@
     "noct_ctl_ultimate": {
       "textures": "textures/noct/items/ctl_ultimate"
     },
+    "noct_ctl_ultimate_ready": {
+      "textures": "textures/noct/items/ctl_ultimate_ready"
+    },
     "noct_ctl_dodge": {
       "textures": "textures/noct/items/ctl_dodge"
     },
-    "noct_ctl_char1": {
-      "textures": "textures/noct/items/ctl_char1"
-    },
-    "noct_ctl_char2": {
-      "textures": "textures/noct/items/ctl_char2"
-    },
-    "noct_ctl_char3": {
-      "textures": "textures/noct/items/ctl_char3"
-    },
-    "noct_ctl_char4": {
-      "textures": "textures/noct/items/ctl_char4"
-    },
     "noct_ctl_menu": {
       "textures": "textures/noct/items/ctl_menu"
+    },
+    "noct_ctl_char_empty": {
+      "textures": "textures/noct/items/ctl_char_empty"
+    },
+    "noct_ctl_char_locked": {
+      "textures": "textures/noct/items/ctl_char_locked"
+    },
+    "noct_ctl_char_aria": {
+      "textures": "textures/noct/items/ctl_char_aria"
+    },
+    "noct_ctl_char_aria_ready": {
+      "textures": "textures/noct/items/ctl_char_aria_ready"
+    },
+    "noct_ctl_char_eiden": {
+      "textures": "textures/noct/items/ctl_char_eiden"
+    },
+    "noct_ctl_char_eiden_ready": {
+      "textures": "textures/noct/items/ctl_char_eiden_ready"
+    },
+    "noct_ctl_char_kael": {
+      "textures": "textures/noct/items/ctl_char_kael"
+    },
+    "noct_ctl_char_kael_ready": {
+      "textures": "textures/noct/items/ctl_char_kael_ready"
+    },
+    "noct_ctl_char_lumia": {
+      "textures": "textures/noct/items/ctl_char_lumia"
+    },
+    "noct_ctl_char_lumia_ready": {
+      "textures": "textures/noct/items/ctl_char_lumia_ready"
+    },
+    "noct_ctl_char_mirel": {
+      "textures": "textures/noct/items/ctl_char_mirel"
+    },
+    "noct_ctl_char_mirel_ready": {
+      "textures": "textures/noct/items/ctl_char_mirel_ready"
+    },
+    "noct_ctl_char_nox": {
+      "textures": "textures/noct/items/ctl_char_nox"
+    },
+    "noct_ctl_char_nox_ready": {
+      "textures": "textures/noct/items/ctl_char_nox_ready"
+    },
+    "noct_ctl_char_rin": {
+      "textures": "textures/noct/items/ctl_char_rin"
+    },
+    "noct_ctl_char_rin_ready": {
+      "textures": "textures/noct/items/ctl_char_rin_ready"
+    },
+    "noct_ctl_char_seria": {
+      "textures": "textures/noct/items/ctl_char_seria"
+    },
+    "noct_ctl_char_seria_ready": {
+      "textures": "textures/noct/items/ctl_char_seria_ready"
+    },
+    "noct_ctl_char_vela": {
+      "textures": "textures/noct/items/ctl_char_vela"
+    },
+    "noct_ctl_char_vela_ready": {
+      "textures": "textures/noct/items/ctl_char_vela_ready"
+    },
+    "noct_ctl_char_zeon": {
+      "textures": "textures/noct/items/ctl_char_zeon"
+    },
+    "noct_ctl_char_zeon_ready": {
+      "textures": "textures/noct/items/ctl_char_zeon_ready"
     }
   }
 }

@@ -174,12 +174,22 @@
       {
         "name": "Nightborn",
         "description": "적 뒤에서 공격 시 치명타 피해 +30%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "behind_target",
+          "stat": "critDmg",
+          "value": 30
+        }
       },
       {
         "name": "Hollow",
         "description": "Shadow 상태 중 회피 쿨타임 감소.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "dodge_cd_in_state",
+          "value": 0.5
+        }
       },
       {
         "name": "Silent",

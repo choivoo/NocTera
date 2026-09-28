@@ -1,0 +1,32 @@
+{
+  "namespace": "hud",
+
+  "hud_actionbar_text": {
+    "type": "image",
+    "size": [ "100%c + 12px", "100%c + 8px" ],
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "offset": [ 3, -14 ],
+    "texture": "textures/noct/ui/glass_panel",
+    "alpha": "@hud.anim_actionbar_text_background_alpha_out",
+    "controls": [
+      {
+        "actionbar_message": {
+          "type": "label",
+          "anchor_from": "left_middle",
+          "anchor_to": "left_middle",
+          "offset": [ 6, 0 ],
+          "color": [ 0.93, 0.95, 1.0 ],
+          "enable_profanity_filter": false,
+          "layer": 31,
+          "text": "$actionbar_text",
+          "text_alignment": "left",
+          "font_scale_factor": 0.85,
+          "shadow": true,
+          "localize": false,
+          "alpha": "@hud.anim_actionbar_text_alpha_out"
+        }
+      }
+    ]
+  }
+}

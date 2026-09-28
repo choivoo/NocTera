@@ -2,7 +2,7 @@
 import { InputMode, PlatformType, type Player } from "@minecraft/server";
 import type { PlayerProfile } from "../account/PlayerProfile";
 
-export type UiPreset = "COMPACT" | "PHONE" | "FOLD_EXPANDED" | "WINDOWS";
+export type UiPreset = "COVER" | "COMPACT" | "PHONE" | "FOLD_EXPANDED" | "WINDOWS";
 
 export interface PresetSpec {
   /** Bar widths for HP / energy in HUD glyphs. */
@@ -16,6 +16,8 @@ export interface PresetSpec {
 }
 
 export const PRESETS: Record<UiPreset, PresetSpec> = {
+  // Fold cover screen / very narrow ratio: shortest lines so nothing clips.
+  COVER: { bar: 5, detail: false, twoColumn: false, names: false },
   COMPACT: { bar: 6, detail: false, twoColumn: false, names: false },
   PHONE: { bar: 8, detail: false, twoColumn: false, names: true },
   FOLD_EXPANDED: { bar: 12, detail: true, twoColumn: true, names: true },
@@ -24,7 +26,7 @@ export const PRESETS: Record<UiPreset, PresetSpec> = {
 
 export function presetFor(player: Player, profile: PlayerProfile): UiPreset {
   const s = profile.settings.uiPreset;
-  if (s !== "AUTO") return s;
+  if (s !== "AUTO") return s as UiPreset;
   try {
     if (player.clientSystemInfo.platformType === PlatformType.Mobile) return "PHONE";
     if (player.inputInfo.lastInputModeUsed === InputMode.Touch) return "PHONE";
@@ -40,6 +42,11 @@ export const RARITY_COLOR: Record<number, string> = { 3: "§9", 4: "§d", 5: "§
 
 export function stars(n: number): string {
   return `${RARITY_COLOR[n] ?? "§f"}${"★".repeat(n)}`;
+}
+
+/** Applies the HUD Scale setting (80–120%) to a bar width. */
+export function scaled(width: number, profile: PlayerProfile): number {
+  return Math.max(3, Math.round((width * profile.settings.hudScale) / 100));
 }
 
 export function bar(value: number, max: number, width: number, on = "§a", off = "§8"): string {

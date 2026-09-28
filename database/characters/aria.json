@@ -152,17 +152,30 @@
       {
         "name": "Tailwind",
         "description": "Tempest 중 확산 피해 +40%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "reaction:SPREAD",
+          "stat": "dmgPct",
+          "value": 40
+        }
       },
       {
         "name": "Eye of Storm",
         "description": "Cyclone 명중 시 에너지 회복.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "skill_hit_energy",
+          "value": 2
+        }
       },
       {
         "name": "Glide",
         "description": "활공 스태미나 감소.",
-        "unlockAscension": 0
+        "unlockAscension": 0,
+        "effect": {
+          "type": "utility_speed"
+        }
       }
     ]
   },

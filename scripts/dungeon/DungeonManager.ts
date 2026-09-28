@@ -13,6 +13,8 @@ import { refreshFlux, spendFlux, addDailyProgress } from "../account/Progression
 import { grant } from "../account/Wallet";
 import { rollImprint } from "../artifact/ImprintGen";
 import { particle, sound } from "../audio/Fx";
+import { questSignal } from "../quest/QuestRuntime";
+import { playAnim } from "../character/CharacterVisual";
 
 export type DungeonDef = (typeof dungeons)[number];
 export const DUNGEONS = dungeons as DungeonDef[];
@@ -96,6 +98,8 @@ function clear(s: Session, run: Run): void {
     const secs = Math.round((system.currentTick - run.startedAt) / 20);
     s.player.onScreenDisplay.setTitle("§6§lCLEAR", { subtitle: `§7${run.def.name} — ${secs}s`, fadeInDuration: 5, stayDuration: 50, fadeOutDuration: 10 });
     sound(s.player, "noct.gacha.gold");
+    playAnim(s.player, "victory");
+    questSignal(s, { type: "dungeon", dungeon: run.def.id });
   }
   system.runTimeout(() => s.player.isValid && returnToBeacon(s), 80);
 }

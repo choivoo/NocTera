@@ -83,7 +83,7 @@ for (const e of enemies) {
   if (!ce) err(`enemy ${e.id}: RP client entity missing`);
   else for (const t of Object.values(ce["minecraft:client_entity"].description.textures)) if (!fs.existsSync(`${RP}/${t}.png`)) err(`missing texture ${t}.png`);
 }
-const geos = new Set();
+const geos = new Set(["geometry.humanoid.custom", "geometry.humanoid.customSlim", "geometry.cape"]); // vanilla
 for (const [f, v] of json) if (f.startsWith(`${RP}/models/`)) for (const g of v["minecraft:geometry"] ?? []) geos.add(g.description.identifier);
 for (const [f, v] of json) if (f.startsWith(`${RP}/entity/`)) for (const g of Object.values(v["minecraft:client_entity"].description.geometry)) if (!geos.has(g)) err(`${f}: unknown geometry ${g}`);
 const itemTex = get(`${RP}/textures/item_texture.json`).texture_data;
@@ -99,6 +99,33 @@ for (const f of walk("scripts", ".ts")) {
   for (const m of src.matchAll(/ICON\("([a-z0-9_]+)"\)/g)) if (!fs.existsSync(`${RP}/textures/noct/ui/${m[1]}.png`)) err(`${f}: missing UI icon ${m[1]}`);
 }
 for (const c of charIds) if (!fs.existsSync(`${RP}/textures/noct/portraits/${c}.png`)) err(`portrait missing: ${c}`);
+
+// Player rig: every controller animation key and render-controller array entry must resolve.
+const pe = get(`${RP}/entity/player.entity.json`)?.["minecraft:client_entity"]?.description;
+if (pe) {
+  const animKeys = new Set(Object.keys(pe.animations));
+  const allAnims = new Set();
+  for (const [f, v] of json) if (f.startsWith(`${RP}/animations/`)) for (const k of Object.keys(v.animations ?? {})) allAnims.add(k);
+  for (const [k, full] of Object.entries(pe.animations)) if (full.startsWith("animation.noct.") && !allAnims.has(full)) err(`player.entity: ${k} → missing ${full}`);
+  const acs = get(`${RP}/animation_controllers/noct_char.ac.json`)?.animation_controllers ?? {};
+  for (const [cid, c] of Object.entries(acs)) {
+    if (!Object.values(pe.animations).includes(cid)) err(`controller ${cid} not referenced by player.entity`);
+    for (const [sn, st] of Object.entries(c.states)) {
+      for (const a of st.animations) for (const k of typeof a === "string" ? [a] : Object.keys(a)) if (!animKeys.has(k)) err(`${cid}.${sn}: animation key ${k} not in player.entity`);
+      for (const tr of st.transitions ?? []) for (const target of Object.keys(tr)) if (!c.states[target]) err(`${cid}.${sn}: transition to missing state ${target}`);
+    }
+  }
+  const rc = get(`${RP}/render_controllers/noct_char.rc.json`)?.render_controllers?.["controller.render.noct.character"];
+  for (const g of rc?.arrays?.geometries?.["Array.geo"] ?? []) if (!pe.geometry[g.replace("Geometry.", "")]) err(`render controller geometry ${g} missing`);
+  for (const t of rc?.arrays?.textures?.["Array.tex"] ?? []) {
+    const path = pe.textures[t.replace("Texture.", "")];
+    if (!path || !fs.existsSync(`${RP}/${path}.png`)) err(`render controller texture ${t} missing`);
+  }
+  for (const g of Object.values(pe.geometry)) if (!geos.has(g)) err(`player.entity geometry ${g} undefined`);
+  const bpPlayer = get(`${BP}/entities/player.json`);
+  const props = bpPlayer?.["minecraft:entity"]?.description?.properties ?? {};
+  for (const k of ["noct:char", "noct:anim"]) if (!props[k]?.client_sync) err(`BP player.json missing client_sync property ${k}`);
+}
 
 for (const w of warn) console.warn(`WARN  ${w}`);
 for (const e of errors) console.error(`ERROR ${e}`);

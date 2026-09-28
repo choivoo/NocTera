@@ -1,0 +1,11 @@
+[
+  { "id": "guild", "name": "Quest Guild", "nameKo": "퀘스트 길드 · 마렌", "color": "#ffd98a", "offset": [6, 0, -6], "opens": "quest" },
+  { "id": "weapon_lab", "name": "Weapon Lab", "nameKo": "무기 연구소 · 도르크", "color": "#c8d0ff", "offset": [10, 0, -2], "opens": "weapon" },
+  { "id": "upgrade", "name": "Character Upgrade", "nameKo": "공명 조율사 · 에이라", "color": "#9fd8ff", "offset": [10, 0, 3], "opens": "character" },
+  { "id": "artifact_lab", "name": "Artifact Lab", "nameKo": "각인 연구소 · 세라핀", "color": "#d58cff", "offset": [6, 0, 7], "opens": "imprint" },
+  { "id": "shop", "name": "Shop", "nameKo": "상점 · 모모", "color": "#ffb36b", "offset": [-6, 0, 7], "opens": "shop" },
+  { "id": "gacha", "name": "Signal Terminal", "nameKo": "시그널 터미널", "color": "#ffcc4d", "offset": [-10, 0, 3], "opens": "gacha" },
+  { "id": "craft", "name": "Crafting", "nameKo": "합성 공방 · 벨", "color": "#aab4cc", "offset": [-10, 0, -2], "opens": "craft" },
+  { "id": "training", "name": "Training Ground", "nameKo": "훈련 교관 · 가론", "color": "#ff9a6a", "offset": [-6, 0, -6], "opens": "training" },
+  { "id": "coop", "name": "Co-op Lobby", "nameKo": "협동 로비 · 린크", "color": "#6fffc8", "offset": [0, 0, -9], "opens": "coop" }
+]

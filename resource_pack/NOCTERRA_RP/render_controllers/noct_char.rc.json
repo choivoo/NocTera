@@ -1,0 +1,46 @@
+{
+ "format_version": "1.10.0",
+ "render_controllers": {
+  "controller.render.noct.character": {
+   "arrays": {
+    "geometries": {
+     "Array.geo": [
+      "Geometry.noct_seria",
+      "Geometry.noct_kael",
+      "Geometry.noct_lumia",
+      "Geometry.noct_nox",
+      "Geometry.noct_rin",
+      "Geometry.noct_aria",
+      "Geometry.noct_eiden",
+      "Geometry.noct_mirel",
+      "Geometry.noct_vela",
+      "Geometry.noct_zeon"
+     ]
+    },
+    "textures": {
+     "Array.tex": [
+      "Texture.noct_seria",
+      "Texture.noct_kael",
+      "Texture.noct_lumia",
+      "Texture.noct_nox",
+      "Texture.noct_rin",
+      "Texture.noct_aria",
+      "Texture.noct_eiden",
+      "Texture.noct_mirel",
+      "Texture.noct_vela",
+      "Texture.noct_zeon"
+     ]
+    }
+   },
+   "geometry": "Array.geo[math.clamp(q.property('noct:char') - 1, 0, 9)]",
+   "materials": [
+    {
+     "*": "Material.default"
+    }
+   ],
+   "textures": [
+    "Array.tex[math.clamp(q.property('noct:char') - 1, 0, 9)]"
+   ]
+  }
+ }
+}

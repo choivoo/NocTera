@@ -1,37 +1,45 @@
-# UI
+# UI / UX (mobile-first, Galaxy Z Fold)
 
-## Principles
-Everything uses the **stable** `@minecraft/server-ui` forms plus the action bar and title/subtitle channels. There are no chest-GUI menus, and no experimental DDUI/CustomForm dependency. Experimental work goes in a separate `experimental/` module if it is ever added.
+All UI uses the **stable** `@minecraft/server-ui` API plus RP JSON UI overrides. There are no chest GUIs and no experimental DDUI dependency.
 
-## Controls (touch hotbar)
-| Slot | 1 | 2 | 3 | 4 | 5–8 | 9 |
-|---|---|---|---|---|---|---|
-| Item | ATTACK | SKILL | ULTIMATE | DODGE | CHARACTER 1–4 | MENU |
+## Screens
+| Screen | Implementation |
+|---|---|
+| **Title** | Astera night skyline and a distant Rift (free camera and particles), "N O C T E R R A", TAP TO START, version line |
+| **Loading** | Slow camera drift over the city, glass loading bar and a random tip (`database/art/tips.json`) |
+| **Combat HUD** | Glass panel on the left edge (`RP/ui/hud_screen.json` overrides `hud_actionbar_text`): quest line with ↗ distance marker, a party column (element, name, HP, ✦ ult, QTE, ✖, CO-OP lock), active HP/shield, ULT/SKILL/gauge, buffs, last hit |
+| **Touch buttons** | Hotbar: 1 ATK · 2 SKILL · 3 ULT · 4 DODGE · 5–8 party portraits · 9 MENU. Round glass icons. ULT and portraits swap to glowing variants when ready or QTE |
+| **Character** | The player's avatar becomes the 3D model (Showcase camera and Selection Animation), then a stats/gear sheet (2-column on Fold) with Weapon / Imprint / Talent / Resonance, and ◀ ▶ to cycle characters |
+| **Weapon** | Large name, stars, Lv/cap, ATK, substat, passive per refinement, UPGRADE / ASCEND / swap |
+| **Memory Imprint** | Constellation layout CORE / TRACE–ECHO / PRISM–RELIC, set bonuses listed below |
+| **Talent** | Node graph Normal → Skill → P1/P2 → Ultimate, with node detail and upgrade |
+| **Party** | 4 columns (Fold) or rows (phone): element, role, level, HP, plus Element Resonance |
+| **Gacha** | Banner page (featured name, subtitle, RATE UP, pick-ups, ✦/Signal/pity, 1/10 PULL, DETAILS) |
+| **Pull** | Fade → camera to the Rift → signal streaks → rarity light → 5★ only: music sting, white flash, special cut → silhouette (???) → reveal on the 3D model with Selection Animation and element FX |
+| **Result** | Summary by rarity, 5★ cards marked ✦ and sorted first, NEW / R*n* Resonance / → Stella / Refine +1; tap a card for its detail and showcase |
+| **Boss** | Vanilla boss bar at top center, synced to the scripted HP. Name shows `VOID SERAPH  PHASE 2  ▮▮▮▯▯▯` Break meter and aura |
+| **Dialogue** | Speaker close-up on the 3D character, portrait icon, the line, "> choice" buttons |
+| **Feedback** | Floating damage numbers (normal / ✦crit / reaction label / BREAK), center "BREAK", "PERFECT" plus a cold edge flash |
+| **Transitions** | 0.25 s tinted fade on every menu open, kept short so input never feels slow |
 
-The items are locked in their slots and kept on death, so a tap on a slot always means one action. Narrow ranged attacks get **aim assist**: if the aim cone is empty, they snap to the nearest enemy within 35°.
+## Presets
+`AUTO` picks PHONE on mobile or touch and WINDOWS otherwise. Manual options:
 
-## HUD (action bar, refreshed every 4 ticks)
-```
-◇ Silver Plains Nexus Beacon 활성화                 (quest tracker: FOLD/WINDOWS or setting)
-[1]SERIA ▮▮▮▮ ✦ | [2]RIN ▮▮▮▮ QTE | [3]…           (party: HP, ult-ready ✦, QTE, ✖ down)
-❄ SERIA Lv.20  HP ▮▮▮▮▮▮▮▮▮▮▮▮ 2310/2400 ⛨300       (active character)
-ULT READY  SKILL 3s  FROST ▮▮▮▯▯  SWAP 0.6          (resources)
-✦12,480 MELT BREAK                                  (last hit)
-```
+| Preset | For | HUD |
+|---|---|---|
+| COVER | Z Fold cover screen or narrow ratios | ≤ 30 glyphs per line, initials only |
+| COMPACT / PHONE | Normal phones | Names, 8-glyph bars |
+| FOLD_EXPANDED | Z Fold 8 Ultra unfolded | Quest tracker, swap timer, buffs, 2-column sheets and party table. The layout is rearranged, not just enlarged |
+| WINDOWS | Desktop | Same as Fold |
 
-## Presets (`scripts/ui/UIManager.ts`, Settings → UI 프리셋)
-| Preset | Bars | Detail | Menus |
-|---|---|---|---|
-| COMPACT | 6 | – | tabbed |
-| PHONE | 8 | – | tabbed |
-| FOLD_EXPANDED | 12 | quest tracker, swap timer, buffs | 2-column character sheet |
-| WINDOWS | 12 | same as Fold | 2-column |
+The Script API cannot tell whether a Fold is open, so **Settings → 화면 · HUD → FOLD_EXPANDED** is picked once.
 
-AUTO picks PHONE on mobile or touch input, and WINDOWS otherwise. The Script API cannot tell whether a Fold is open or closed, so Fold players select FOLD_EXPANDED once in Settings.
+## Settings
+HUD Scale 80–120%, Touch Button Size, Touch Button Opacity, damage numbers on/off and size, Camera Sensitivity (cutscene and showcase ease), Aim Assist 0–100%, ultimate cinematic on/off, camera shake, quest tracker.
 
-## Main menu
-CHARACTER · PARTY · INVENTORY · QUEST · MAP (beacons + dungeons) · GACHA · EVENT (daily) · PROFILE · SETTINGS
+**HUD Edit Mode:** `settings.hudLayout` stores anchor, offset, scale and visibility for party / quest / combat / boss / minimap, and the Settings UI edits it. The 1.0 JSON UI reads the party panel position. Free placement of every element needs a JSON UI edit mode that consumes this data, which is prepared for but not wired yet.
 
-## Known gaps (tracked in CHANGELOG)
-- A left or right edge party panel with portraits needs a JSON UI `hud_screen` override. Right now the HUD is centered text.
-- Playable characters are not yet visible models. The player keeps their own skin, and switching is shown through FX and titles. The planned approach is a player-entity override with a `noct:char` client-synced property that selects geometry and texture.
+## Platform limits (honest)
+- Custom on-screen touch buttons that call scripts are not possible in Bedrock, so the hotbar is the control surface. It sits bottom-center, which is reachable with the right thumb on an unfolded Fold. The left thumb keeps the vanilla movement pad.
+- A real minimap needs a map-renderer UI, which is not available. The quest marker (arrow and distance) replaces it.
+- Form-based screens (character, gacha) are modal panels. The 3D model is shown by the Showcase before and around them.

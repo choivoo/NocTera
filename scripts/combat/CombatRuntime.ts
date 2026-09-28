@@ -17,6 +17,11 @@ import { game } from "../runtime/Game";
 import { bus } from "../core/EventBus";
 import { addDailyProgress } from "../account/Progression";
 import { imprintFourPiece } from "../artifact/ImprintRuntime";
+import { playAnim, showCharacter, type AnimName } from "../character/CharacterVisual";
+import { playUltimateCinematic } from "../camera/UltimateCinematic";
+import { allowedSlots } from "../coop/CoopManager";
+import { spawnDamageNumber } from "../ui/DamageNumbers";
+import { defenseBonus, offenseBonus, passiveValue } from "../character/Passives";
 
 const C = () => Config.combat;
 const tick = () => system.currentTick;
@@ -41,8 +46,9 @@ function targetsFor(s: Session, e: { range: number; arc?: number; radius?: numbe
     const inRange = enemiesNear(s, pos, e.range + 0.8);
     list = inRange.filter((en) => dist(pos, en.location) < 1.2 || angleTo(pos, view, en.location) <= arc / 2);
     // Touch aim-assist: narrow ranged attacks snap to the nearest enemy in a 70° cone.
-    if (list.length === 0 && arc <= 30) {
-      const assisted = inRange.filter((en) => angleTo(pos, view, en.location) <= 35);
+    const assist = (35 * s.profile.settings.aimAssist) / 70;
+    if (list.length === 0 && arc <= 30 && assist > 0) {
+      const assisted = inRange.filter((en) => angleTo(pos, view, en.location) <= assist);
       assisted.sort((a, b) => dist(pos, a.location) - dist(pos, b.location));
       list = assisted.slice(0, 1);
     }
@@ -122,9 +128,12 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
   state.aura = el.aura;
   let bonus = o.bonusDmgPct ?? 0;
   if (o.kind === "normal") bonus += s.buffTotal("normalDmg", t);
+  const pb = offenseBonus(s, charId, { tick: t, target, state, reaction: el.reaction });
+  bonus += pb.dmgPct;
+  const attacker = pb.critRate || pb.critDmg || pb.atkPct ? { ...stats, critRate: Math.min(100, stats.critRate + pb.critRate), critDmg: stats.critDmg + pb.critDmg, atk: stats.atk * (1 + pb.atkPct / 100) } : stats;
   const res = computeDamage(
     {
-      attacker: stats,
+      attacker,
       mult: o.mult,
       elemental: o.element === def.element,
       bonusDmgPct: bonus,
@@ -138,6 +147,11 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
   );
 
   state.lastHitBy = { playerId: s.id, characterId: charId };
+  if (o.kind === "skill") {
+    const extra = passiveValue(s, charId, "skill_hit_energy", t);
+    const rtc = s.chars.get(charId);
+    if (extra && rtc) rtc.energy = Math.min(getCharacter(charId).kit.ultimate.energyCost ?? 60, rtc.energy + extra);
+  }
   const killed = state.applyDamage(res.amount);
   const broke = state.applyBreak(computeBreak(o.breakDmg, stats.breakPower, el.reaction), t, C().breakDurationTicks);
   s.inCombatUntil = t + 200;
@@ -192,6 +206,12 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
     /* entity gone */
   }
 
+  spawnDamageNumber(s, dim, target.location, { amount: res.amount, crit: res.crit, reaction: el.reaction?.name ?? null, element: o.element, kind: "hit" });
+  if (broke) {
+    spawnDamageNumber(s, dim, target.location, { amount: 0, crit: false, reaction: null, element: null, kind: "break" });
+    s.player.onScreenDisplay.setTitle("§e§lBREAK", { subtitle: "", fadeInDuration: 0, stayDuration: 8, fadeOutDuration: 6 });
+  }
+  if (state.def.tier === "boss") enemies.syncBossBar(target, state);
   s.lastHit = `${res.crit ? "§6✦" : "§f"}${res.amount.toLocaleString()}${el.reaction ? ` §d${el.reaction.name}` : ""}${broke ? " §cBREAK" : ""}`;
   s.lastHitUntil = t + 30;
   bus.emit("combat:damage", { playerId: s.id, characterId: charId, targetId: target.id, amount: res.amount, crit: res.crit, element: o.element, reaction: el.reaction?.id ?? null });
@@ -281,9 +301,16 @@ function applyEffect(s: Session, charId: string, e: EffectDef, kind: HitKind, sc
     case "heal": {
       const amount = computeHeal(s.stats(charId, t), e.pctAtk * scale, e.flat);
       const targets = e.target === "party" ? [...s.chars.values()] : [s.active!].filter(Boolean);
+      const over = passiveValue(s, charId, "overheal_shield", t);
       for (const r of targets) {
         if (r.hp <= 0) continue;
-        r.hp = Math.min(s.stats(r.id, t).maxHp, r.hp + amount);
+        const max = s.stats(r.id, t).maxHp;
+        const overheal = Math.max(0, r.hp + amount - max);
+        r.hp = Math.min(max, r.hp + amount);
+        if (over && overheal > 0) {
+          r.shield = Math.max(r.shield, Math.round((overheal * over) / 100));
+          r.shieldUntil = t + 200;
+        }
       }
       particle(p.dimension, "noct:heal", p.location, 4);
       break;
@@ -373,6 +400,7 @@ export function normalAttack(s: Session): void {
   const scale = talentScale(effectiveTalent(s.profile.characters[rt.id], "normal"));
   const element = rt.stateUntil > t ? def.mechanic.state?.normalElement ?? null : null;
   const targets = targetsFor(s, step.hit);
+  playAnim(s.player, `attack${Math.min(6, step.step + 1)}` as AnimName, 0.12 + step.hit.hitstop * 0.03);
   sound(s.player, step.hit.sound, 1 + step.step * 0.05);
   const view = s.player.getViewDirection();
   const fxAt = { x: s.player.location.x + view.x * 1.5, y: s.player.location.y + 1.2, z: s.player.location.z + view.z * 1.5 };
@@ -408,6 +436,7 @@ export function useSkill(s: Session): void {
   if (rt.skillCharges === maxCharges) rt.skillReadyAt = t + cdTicks;
   rt.skillCharges--;
   const scale = talentScale(effectiveTalent(inst, "skill"));
+  playAnim(s.player, "skill");
   executeEffects(s, rt.id, def.kit.skill, "skill", scale);
   gainEnergy(s, rt, def.kit.skill.energyGain ?? 10);
   imprintFourPiece(s, rt.id, "skill", t);
@@ -427,30 +456,16 @@ export function useUltimate(s: Session): void {
   }
   rt.energy = 0;
   const inst = s.profile.characters[rt.id];
-  s.busyUntil = t + 16; // brief cinematic lock
-  s.dodge.iframesUntil = t + 20;
-  ultimateCinematic(s, def.kit.ultimate.name, def.visual.color);
   const scale = talentScale(effectiveTalent(inst, "ultimate"));
+  playAnim(s.player, "ultimate");
+  const impact = playUltimateCinematic(s, rt.id);
+  s.busyUntil = t + impact + 4;
+  s.dodge.iframesUntil = t + impact + 10;
   system.runTimeout(() => {
     if (!s.player.isValid) return;
     executeEffects(s, rt.id, def.kit.ultimate, "ultimate", scale);
     imprintFourPiece(s, rt.id, "ultimate", tick());
-    if (s.profile.settings.cameraShake) shake(s, 0.25);
-  }, 14);
-}
-
-function ultimateCinematic(s: Session, name: string, _color: string): void {
-  const p = s.player;
-  const view = flatDir(p.getViewDirection());
-  const cam = { x: p.location.x + view.x * 3.2 + view.z * 1.6, y: p.location.y + 1.7, z: p.location.z + view.z * 3.2 - view.x * 1.6 };
-  try {
-    p.camera.setCamera("minecraft:free", { location: cam, facingLocation: { x: p.location.x, y: p.location.y + 1.3, z: p.location.z }, easeOptions: { easeTime: 0.25, easeType: "OutCubic" as any } });
-    system.runTimeout(() => p.isValid && p.camera.clear(), 16);
-  } catch {
-    /* camera unsupported */
-  }
-  p.onScreenDisplay.setTitle(" ", { subtitle: `§l§f${name.toUpperCase()}`, fadeInDuration: 0, stayDuration: 14, fadeOutDuration: 6 });
-  sound(p, "noct.ultimate");
+  }, impact);
 }
 
 export function shake(s: Session, intensity: number): void {
@@ -465,7 +480,8 @@ export function dodge(s: Session): void {
   const rt = canAct(s);
   if (!rt) return;
   const t = tick();
-  const cd = C().dodgeCooldownTicks * (resonanceValue(s.profile.characters[rt.id], "dodgeGauge") > 0 && rt.stateUntil > t ? 0.5 : 1);
+  const inState = rt.stateUntil > t;
+  const cd = C().dodgeCooldownTicks * (inState ? passiveValue(s, rt.id, "dodge_cd_in_state", t) ?? 1 : 1);
   if (t < s.dodge.cooldownUntil) return;
   s.dodge.lastDodgeTick = t;
   s.dodge.iframesUntil = t + C().dodgeIframes;
@@ -480,6 +496,7 @@ export function dodge(s: Session): void {
     /* ignore */
   }
   particle(s.player.dimension, "noct:shadow_puff", s.player.location);
+  playAnim(s.player, "dodge");
   sound(s.player, "noct.dodge");
 }
 
@@ -490,8 +507,15 @@ export function onPerfectDodge(s: Session): void {
   const t = tick();
   s.dodge.iframesUntil = t + 20;
   particle(s.player.dimension, "noct:perfect_dodge", s.player.location);
+  playAnim(s.player, "perfect");
   sound(s.player, "noct.perfect", 1.4);
-  s.player.onScreenDisplay.setTitle(" ", { subtitle: "§b§lPERFECT DODGE", fadeInDuration: 0, stayDuration: 16, fadeOutDuration: 6 });
+  s.player.onScreenDisplay.setTitle("§b§lPERFECT", { subtitle: "§7COUNTER READY", fadeInDuration: 0, stayDuration: 10, fadeOutDuration: 5 });
+  try {
+    // Brief cold edge flash — reads as time-slow without covering the fight.
+    s.player.camera.fade({ fadeTime: { fadeInTime: 0.02, holdTime: 0.02, fadeOutTime: 0.25 }, fadeColor: { red: 0.6, green: 0.85, blue: 1 } });
+  } catch {
+    /* ignore */
+  }
   // "Time slow": enemies around are slowed hard, next normal attack is a counter.
   for (const en of enemiesNear(s, s.player.location, 10)) {
     try {
@@ -519,13 +543,22 @@ export function switchTo(s: Session, slot: number): void {
     s.lastHitUntil = t + 20;
     return;
   }
+  if (!allowedSlots(s).includes(slot)) {
+    s.lastHit = "§7CO-OP: 캐릭터 제한";
+    s.lastHitUntil = t + 20;
+    return;
+  }
   const qte = target.qteReadyUntil > t;
   if (t < s.switchReadyAt && !qte) return;
   const fromId = s.activeId;
   const p = s.player;
   particle(p.dimension, "noct:switch_out", p.location, 3);
   s.profile.activeSlot = slot;
-  s.switchReadyAt = t + C().switchCooldownTicks;
+  showCharacter(p, targetId);
+  playAnim(p, qte ? "qte" : "switch_in");
+  let swMult = 1;
+  for (const m of s.chars.values()) swMult = Math.min(swMult, passiveValue(s, m.id, "switch_cd", t) ?? 1);
+  s.switchReadyAt = t + Math.round(C().switchCooldownTicks * swMult);
   s.dodge.iframesUntil = Math.max(s.dodge.iframesUntil, t + C().switchIframes);
   s.invalidateStats();
   if (fromId) s.chars.get(fromId)?.combo.reset();
@@ -551,16 +584,25 @@ export function damageActive(s: Session, raw: number): void {
   if (!rt || rt.hp <= 0) return;
   const t = tick();
   const stats = s.stats(rt.id, t);
-  let dmg = raw * (C().defConstant / (C().defConstant + stats.def));
-  dmg *= 1 - Math.min(80, s.buffTotal("dmgReduction", t)) / 100;
+  const db = defenseBonus(s, rt.id, t);
+  let dmg = raw * (C().defConstant / (C().defConstant + stats.def * (1 + db.defPct / 100)));
+  dmg *= 1 - Math.min(80, s.buffTotal("dmgReduction", t) + db.dmgReduction) / 100;
   dmg = Math.max(1, Math.round(dmg));
   if (rt.shield > 0 && rt.shieldUntil > t) {
     const absorbed = Math.min(rt.shield, dmg);
     rt.shield -= absorbed;
     dmg -= absorbed;
+    if (rt.shield <= 0) {
+      // Vela · Sanctuary (any party member carrying shield_break_heal)
+      for (const m of s.chars.values()) {
+        const v = passiveValue(s, m.id, "shield_break_heal", t);
+        if (v) rt.hp = Math.min(stats.maxHp, rt.hp + computeHeal(s.stats(m.id, t), v));
+      }
+    }
   }
   rt.hp = Math.max(0, rt.hp - dmg);
   s.inCombatUntil = t + 200;
+  playAnim(s.player, dmg > stats.maxHp * 0.2 ? "knockback" : "hurt");
   sound(s.player, getCharacter(rt.id).sounds.hurt);
   try {
     s.player.runCommand("camerashake add @s 0.15 0.12 positional");
@@ -571,12 +613,19 @@ export function damageActive(s: Session, raw: number): void {
 }
 
 function onCharacterDown(s: Session): void {
-  const next = s.profile.party.findIndex((id, i) => id && i !== s.profile.activeSlot && s.alive(id));
+  const allowed = allowedSlots(s);
+  const next = s.profile.party.findIndex((id, i) => id && i !== s.profile.activeSlot && s.alive(id) && allowed.includes(i));
+  playAnim(s.player, "death");
   const p = s.player;
   if (next >= 0) {
     p.onScreenDisplay.setTitle("§c전투 불능", { subtitle: `${getCharacter(s.activeId!).name}`, fadeInDuration: 0, stayDuration: 20, fadeOutDuration: 10 });
     s.switchReadyAt = 0;
-    switchTo(s, next);
+    s.busyUntil = tick() + 12;
+    system.runTimeout(() => {
+      if (!p.isValid) return;
+      s.busyUntil = 0;
+      switchTo(s, next);
+    }, 12);
     return;
   }
   // Party wipe → fade, return to last beacon, revive at 30%.
@@ -635,6 +684,14 @@ export function tickSession(s: Session): void {
         }
       }
       if (f.mult > 0) hitEnemy(s, en, { mult: f.mult, element: (f.element as ElementId) ?? null, breakDmg: 2, kind: "field", charId: f.owner });
+    }
+  }
+  // Utility passive: exploration speed out of combat.
+  if (t > s.inCombatUntil && t % 40 === 0 && s.activeId && passiveValue(s, s.activeId, "utility_speed", t)) {
+    try {
+      p.addEffect("speed", 60, { amplifier: 0, showParticles: false });
+    } catch {
+      /* ignore */
     }
   }
   // Out-of-combat regen for bench and active characters.

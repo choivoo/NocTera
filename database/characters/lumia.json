@@ -138,12 +138,22 @@
       {
         "name": "Mercy",
         "description": "Eden 필드 내 경직 저항.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "in_field",
+          "stat": "defPct",
+          "value": 20
+        }
       },
       {
         "name": "Afterglow",
         "description": "과회복량의 20%가 보호막.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "overheal_shield",
+          "value": 20
+        }
       },
       {
         "name": "Candle",

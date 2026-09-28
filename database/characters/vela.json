@@ -144,12 +144,22 @@
       {
         "name": "Resolve",
         "description": "보호막 중 공격력 +15%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "shielded",
+          "stat": "atkPct",
+          "value": 15
+        }
       },
       {
         "name": "Sanctuary",
         "description": "보호막 파괴 시 회복.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "shield_break_heal",
+          "value": 60
+        }
       },
       {
         "name": "Escort",

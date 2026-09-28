@@ -66,6 +66,13 @@ export interface MechanicDef {
   state?: { name: string; duration: number; buffs: StatBlock; normalElement?: ElementId };
 }
 
+/** Machine-readable passive (see scripts/character/Passives.ts). */
+export type PassiveEffect =
+  | { type: "cond"; when: string; stat: "critRate" | "critDmg" | "dmgPct" | "atkPct" | "defPct" | "dmgReduction"; value: number }
+  | { type: "overheal_shield" | "dodge_cd_in_state" | "skill_hit_energy" | "shield_break_heal"; value: number }
+  | { type: "switch_cd"; when: string; value: number }
+  | { type: "utility_speed" };
+
 export interface CharacterDef {
   id: string;
   name: string;
@@ -83,7 +90,7 @@ export interface CharacterDef {
     skill: ActionDef;
     ultimate: ActionDef;
     switchIn: ActionDef;
-    passives: { name: string; description: string; unlockAscension: number }[];
+    passives: { name: string; description: string; unlockAscension: number; effect?: PassiveEffect }[];
   };
   mechanic: MechanicDef;
   qte?: { trigger: "frozen" | "break" | "airborne" | "shocked"; action: ActionDef };
@@ -149,5 +156,7 @@ export interface EnemyDef {
   element: ElementId | null;
   exp: number;
   credit: number;
+  /** Training dummies: never die, never reward. */
+  immortal?: boolean;
   attack: { windup: number; range: number; mult: number; cooldown: number };
 }

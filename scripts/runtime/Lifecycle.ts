@@ -6,8 +6,9 @@ import { bootstrapAccount, onLogin } from "../account/AccountService";
 import { bus } from "../core/EventBus";
 import { giveControls } from "../input/Controls";
 import { tickSession } from "../combat/CombatRuntime";
-import { playCutscene, orbit } from "../camera/Cutscene";
-import { resolve, beacon } from "../world/World";
+import { titleFlow } from "../ui/TitleScreen";
+import { showCharacter } from "../character/CharacterVisual";
+import { restoreGroup, leaveGroup } from "../coop/CoopManager";
 import { startQuest, FIRST_QUEST } from "../quest/QuestManager";
 import { presentStep } from "../quest/QuestRuntime";
 import { abandonDungeon } from "../dungeon/DungeonManager";
@@ -27,6 +28,7 @@ function join(player: Player): void {
   if (starter) startQuest(profile, FIRST_QUEST);
   const s = new Session(player, profile);
   g.sessions.set(player.id, s);
+  restoreGroup(s);
   g.save.saveNow(player.id);
   giveControls(player);
   bus.emit("profile:loaded", { playerId: player.id, isNew });
@@ -34,34 +36,21 @@ function join(player: Player): void {
   void intro(s, starter);
 }
 
-/** "NOCTERRA" loading sequence → Astera entry. */
 async function intro(s: Session, firstTime: boolean): Promise<void> {
-  const p = s.player;
-  const city = beacon("astera_city")!;
-  const dest = resolve(city.offset);
-  s.busyUntil = system.currentTick + (firstTime ? 160 : 70);
-  const sky = { x: dest.x, y: dest.y + 30, z: dest.z };
-  await playCutscene(
-    p,
-    [
-      { at: 1, fade: { in: 0, hold: 1.5, out: 1.2, color: [0.01, 0.01, 0.04] }, title: "§l§fN O C T E R R A", subtitle: "§7녹테라" },
-      { at: 5, camera: { pos: orbit(sky, 0, 40, 10), facing: dest } },
-      { at: 8, camera: { pos: orbit(dest, 30, 18, 8), facing: dest, ease: firstTime ? 5 : 2.5 }, actionbar: "§8LOADING RESONANCE DATA ..." },
-      { at: 40, title: "§bASTERA", subtitle: firstTime ? "§7CHAPTER 1 — FALLEN NIGHT" : `§7Welcome back, ${p.name}` },
-      ...(firstTime ? [{ at: 110, camera: { pos: orbit(dest, 90, 5, 2), facing: { x: dest.x, y: dest.y + 1.5, z: dest.z }, ease: 2 } }] : []),
-      { at: firstTime ? 150 : 60, fade: { in: 0.3, hold: 0.2, out: 0.6 } },
-    ],
-    firstTime ? 158 : 68,
-  );
-  if (!p.isValid) return;
-  if (firstTime) p.teleport(dest);
-  s.busyUntil = 0;
-  presentStep(s);
+  showCharacter(s.player, s.activeId);
+  await titleFlow(s, firstTime);
+  if (s.player.isValid) presentStep(s);
 }
 
 function leave(playerId: string): void {
   const g = game();
   abandonDungeon(playerId);
+  const s = g.sessions.get(playerId);
+  if (s) {
+    const gid = s.profile.coop.groupId;
+    leaveGroup(s);
+    s.profile.coop.groupId = gid; // remembered for reconnect
+  }
   g.sessions.delete(playerId);
   g.save.unload(playerId);
 }
@@ -69,7 +58,11 @@ function leave(playerId: string): void {
 export function registerLifecycle(): void {
   world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
     if (initialSpawn) system.runTimeout(() => player.isValid && join(player), 20);
-    else giveControls(player);
+    else {
+      giveControls(player);
+      const s = game().session(player);
+      if (s) showCharacter(player, s.activeId);
+    }
   });
   world.beforeEvents.playerLeave.subscribe(({ player }) => {
     const id = player.id;

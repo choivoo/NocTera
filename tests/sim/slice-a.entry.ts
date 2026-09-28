@@ -17,20 +17,30 @@ const expectFile = `${file}.expect.json`;
 m.loadDynamic(file);
 m.boot();
 
+async function settle(ticks: number) {
+  for (let i = 0; i < ticks; i++) {
+    m.advance(1);
+    await m.flush();
+  }
+}
+
 async function run() {
   const p = m.joinPlayer("P1", "Tester");
-  m.advance(30);
+  await settle(30);
   const s = game().sessions.get("P1")!;
   assert.ok(s, "session created");
 
   if (phase === "1") {
     assert.deepEqual(s.profile.party, ["seria", "rin", null, null], "starter party");
-    assert.ok(p.titles.some((t) => t.includes("N O C T E R R A")), "loading intro shown");
-    m.advance(160);
-    await m.flush();
+    assert.ok(p.titles.some((t) => t.includes("N O C T E R R A") && t.includes("T A P")), "title screen: TAP TO START");
+    await settle(200);
     assert.ok(p.titles.some((t) => t.includes("ASTERA")), "Astera entry");
+    assert.ok(s.busyUntil <= m.system.currentTick, "input unlocked after title/loading");
     assert.equal(p.inventory.getItem(0)?.typeId, "noct:ctl_attack", "touch controls in hotbar");
+    assert.equal(p.inventory.getItem(4)?.typeId, "noct:ctl_char_seria", "portrait button for party slot 1");
+    assert.equal(p.inventory.getItem(5)?.typeId, "noct:ctl_char_rin", "portrait button for party slot 2");
     assert.equal(s.activeId, "seria");
+    assert.equal(p.getProperty("noct:char"), 1, "Seria model shown");
 
     const expOf = () => ["seria", "rin"].reduce((a, id) => a + s.profile.characters[id].exp + s.profile.characters[id].level * 1e6, 0);
     const exp0 = expOf();
@@ -38,10 +48,16 @@ async function run() {
     const hound = m.overworld.spawnEntity("noct:rift_hound", { x: 2, y: 64, z: 0 });
     const st = enemies.state(hound as any)!;
     const hp0 = st.hp;
+    let sawAnim = false;
+    let sawDmg = false;
     for (let i = 0; i < 5; i++) {
-      m.tap(p, "attack");
+      m.tapSlot(p, 0);
+      sawAnim ||= p.getProperty("noct:anim") >= 1 && p.getProperty("noct:anim") <= 6;
+      sawDmg ||= m.overworld.getEntities({}).some((e) => e.typeId === "noct:dmg_text" && /\d/.test(e.nameTag));
       m.advance(9);
     }
+    assert.ok(sawAnim, "attack animation code driven");
+    assert.ok(sawDmg, "floating damage numbers spawned");
     assert.ok(st.hp < hp0, "combo damages enemy");
     const seria = s.chars.get("seria")!;
     assert.ok(seria.gauge > 0, "FROST gauge builds");
@@ -53,19 +69,23 @@ async function run() {
 
     // Ultimate (charge energy through the real path: fill directly then fire)
     seria.energy = 60;
+    await settle(5);
+    assert.equal(p.inventory.getItem(2)?.typeId, "noct:ctl_ultimate_ready", "ULT button glows when ready");
     const hound2 = m.overworld.spawnEntity("noct:shade_husk", { x: 3, y: 64, z: 0 });
     const st2 = enemies.state(hound2 as any)!;
-    m.tap(p, "ultimate");
-    m.advance(30);
+    m.tapSlot(p, 2);
+    assert.equal(p.getProperty("noct:anim"), 8, "ultimate animation");
+    m.advance(50);
     assert.equal(seria.energy < 60, true, "ultimate consumed energy");
     assert.ok(st2.hp < st2.maxHp || !hound2.isValid, "End of Winter hits");
     assert.ok(p.titles.some((t) => t.includes("END OF WINTER")), "ultimate cinematic title");
 
     // Switch to Rin and finish enemies
     m.advance(25);
-    m.tap(p, "char2");
+    m.tapSlot(p, 5); // Rin's portrait button
     m.advance(5);
     assert.equal(s.activeId, "rin", "switched to Rin");
+    assert.equal(p.getProperty("noct:char"), 5, "Rin model shown");
     const hound3 = m.overworld.spawnEntity("noct:frost_mite", { x: 3, y: 64, z: 0.5 }); // on the firing line
     const st3 = enemies.state(hound3 as any)!;
     m.tap(p, "attack");
@@ -90,7 +110,7 @@ async function run() {
     const hpBefore = s.active!.hp;
     m.tap(p, "dodge");
     m.advance(6);
-    assert.ok(p.titles.some((t) => t.includes("PERFECT DODGE")), "perfect dodge triggers");
+    assert.ok(p.titles.some((t) => t.includes("PERFECT")), "perfect dodge triggers");
     assert.equal(s.active!.hp, hpBefore, "no damage taken on perfect dodge");
     brute.remove();
 

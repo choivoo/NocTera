@@ -4,6 +4,7 @@ import { Config, getCharacter, Weapons } from "../data/registry";
 import { equipWeapon, obtainCharacter, obtainWeapon } from "../character/CharacterManager";
 import { grant } from "./Wallet";
 import { refreshFlux, rollDaily } from "./Progression";
+import { QUESTS } from "../quest/QuestManager";
 
 /** Gives a fresh account its starter kit. Idempotent via a story flag. */
 export function bootstrapAccount(p: PlayerProfile, now: number): boolean {
@@ -22,6 +23,11 @@ export function bootstrapAccount(p: PlayerProfile, now: number): boolean {
 }
 
 export function onLogin(p: PlayerProfile, now: number): void {
+  // Story-gated features: re-derive unlocks from completed quests (covers pre-1.0 saves).
+  for (const [id, q] of Object.entries(p.quests)) {
+    if (q.status !== "completed") continue;
+    for (const f of QUESTS.get(id)?.unlocks ?? []) p.story.flags[`unlock_${f}`] = true;
+  }
   refreshFlux(p, now);
   rollDaily(p, now);
   // Repair: party must reference owned characters only.

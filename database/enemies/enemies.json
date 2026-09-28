@@ -1,15 +1,269 @@
 [
-  { "id": "rift_hound", "name": "Rift Hound", "tier": "normal", "entity": "noct:rift_hound", "hp": 320, "atk": 18, "def": 20, "breakGauge": 0, "element": null, "exp": 40, "credit": 60, "attack": { "windup": 12, "range": 2.5, "mult": 1.0, "cooldown": 40 } },
-  { "id": "shade_husk", "name": "Shade Husk", "tier": "normal", "entity": "noct:shade_husk", "hp": 380, "atk": 16, "def": 25, "breakGauge": 0, "element": "UMBRA", "exp": 45, "credit": 60, "attack": { "windup": 16, "range": 2.2, "mult": 1.1, "cooldown": 45 } },
-  { "id": "frost_mite", "name": "Frost Mite", "tier": "normal", "entity": "noct:frost_mite", "hp": 260, "atk": 14, "def": 15, "breakGauge": 0, "element": "GLACIA", "exp": 35, "credit": 50, "attack": { "windup": 10, "range": 2, "mult": 0.9, "cooldown": 35 } },
-  { "id": "volt_drone", "name": "Stray Volt Drone", "tier": "normal", "entity": "noct:volt_drone", "hp": 240, "atk": 17, "def": 18, "breakGauge": 0, "element": "VOLT", "exp": 40, "credit": 55, "attack": { "windup": 14, "range": 8, "mult": 0.8, "cooldown": 50 } },
-  { "id": "ember_imp", "name": "Ember Imp", "tier": "normal", "entity": "noct:ember_imp", "hp": 280, "atk": 19, "def": 18, "breakGauge": 0, "element": "IGNIS", "exp": 40, "credit": 55, "attack": { "windup": 12, "range": 2.4, "mult": 1.0, "cooldown": 40 } },
-  { "id": "gale_wisp", "name": "Gale Wisp", "tier": "normal", "entity": "noct:gale_wisp", "hp": 220, "atk": 15, "def": 12, "breakGauge": 0, "element": "AER", "exp": 35, "credit": 50, "attack": { "windup": 12, "range": 6, "mult": 0.8, "cooldown": 45 } },
-  { "id": "ruin_sentinel", "name": "Ruin Sentinel", "tier": "normal", "entity": "noct:ruin_sentinel", "hp": 520, "atk": 20, "def": 40, "breakGauge": 60, "element": null, "exp": 60, "credit": 80, "attack": { "windup": 20, "range": 3, "mult": 1.3, "cooldown": 60 } },
-  { "id": "lumen_moth", "name": "Lumen Moth", "tier": "normal", "entity": "noct:lumen_moth", "hp": 200, "atk": 13, "def": 10, "breakGauge": 0, "element": "LUX", "exp": 30, "credit": 45, "attack": { "windup": 10, "range": 5, "mult": 0.7, "cooldown": 40 } },
-  { "id": "rift_knight", "name": "Rift Knight", "tier": "elite", "entity": "noct:rift_knight", "hp": 2400, "atk": 30, "def": 60, "breakGauge": 200, "element": "UMBRA", "exp": 220, "credit": 400, "attack": { "windup": 22, "range": 3.5, "mult": 1.6, "cooldown": 50 } },
-  { "id": "glacier_brute", "name": "Glacier Brute", "tier": "elite", "entity": "noct:glacier_brute", "hp": 2800, "atk": 32, "def": 70, "breakGauge": 240, "element": "GLACIA", "exp": 240, "credit": 420, "attack": { "windup": 26, "range": 3.5, "mult": 1.8, "cooldown": 60 } },
-  { "id": "storm_warden", "name": "Storm Warden", "tier": "elite", "entity": "noct:storm_warden", "hp": 2200, "atk": 34, "def": 50, "breakGauge": 180, "element": "VOLT", "exp": 230, "credit": 400, "attack": { "windup": 20, "range": 10, "mult": 1.4, "cooldown": 55 } },
-  { "id": "frost_devourer", "name": "Frost Devourer", "tier": "boss", "entity": "noct:frost_devourer", "hp": 24000, "atk": 48, "def": 90, "breakGauge": 900, "element": "GLACIA", "exp": 1500, "credit": 3000, "attack": { "windup": 28, "range": 5, "mult": 2.0, "cooldown": 50 } },
-  { "id": "void_seraph", "name": "Void Seraph", "tier": "boss", "entity": "noct:void_seraph", "hp": 30000, "atk": 55, "def": 95, "breakGauge": 1000, "element": "UMBRA", "exp": 1800, "credit": 3600, "attack": { "windup": 24, "range": 8, "mult": 2.2, "cooldown": 45 } }
+  {
+    "id": "rift_hound",
+    "name": "Rift Hound",
+    "tier": "normal",
+    "entity": "noct:rift_hound",
+    "hp": 320,
+    "atk": 18,
+    "def": 20,
+    "breakGauge": 0,
+    "element": null,
+    "exp": 40,
+    "credit": 60,
+    "attack": {
+      "windup": 12,
+      "range": 2.5,
+      "mult": 1.0,
+      "cooldown": 40
+    }
+  },
+  {
+    "id": "shade_husk",
+    "name": "Shade Husk",
+    "tier": "normal",
+    "entity": "noct:shade_husk",
+    "hp": 380,
+    "atk": 16,
+    "def": 25,
+    "breakGauge": 0,
+    "element": "UMBRA",
+    "exp": 45,
+    "credit": 60,
+    "attack": {
+      "windup": 16,
+      "range": 2.2,
+      "mult": 1.1,
+      "cooldown": 45
+    }
+  },
+  {
+    "id": "frost_mite",
+    "name": "Frost Mite",
+    "tier": "normal",
+    "entity": "noct:frost_mite",
+    "hp": 260,
+    "atk": 14,
+    "def": 15,
+    "breakGauge": 0,
+    "element": "GLACIA",
+    "exp": 35,
+    "credit": 50,
+    "attack": {
+      "windup": 10,
+      "range": 2,
+      "mult": 0.9,
+      "cooldown": 35
+    }
+  },
+  {
+    "id": "volt_drone",
+    "name": "Stray Volt Drone",
+    "tier": "normal",
+    "entity": "noct:volt_drone",
+    "hp": 240,
+    "atk": 17,
+    "def": 18,
+    "breakGauge": 0,
+    "element": "VOLT",
+    "exp": 40,
+    "credit": 55,
+    "attack": {
+      "windup": 14,
+      "range": 8,
+      "mult": 0.8,
+      "cooldown": 50
+    }
+  },
+  {
+    "id": "ember_imp",
+    "name": "Ember Imp",
+    "tier": "normal",
+    "entity": "noct:ember_imp",
+    "hp": 280,
+    "atk": 19,
+    "def": 18,
+    "breakGauge": 0,
+    "element": "IGNIS",
+    "exp": 40,
+    "credit": 55,
+    "attack": {
+      "windup": 12,
+      "range": 2.4,
+      "mult": 1.0,
+      "cooldown": 40
+    }
+  },
+  {
+    "id": "gale_wisp",
+    "name": "Gale Wisp",
+    "tier": "normal",
+    "entity": "noct:gale_wisp",
+    "hp": 220,
+    "atk": 15,
+    "def": 12,
+    "breakGauge": 0,
+    "element": "AER",
+    "exp": 35,
+    "credit": 50,
+    "attack": {
+      "windup": 12,
+      "range": 6,
+      "mult": 0.8,
+      "cooldown": 45
+    }
+  },
+  {
+    "id": "ruin_sentinel",
+    "name": "Ruin Sentinel",
+    "tier": "normal",
+    "entity": "noct:ruin_sentinel",
+    "hp": 520,
+    "atk": 20,
+    "def": 40,
+    "breakGauge": 60,
+    "element": null,
+    "exp": 60,
+    "credit": 80,
+    "attack": {
+      "windup": 20,
+      "range": 3,
+      "mult": 1.3,
+      "cooldown": 60
+    }
+  },
+  {
+    "id": "lumen_moth",
+    "name": "Lumen Moth",
+    "tier": "normal",
+    "entity": "noct:lumen_moth",
+    "hp": 200,
+    "atk": 13,
+    "def": 10,
+    "breakGauge": 0,
+    "element": "LUX",
+    "exp": 30,
+    "credit": 45,
+    "attack": {
+      "windup": 10,
+      "range": 5,
+      "mult": 0.7,
+      "cooldown": 40
+    }
+  },
+  {
+    "id": "rift_knight",
+    "name": "Rift Knight",
+    "tier": "elite",
+    "entity": "noct:rift_knight",
+    "hp": 2400,
+    "atk": 30,
+    "def": 60,
+    "breakGauge": 200,
+    "element": "UMBRA",
+    "exp": 220,
+    "credit": 400,
+    "attack": {
+      "windup": 22,
+      "range": 3.5,
+      "mult": 1.6,
+      "cooldown": 50
+    }
+  },
+  {
+    "id": "glacier_brute",
+    "name": "Glacier Brute",
+    "tier": "elite",
+    "entity": "noct:glacier_brute",
+    "hp": 2800,
+    "atk": 32,
+    "def": 70,
+    "breakGauge": 240,
+    "element": "GLACIA",
+    "exp": 240,
+    "credit": 420,
+    "attack": {
+      "windup": 26,
+      "range": 3.5,
+      "mult": 1.8,
+      "cooldown": 60
+    }
+  },
+  {
+    "id": "storm_warden",
+    "name": "Storm Warden",
+    "tier": "elite",
+    "entity": "noct:storm_warden",
+    "hp": 2200,
+    "atk": 34,
+    "def": 50,
+    "breakGauge": 180,
+    "element": "VOLT",
+    "exp": 230,
+    "credit": 400,
+    "attack": {
+      "windup": 20,
+      "range": 10,
+      "mult": 1.4,
+      "cooldown": 55
+    }
+  },
+  {
+    "id": "frost_devourer",
+    "name": "Frost Devourer",
+    "tier": "boss",
+    "entity": "noct:frost_devourer",
+    "hp": 24000,
+    "atk": 48,
+    "def": 90,
+    "breakGauge": 900,
+    "element": "GLACIA",
+    "exp": 1500,
+    "credit": 3000,
+    "attack": {
+      "windup": 28,
+      "range": 5,
+      "mult": 2.0,
+      "cooldown": 50
+    }
+  },
+  {
+    "id": "void_seraph",
+    "name": "Void Seraph",
+    "tier": "boss",
+    "entity": "noct:void_seraph",
+    "hp": 30000,
+    "atk": 55,
+    "def": 95,
+    "breakGauge": 1000,
+    "element": "UMBRA",
+    "exp": 1800,
+    "credit": 3600,
+    "attack": {
+      "windup": 24,
+      "range": 8,
+      "mult": 2.2,
+      "cooldown": 45
+    }
+  },
+  {
+    "id": "training_dummy",
+    "name": "Training Dummy",
+    "tier": "normal",
+    "entity": "noct:training_dummy",
+    "hp": 999999,
+    "atk": 0,
+    "def": 30,
+    "breakGauge": 400,
+    "element": null,
+    "exp": 0,
+    "credit": 0,
+    "immortal": true,
+    "attack": {
+      "windup": 20,
+      "range": 0,
+      "mult": 0,
+      "cooldown": 99999
+    }
+  }
 ]

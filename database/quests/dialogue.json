@@ -1,16 +1,118 @@
 {
   "prologue_wake": [
-    { "speaker": "???", "text": "……들려? 공명이 맞다면, 눈을 떠." },
-    { "speaker": "SERIA", "text": "Nightfall 이후로 이런 반응은 처음이야. 너, Resonator구나." },
-    { "speaker": "RIN", "text": "와, 진짜로 깨어났다! 세리아, 이 사람 데려가도 되지?" },
-    { "speaker": "SERIA", "text": "여기서 더 앞으로 가면 돌아올 수 없어.", "choices": ["그래도 가야 해.", "다른 방법을 찾아보자."] },
-    { "speaker": "SERIA", "text": "……좋아. 우선 도시 외곽의 Rift 개체부터 정리하자. 교대 신호를 놓치지 마." }
+    {
+      "speaker": "???",
+      "text": "……들려? 공명이 맞다면, 눈을 떠."
+    },
+    {
+      "speaker": "SERIA",
+      "text": "Nightfall 이후로 이런 반응은 처음이야. 너, Resonator구나."
+    },
+    {
+      "speaker": "RIN",
+      "text": "와, 진짜로 깨어났다! 세리아, 이 사람 데려가도 되지?"
+    },
+    {
+      "speaker": "SERIA",
+      "text": "여기서 더 앞으로 가면 돌아올 수 없어.",
+      "choices": [
+        "그래도 가야 해.",
+        "다른 방법을 찾아보자."
+      ]
+    },
+    {
+      "speaker": "SERIA",
+      "text": "……좋아. 우선 도시 외곽의 Rift 개체부터 정리하자. 교대 신호를 놓치지 마."
+    }
   ],
   "prologue_end": [
-    { "speaker": "RIN", "text": "비콘 연결 완료! 이제 어디서든 여기로 돌아올 수 있어." },
-    { "speaker": "SERIA", "text": "Astera에 온 걸 환영해, Resonator. 길드 단말에서 Signal을 확인해 봐." }
+    {
+      "speaker": "RIN",
+      "text": "비콘 연결 완료! 이제 어디서든 여기로 돌아올 수 있어."
+    },
+    {
+      "speaker": "SERIA",
+      "text": "Astera에 온 걸 환영해, Resonator. 길드 단말에서 Signal을 확인해 봐."
+    }
   ],
   "act1_end": [
-    { "speaker": "SERIA", "text": "Frost Devourer의 핵에서 Umbra 반응이 나왔어. Void Scar… 거기가 근원이야." }
+    {
+      "speaker": "SERIA",
+      "text": "Frost Devourer의 핵에서 Umbra 반응이 나왔어. Void Scar… 거기가 근원이야."
+    }
+  ],
+  "act1_mid": [
+    {
+      "speaker": "SERIA",
+      "text": "이 한기… 평범한 Rift가 아니야. 뭔가 거대한 게 숲을 삼키고 있어."
+    },
+    {
+      "speaker": "RIN",
+      "text": "드론 반응 최대치! 저쪽 깊은 곳이야. 교대 타이밍, 잊지 마!"
+    }
+  ],
+  "act2_log": [
+    {
+      "speaker": "LOG",
+      "text": "[기록 07] Nightfall 직전, 우리는 Rift를 '문'이라 불렀다. 문 너머에서 누군가 응답했다."
+    },
+    {
+      "speaker": "SERIA",
+      "text": "응답……? 그렇다면 Rift는 사고가 아니라 초대였다는 거야?",
+      "choices": [
+        "더 조사하자.",
+        "도시로 보고하자."
+      ]
+    },
+    {
+      "speaker": "RIN",
+      "text": "기록 코어는 던전 깊숙이 있어. 한 번 들어가 봐야겠는데?"
+    }
+  ],
+  "act2_end": [
+    {
+      "speaker": "SERIA",
+      "text": "Rift Knight의 문장… Void Scar의 수호자와 같은 표식이야."
+    },
+    {
+      "speaker": "RIN",
+      "text": "그럼 다음 목적지는 정해졌네. 협동 로비도 열어 둘게. 혼자선 무리야."
+    }
+  ],
+  "act3_before": [
+    {
+      "speaker": "SERIA",
+      "text": "여기서 더 앞으로 가면 돌아올 수 없어."
+    },
+    {
+      "speaker": "???",
+      "text": "공명자여. 너는 문을 닫으러 왔는가, 열러 왔는가.",
+      "choices": [
+        "닫으러 왔다.",
+        "네가 누구든 상관없어."
+      ]
+    },
+    {
+      "speaker": "SERIA",
+      "text": "……검을 들어. 겨울은 여기서 끝낸다."
+    }
+  ],
+  "epilogue": [
+    {
+      "speaker": "RIN",
+      "text": "Void Seraph 반응 소멸. Astera 상공의 균열이… 줄어들고 있어!"
+    },
+    {
+      "speaker": "SERIA",
+      "text": "끝이 아니야. 기록에 남은 '응답자'는 아직 저 너머에 있어."
+    },
+    {
+      "speaker": "LUMIA",
+      "text": "그래도 오늘 밤은, 별이 보이네요."
+    },
+    {
+      "speaker": "SYSTEM",
+      "text": "CHAPTER 1 — FALLEN NIGHT 완료. 주간 보스 보상이 해금되었습니다."
+    }
   ]
 }

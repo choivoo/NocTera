@@ -172,12 +172,24 @@
       {
         "name": "Crusher",
         "description": "Break 상태 적에게 피해 +20%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "target_broken",
+          "stat": "dmgPct",
+          "value": 20
+        }
       },
       {
         "name": "Grit",
         "description": "HP 30% 이하 시 방어 +40%.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "cond",
+          "when": "hp_below:30",
+          "stat": "defPct",
+          "value": 40
+        }
       },
       {
         "name": "Heavy Lifter",

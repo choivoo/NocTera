@@ -26,6 +26,11 @@ database/*.json  ──►  scripts/data (registry, typed defs)
       ├─ world/      World (Astera origin, beacons, zone spawner, bosses)
       ├─ dungeon/    DungeonManager (instanced waves)
       ├─ quest/      QuestRuntime (events → quest signals, auto dialogue, boss spawn)
+      ├─ character/  CharacterVisual (noct:char / noct:anim), Passives
+      ├─ camera/     UltimateCinematic, Showcase (3D model presentation)
+      ├─ coop/       CoopManager (groups, 4/2/1 allowance)
+      ├─ world/      City (plaza, NPCs, pillars), Exploration (treasure, motes, puzzles, trials, surges)
+      ├─ ui/         TitleScreen, DamageNumbers
       ├─ audio/      Fx (particle/sound indirection + per-tick particle budget)
       ├─ save/       DynamicPropertyStorage
       └─ debug/      Commands (/noct:noct …, Admin permission)
@@ -44,3 +49,6 @@ Characters are JSON files in `database/characters/`. A kit is a list of **effect
 - AI loops only over **tracked** enemies and never scans all entities. Hit detection uses bounded `getEntities({location, maxDistance, families})` queries.
 - `performance.particleBudgetPerTick` caps particles per tick.
 - The save queue flushes at most 4 dirty profiles every 100 ticks. Critical actions save immediately.
+
+## Asset pipeline
+`npm run build` runs `gen-registry`, `gen-assets` (items, enemies, NPCs, icons, portraits, glass UI), `gen-characters` (player rig), `render-preview` and then the esbuild bundle. Generated PNGs are never overwritten, so real art can replace them. Vanilla bases live in `tools/vanilla/`.

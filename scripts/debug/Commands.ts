@@ -15,8 +15,12 @@ import { enemies } from "../combat/EnemyRuntime";
 import { setLogLevel } from "../core/Logger";
 import { openBanner } from "../ui/GachaScreen";
 import { rollImprint } from "../artifact/ImprintGen";
+import { respawnNpcs } from "../world/City";
+import { showcase } from "../camera/Showcase";
+import { playAnim, type AnimName } from "../character/CharacterVisual";
+import { groupSize, characterAllowance } from "../coop/CoopManager";
 
-const SUBS = ["debug", "givechar", "level", "astrum", "banner", "boss", "quest", "tp", "reset", "setup", "spawn", "imprint", "save", "stats"];
+const SUBS = ["debug", "givechar", "level", "astrum", "banner", "boss", "quest", "tp", "reset", "setup", "spawn", "imprint", "save", "stats", "unlock", "npc", "preview", "anim", "coop"];
 
 export function registerCommands(registry: any): void {
   registry.registerEnum("noct:sub", SUBS);
@@ -103,7 +107,26 @@ function run(player: Player, sub: string, arg?: string, value?: number): void {
       break;
     case "setup":
       setOrigin(player.location);
-      say(`Astera origin set to ${Math.floor(player.location.x)} ${Math.floor(player.location.y)} ${Math.floor(player.location.z)}`);
+      say(`Astera origin set to ${Math.floor(player.location.x)} ${Math.floor(player.location.y)} ${Math.floor(player.location.z)} — city builds automatically`);
+      break;
+    case "npc":
+      respawnNpcs();
+      say("NPCs respawned");
+      break;
+    case "unlock":
+      for (const f of ["gacha", "dungeon", "coop", "weekly"]) p.story.flags[`unlock_${f}`] = true;
+      g.save.saveNow(s.id);
+      say("all features unlocked");
+      break;
+    case "preview":
+      if (!arg || !Characters.has(arg)) return say(`chars: ${[...Characters.keys()].join(", ")}`);
+      void showcase(s, arg, { ticks: value ?? 60, title: arg.toUpperCase() });
+      break;
+    case "anim":
+      playAnim(player, (arg ?? "select") as AnimName);
+      break;
+    case "coop":
+      say(`group=${p.coop.groupId} size=${groupSize(s)} allowance=${characterAllowance(groupSize(s))}`);
       break;
     case "imprint":
       for (let i = 0; i < (value ?? 5); i++) rollImprint(p, g.rng, arg);

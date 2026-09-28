@@ -145,7 +145,13 @@
       {
         "name": "Blood Heat",
         "description": "HP 50% 미만일 때 피해 +25%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "hp_below:50",
+          "stat": "dmgPct",
+          "value": 25
+        }
       },
       {
         "name": "Overheat",

@@ -5,7 +5,7 @@
  * timing checks. Only tracked enemies are iterated — never all entities —
  * and far enemies update at a reduced rate (LOD).
  */
-import { system, world, type Entity, type Vector3 } from "@minecraft/server";
+import { EntityComponentTypes, system, world, type Entity, type Vector3 } from "@minecraft/server";
 import { EnemyState } from "./EnemyState";
 import { Config, Enemies, getCharacter } from "../data/registry";
 import type { EnemyDef } from "../data/types";
@@ -21,6 +21,7 @@ import { grant } from "../account/Wallet";
 import { bus } from "../core/EventBus";
 import { rollImprint } from "../artifact/ImprintGen";
 import { partyMembers } from "../party/PartyManager";
+import { playAnim } from "../character/CharacterVisual";
 
 interface Tracked {
   entity: Entity;
@@ -70,6 +71,10 @@ class EnemyRuntimeImpl {
   kill(e: Entity, killer: Session): void {
     const tr = this.tracked.get(e.id);
     if (!tr) return;
+    if (tr.state.def.immortal) {
+      tr.state.hp = tr.state.maxHp;
+      return;
+    }
     this.tracked.delete(e.id);
     const def = tr.state.def;
     const at = { ...e.location };
@@ -85,6 +90,16 @@ class EnemyRuntimeImpl {
     for (const s of game().sessions.values()) {
       if (s !== killer && (s.player.dimension.id !== dim.id || dist(s.player.location, at) > 24)) continue;
       reward(s, def, tr.state.scale);
+    }
+  }
+
+  /** Boss UI: vanilla boss bar (top center) mirrors scripted HP; name carries phase + Break. */
+  syncBossBar(e: Entity, st: EnemyState): void {
+    try {
+      e.getComponent(EntityComponentTypes.Health)?.setCurrentValue(Math.max(1, Math.round((st.hp / st.maxHp) * 100000)));
+      e.nameTag = nameplate(st, system.currentTick);
+    } catch {
+      /* ignore */
     }
   }
 
@@ -125,6 +140,7 @@ class EnemyRuntimeImpl {
           /* ignore */
         }
       }
+      if (tr.state.def.tier === "boss" && t % 10 === 0) this.syncBossBar(e, tr.state);
       if (!near || far) continue;
       this.think(tr, near, nd, t);
     }
@@ -210,13 +226,18 @@ class EnemyRuntimeImpl {
 export const enemies = new EnemyRuntimeImpl();
 
 function nameplate(st: EnemyState, t: number): string {
+  if (st.def.tier === "boss") {
+    const brk = st.isBroken(t) ? "§e§lBREAK" : `§e${"▮".repeat(Math.ceil((st.breakGauge / st.def.breakGauge) * 6))}§8${"▮".repeat(6 - Math.ceil((st.breakGauge / st.def.breakGauge) * 6))}`;
+    const aura = st.aura && st.aura.expiresAt > t ? ` ${auraIcon(st.aura.element)}` : "";
+    return `§l§f${st.def.name.toUpperCase()}§r  §7PHASE ${st.phase}  ${brk}${aura}`;
+  }
   const pct = st.hp / st.maxHp;
   const bars = 10;
   const filled = Math.ceil(pct * bars);
   const hp = `§c${"▮".repeat(filled)}§8${"▮".repeat(bars - filled)}`;
   const brk = st.def.breakGauge > 0 ? (st.isBroken(t) ? " §e§lBREAK" : ` §e${"▮".repeat(Math.ceil((st.breakGauge / st.def.breakGauge) * 5))}`) : "";
   const aura = st.aura && st.aura.expiresAt > t ? ` ${auraIcon(st.aura.element)}` : "";
-  const tier = st.def.tier === "elite" ? "§6◆ " : st.def.tier === "boss" ? "§4♛ " : "";
+  const tier = st.def.tier === "elite" ? "§6◆ " : "";
   return `${tier}§f${st.def.name}${aura}\n${hp}${brk}`;
 }
 
@@ -250,7 +271,14 @@ function reward(s: Session, def: EnemyDef, scale: number): void {
     s.player.sendMessage(`§d[기억각인] §f${imp.setId.toUpperCase()} — ${imp.slot} 획득`);
   }
   addDailyProgress(p, "kills", 1, now);
-  if (def.tier === "boss") p.weekly.bossClears++;
+  if (def.tier === "boss") {
+    if (p.story.flags.unlock_weekly && p.weekly.bossClears < 3) {
+      grant(p, { astrum: 60, materials: { rift_core: 3, talent_tome: 2 } });
+      s.player.sendMessage(`§6[WEEKLY] §f주간 보스 보상 ${p.weekly.bossClears + 1}/3 — Astrum +60`);
+    }
+    p.weekly.bossClears++;
+    playAnim(s.player, "victory");
+  }
   game().save.markDirty(p.playerId);
   bus.emit("combat:kill", { playerId: s.id, characterId: s.activeId ?? "", enemyType: def.id, exp });
 }

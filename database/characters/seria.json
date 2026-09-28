@@ -169,12 +169,21 @@
       {
         "name": "Stillness",
         "description": "빙결된 적에게 치명타 확률 +15%.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "cond",
+          "when": "target_frozen",
+          "stat": "critRate",
+          "value": 15
+        }
       },
       {
         "name": "Snowbound Steps",
         "description": "파티 이동 중 스태미나 소비 감소.",
-        "unlockAscension": 0
+        "unlockAscension": 0,
+        "effect": {
+          "type": "utility_speed"
+        }
       }
     ]
   },

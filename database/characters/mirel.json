@@ -126,12 +126,24 @@
       {
         "name": "Steady",
         "description": "정지 상태 2초 이상 시 치명타 +15%.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "stationary",
+          "stat": "critRate",
+          "value": 15
+        }
       },
       {
         "name": "Cold Read",
         "description": "GLACIA 부착 적 약점 노출.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "cond",
+          "when": "target_aura:GLACIA",
+          "stat": "critDmg",
+          "value": 20
+        }
       },
       {
         "name": "Scout",

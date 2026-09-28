@@ -5,7 +5,7 @@
 // docs/REPLACE_ME.md.
 import fs from "fs";
 import path from "path";
-import zlib from "zlib";
+import { roundButton, portrait, glassPanel } from "./lib/icons.mjs";
 
 const BP = "behavior_pack/NOCTERRA_BP";
 const RP = "resource_pack/NOCTERRA_RP";
@@ -16,41 +16,8 @@ const write = (p, obj) => {
 };
 const replaceMe = [];
 
-// ───────── PNG encoder (RGBA) ─────────
-const crcTable = new Int32Array(256).map((_, n) => {
-  let c = n;
-  for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
-  return c;
-});
-const crc32 = (buf) => {
-  let c = -1;
-  for (const b of buf) c = crcTable[(c ^ b) & 0xff] ^ (c >>> 8);
-  return (c ^ -1) >>> 0;
-};
-function chunk(type, data) {
-  const len = Buffer.alloc(4);
-  len.writeUInt32BE(data.length);
-  const td = Buffer.concat([Buffer.from(type), data]);
-  const crc = Buffer.alloc(4);
-  crc.writeUInt32BE(crc32(td));
-  return Buffer.concat([len, td, crc]);
-}
-function png(w, h, pixel) {
-  const raw = Buffer.alloc((w * 4 + 1) * h);
-  for (let y = 0; y < h; y++) {
-    raw[y * (w * 4 + 1)] = 0;
-    for (let x = 0; x < w; x++) {
-      const [r, g, b, a] = pixel(x, y);
-      const o = y * (w * 4 + 1) + 1 + x * 4;
-      raw[o] = r; raw[o + 1] = g; raw[o + 2] = b; raw[o + 3] = a;
-    }
-  }
-  const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(w, 0); ihdr.writeUInt32BE(h, 4);
-  ihdr[8] = 8; ihdr[9] = 6; ihdr[10] = 0; ihdr[11] = 0; ihdr[12] = 0;
-  return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk("IHDR", ihdr), chunk("IDAT", zlib.deflateSync(raw)), chunk("IEND", Buffer.alloc(0))]);
-}
-const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+import { png, hex } from "./lib/png.mjs";
+
 /** Dark glass tile with a glowing border and a centered diamond in `color`. */
 function glassIcon(size, color) {
   const [r, g, b] = hex(color);
@@ -79,33 +46,54 @@ const chars = fs.readdirSync("database/characters").filter((f) => f.endsWith(".j
 const enemies = read("database/enemies/enemies.json");
 const ELEMENT_HEX = { IGNIS: "#ff6a3d", GLACIA: "#8fd6ff", VOLT: "#ffe04a", AER: "#6fffc8", LUX: "#fff1b8", UMBRA: "#9a6bff", null: "#b0b6c8" };
 
-// ───────── control items ─────────
+// ───────── control items (round glass touch buttons) ─────────
+const art = read("database/art/characters.json");
+const ELEMENT_OF = Object.fromEntries(chars.map((c) => [c.id, c.element]));
 const controls = [
-  ["attack", "§lATTACK", "#ffffff"], ["skill", "§b§lSKILL", "#8fd6ff"], ["ultimate", "§6§lULTIMATE", "#ffcc4d"], ["dodge", "§a§lDODGE", "#6fffc8"],
-  ["char1", "§f§lCHARACTER 1", "#c8d0ff"], ["char2", "§f§lCHARACTER 2", "#c8d0ff"], ["char3", "§f§lCHARACTER 3", "#c8d0ff"], ["char4", "§f§lCHARACTER 4", "#c8d0ff"],
-  ["menu", "§d§lNOCTERRA MENU", "#d58cff"],
+  // [id, display name, color, glyph, action, opts]
+  ["attack", "§lATTACK", "#e8ecff", "sword", "attack"],
+  ["skill", "§b§lSKILL", "#7fd3ff", "skill", "skill"],
+  ["ultimate", "§6§lULTIMATE", "#b08a3a", "star", "ultimate"],
+  ["ultimate_ready", "§6§lULTIMATE READY", "#ffcc4d", "star", "ultimate", { ready: true }],
+  ["dodge", "§a§lDODGE", "#6fffc8", "dodge", "dodge"],
+  ["menu", "§d§lMENU", "#c9a0ff", "menu", "menu"],
+  ["char_empty", "§8EMPTY", "#4a5068", "plus", "char", { dim: true }],
+  ["char_locked", "§8CO-OP LOCK", "#4a5068", "lock", "char", { dim: true }],
 ];
 const itemTextures = {};
-for (const [id, name, color] of controls) {
+const itemJson = (id, name, action, tex) => ({
+  format_version: "1.21.90",
+  "minecraft:item": {
+    description: { identifier: `noct:ctl_${id}`, menu_category: { category: "none", is_hidden_in_commands: false } },
+    components: {
+      "minecraft:icon": { textures: { default: tex } },
+      "minecraft:display_name": { value: name },
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": false,
+      "minecraft:use_modifiers": { use_duration: 0.05, movement_modifier: 1.0 },
+      "minecraft:can_destroy_in_creative": false,
+      "noct:control": { action },
+    },
+  },
+});
+for (const [id, name, color, glyph, action, opts] of controls) {
   const tex = `noct_ctl_${id}`;
   itemTextures[tex] = { textures: `textures/noct/items/ctl_${id}` };
-  writePng(`textures/noct/items/ctl_${id}.png`, glassIcon(16, color), `control icon ${id}`);
-  write(`${BP}/items/ctl_${id}.json`, {
-    format_version: "1.21.90",
-    "minecraft:item": {
-      description: { identifier: `noct:ctl_${id}`, menu_category: { category: "items", is_hidden_in_commands: false } },
-      components: {
-        "minecraft:icon": { textures: { default: tex } },
-        "minecraft:display_name": { value: name },
-        "minecraft:max_stack_size": 1,
-        "minecraft:hand_equipped": true,
-        "minecraft:use_modifiers": { use_duration: 0.05, movement_modifier: 1.0 },
-        "minecraft:can_destroy_in_creative": false,
-        "noct:control": { action: id },
-      },
-    },
-  });
+  writePng(`textures/noct/items/ctl_${id}.png`, roundButton(32, color, glyph, opts ?? {}), `touch button ${id}`);
+  write(`${BP}/items/ctl_${id}.json`, itemJson(id, name, action, tex));
 }
+const ELEMENT_RING = { IGNIS: "#ff6a3d", GLACIA: "#8fd6ff", VOLT: "#ffe04a", AER: "#6fffc8", LUX: "#fff1b8", UMBRA: "#b36bff" };
+for (const c of chars) {
+  for (const ready of [false, true]) {
+    const id = `char_${c.id}${ready ? "_ready" : ""}`;
+    const tex = `noct_ctl_${id}`;
+    itemTextures[tex] = { textures: `textures/noct/items/ctl_${id}` };
+    writePng(`textures/noct/items/ctl_${id}.png`, portrait(32, art[c.id].palette, ELEMENT_RING[c.element], { ready }), `portrait button ${c.name}${ready ? " (ready glow)" : ""}`);
+    write(`${BP}/items/ctl_${id}.json`, itemJson(id, `§l${c.name}${ready ? " §6✦" : ""}`, "char", tex));
+  }
+}
+// Remove item definitions from the 0.2 layout (char1..4 are now per-character portraits).
+for (const old of ["char1", "char2", "char3", "char4"]) fs.rmSync(`${BP}/items/ctl_${old}.json`, { force: true });
 write(`${RP}/textures/item_texture.json`, { resource_pack_name: "NOCTERRA_RP", texture_name: "atlas.items", texture_data: itemTextures });
 
 // ───────── UI icons (every ICON("x") used in scripts) ─────────
@@ -113,8 +101,17 @@ const icons = new Set();
 for (const f of walk("scripts")) {
   for (const m of fs.readFileSync(f, "utf8").matchAll(/ICON\("([a-z0-9_]+)"\)/g)) icons.add(m[1]);
 }
-for (const i of icons) writePng(`textures/noct/ui/${i}.png`, glassIcon(32, "#9fb6ff"), `UI icon "${i}"`);
-for (const c of chars) writePng(`textures/noct/portraits/${c.id}.png`, glassIcon(64, c.visual.color), `portrait ${c.name}`);
+const ICON_STYLE = { character: ["#9fd8ff", "diamond"], party: ["#9fd8ff", "ring"], inventory: ["#c8d0ff", "menu"], quest: ["#ffd98a", "info"], map: ["#8fffd6", "arrow_up"], gacha: ["#ffcc4d", "star"], event: ["#ff9ad5", "star"], profile: ["#c8d0ff", "ring"], settings: ["#aab4cc", "plus"], back: ["#8088a0", "back"], confirm: ["#6fffc8", "check"], info: ["#9fb6ff", "info"], levelup: ["#6fffc8", "arrow_up"], ascend: ["#ffcc4d", "arrow_up"], talent: ["#7fd3ff", "skill"], weapon: ["#e8ecff", "sword"], imprint: ["#d58cff", "diamond"], resonance: ["#9fd8ff", "ring"], empty: ["#4a5068", "plus"], dialogue: ["#ffd98a", "info"], beacon: ["#8fd6ff", "diamond"], locked: ["#4a5068", "lock"], dungeon: ["#ff9a6a", "sword"], history: ["#aab4cc", "menu"], pull1: ["#b9c6ff", "diamond"], pull10: ["#ffcc4d", "star"], coop: ["#6fffc8", "ring"], shop: ["#ffd98a", "diamond"], craft: ["#c8d0ff", "plus"], train: ["#ff9a6a", "sword"], start: ["#e8ecff", "arrow_up"] };
+for (const i of new Set([...icons, ...Object.keys(ICON_STYLE)])) {
+  const [col, glyph] = ICON_STYLE[i] ?? ["#9fb6ff", "diamond"];
+  writePng(`textures/noct/ui/${i}.png`, roundButton(32, col, glyph), `UI icon "${i}"`);
+}
+for (const c of chars) writePng(`textures/noct/portraits/${c.id}.png`, portrait(64, art[c.id].palette, ELEMENT_RING[c.element], { round: false }), `portrait ${c.name}`);
+// Glass UI: panel (nineslice) + vanilla tip background override (titles/action bar become glass).
+writePng("textures/noct/ui/glass_panel.png", glassPanel(16, "#7fa8ff", 175), "glass panel");
+write(`${RP}/textures/noct/ui/glass_panel.json`, { nineslice_size: 3, base_size: [16, 16] });
+writePng("textures/ui/hud_tip_text_background.png", glassPanel(16, "#7fa8ff", 150), "vanilla title/actionbar background → NOCTERRA glass");
+write(`${RP}/textures/ui/hud_tip_text_background.json`, { nineslice_size: 3, base_size: [16, 16] });
 
 // ───────── enemy entities ─────────
 const lang = { en: [], ko: [] };
@@ -149,7 +146,8 @@ for (const e of enemies) {
         "minecraft:behavior.look_at_player": { priority: 3, look_distance: 12 },
         "minecraft:behavior.random_stroll": { priority: 5, speed_multiplier: 0.6 },
         "minecraft:behavior.random_look_around": { priority: 6 },
-        ...(e.tier === "boss" ? { "minecraft:scale": { value: 1.0 } } : {}),
+        ...(e.tier === "boss" ? { "minecraft:boss": { should_darken_sky: false, hud_range: 55 } } : {}),
+        ...(e.immortal ? { "minecraft:movement": { value: 0 } } : {}),
       },
     },
   });
@@ -173,6 +171,75 @@ for (const e of enemies) {
   lang.en.push(`entity.${e.entity}.name=${e.name}`, `item.spawn_egg.entity.${e.entity}.name=Spawn ${e.name}`);
   lang.ko.push(`entity.${e.entity}.name=${e.name}`, `item.spawn_egg.entity.${e.entity}.name=${e.name} 소환`);
 }
+// ───────── FX + NPC entities ─────────
+write(`${BP}/entities/dmg_text.json`, {
+  format_version: "1.21.0",
+  "minecraft:entity": {
+    description: { identifier: "noct:dmg_text", is_spawnable: false, is_summonable: true, is_experimental: false },
+    components: {
+      "minecraft:type_family": { family: ["noct_fx", "inanimate"] },
+      "minecraft:health": { value: 1, max: 1 },
+      "minecraft:damage_sensor": { triggers: [{ cause: "all", deals_damage: "no" }] },
+      "minecraft:collision_box": { width: 0.01, height: 0.01 },
+      "minecraft:physics": { has_gravity: false, has_collision: false },
+      "minecraft:pushable": { is_pushable: false, is_pushable_by_piston: false },
+      "minecraft:nameable": { always_show: true, allow_name_tag_renaming: false },
+      "minecraft:persistent": {},
+    },
+  },
+});
+write(`${RP}/entity/dmg_text.entity.json`, {
+  format_version: "1.10.0",
+  "minecraft:client_entity": { description: { identifier: "noct:dmg_text", materials: { default: "entity_alphatest" }, textures: { default: "textures/noct/entity/rift_hound" }, geometry: { default: "geometry.noct.empty" }, render_controllers: ["controller.render.default"] } },
+});
+const NPCS = read("database/world/npcs.json");
+write(`${BP}/entities/npc.json`, {
+  format_version: "1.21.0",
+  "minecraft:entity": {
+    description: { identifier: "noct:npc", is_spawnable: false, is_summonable: true, is_experimental: false, properties: { "noct:look": { type: "int", range: [0, 15], default: 0, client_sync: true } } },
+    components: {
+      "minecraft:type_family": { family: ["noct_npc", "npc"] },
+      "minecraft:health": { value: 1000, max: 1000 },
+      "minecraft:damage_sensor": { triggers: [{ cause: "all", deals_damage: "no" }] },
+      "minecraft:collision_box": { width: 0.6, height: 1.9 },
+      "minecraft:physics": {},
+      "minecraft:pushable": { is_pushable: false, is_pushable_by_piston: false },
+      "minecraft:knockback_resistance": { value: 1 },
+      "minecraft:nameable": { always_show: true, allow_name_tag_renaming: false },
+      "minecraft:persistent": {},
+      "minecraft:interact": { interactions: [{ interact_text: "action.interact.talk", on_interact: { filters: { test: "is_family", subject: "other", value: "player" } } }] },
+      "minecraft:behavior.look_at_player": { priority: 1, look_distance: 8, probability: 1 },
+    },
+  },
+});
+NPCS.forEach((n, i) => writePng(`textures/noct/entity/npc_${n.id}.png`, glassIcon(64, n.color), `NPC ${n.name}`));
+write(`${RP}/entity/npc.entity.json`, {
+  format_version: "1.10.0",
+  "minecraft:client_entity": {
+    description: {
+      identifier: "noct:npc",
+      materials: { default: "entity_alphatest" },
+      textures: Object.fromEntries(NPCS.map((n) => [n.id, `textures/noct/entity/npc_${n.id}`])),
+      geometry: { default: "geometry.noct.enemy_humanoid" },
+      animations: { idle: "animation.noct.enemy.idle" },
+      scripts: { animate: ["idle"] },
+      render_controllers: ["controller.render.noct.npc"],
+    },
+  },
+});
+write(`${RP}/render_controllers/noct_npc.rc.json`, {
+  format_version: "1.10.0",
+  render_controllers: {
+    "controller.render.noct.npc": {
+      arrays: { textures: { "Array.tex": NPCS.map((n) => `Texture.${n.id}`) } },
+      geometry: "Geometry.default",
+      materials: [{ "*": "Material.default" }],
+      textures: [`Array.tex[math.clamp(q.property('noct:look'), 0, ${NPCS.length - 1})]`],
+    },
+  },
+});
+lang.en.push("entity.noct:dmg_text.name=", "entity.noct:npc.name=Astera Citizen");
+lang.ko.push("entity.noct:dmg_text.name=", "entity.noct:npc.name=아스테라 시민");
 replaceMe.push("- `geometry.noct.enemy_{humanoid,beast,boss}` — box placeholders in models/entity/noct_enemy.geo.json");
 
 // Placeholder geometry: simple readable silhouettes built from boxes.
@@ -181,6 +248,7 @@ const geo = (id, w, h, bones) => ({ description: { identifier: id, texture_width
 write(`${RP}/models/entity/noct_enemy.geo.json`, {
   format_version: "1.12.0",
   "minecraft:geometry": [
+    { description: { identifier: "geometry.noct.empty", texture_width: 16, texture_height: 16 }, bones: [{ name: "root", pivot: [0, 0, 0] }] },
     geo("geometry.noct.enemy_humanoid", 2, 3, [
       { name: "root", pivot: [0, 0, 0] },
       { name: "body", parent: "root", pivot: [0, 12, 0], cubes: [box([-4, 12, -2], [8, 12, 4], [16, 16])] },

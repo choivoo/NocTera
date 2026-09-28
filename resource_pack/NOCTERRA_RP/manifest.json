@@ -4,10 +4,10 @@
     "name": "NOCTERRA RP",
     "description": "NOCTERRA — visuals, UI, sounds (REPLACE_ME placeholders)",
     "uuid": "f3fa2c3c-4044-4995-80a3-c3c3d11a23da",
-    "version": [0, 2, 0],
-    "min_engine_version": [1, 21, 90]
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 26, 30]
   },
   "modules": [
-    { "type": "resources", "uuid": "17d8f54c-9359-45d0-a270-eeb7dfa82100", "version": [0, 2, 0] }
+    { "type": "resources", "uuid": "17d8f54c-9359-45d0-a270-eeb7dfa82100", "version": [1, 0, 0] }
   ]
 }

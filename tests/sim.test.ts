@@ -6,7 +6,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 
-async function runSlice(name: string) {
+async function runSlice(name: string, single = false) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "noct-sim-"));
   const out = path.join(dir, `${name}.mjs`);
   await build({
@@ -19,6 +19,10 @@ async function runSlice(name: string) {
     logLevel: "error",
   });
   const db = path.join(dir, "world.json");
+  if (single) {
+    assert.match(execFileSync("node", [out, "1", db], { encoding: "utf8" }), /OK/);
+    return;
+  }
   const r1 = execFileSync("node", [out, "1", db], { encoding: "utf8" });
   assert.match(r1, /phase 1 OK/);
   const r2 = execFileSync("node", [out, "2", db], { encoding: "utf8" });
@@ -27,3 +31,5 @@ async function runSlice(name: string) {
 
 test("Vertical Slice A end-to-end (mock engine, two processes = server restart)", () => runSlice("slice-a"));
 test("Vertical Slice B: gacha → obtain → party → field → persist", () => runSlice("slice-b"));
+test("Vertical Slice C: full Chapter 1 → rewards → unlocks → persist", () => runSlice("slice-c"));
+test("UI QA: HUD fits COVER / PHONE / FOLD_EXPANDED / WINDOWS at 80–120% scale", () => runSlice("ui-qa", true));

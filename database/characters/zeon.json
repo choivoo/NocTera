@@ -150,12 +150,24 @@
       {
         "name": "Conductor",
         "description": "Thunder Field 중 낙뢰 확률 치명타 적용.",
-        "unlockAscension": 1
+        "unlockAscension": 1,
+        "effect": {
+          "type": "cond",
+          "when": "in_field",
+          "stat": "critRate",
+          "value": 15
+        }
       },
       {
         "name": "Grounded",
         "description": "필드 안 받는 피해 -10%.",
-        "unlockAscension": 4
+        "unlockAscension": 4,
+        "effect": {
+          "type": "cond",
+          "when": "in_field",
+          "stat": "dmgReduction",
+          "value": 10
+        }
       },
       {
         "name": "Storm Sense",

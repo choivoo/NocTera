@@ -7,6 +7,8 @@ import path from "path";
 const pkg = process.argv.includes("--package");
 execSync("node tools/gen-registry.mjs", { stdio: "inherit" });
 execSync("node tools/gen-assets.mjs", { stdio: "inherit" });
+execSync("node tools/gen-characters.mjs", { stdio: "inherit" });
+execSync("node tools/render-preview.mjs", { stdio: "inherit" });
 
 await build({
   entryPoints: ["scripts/main.ts"],

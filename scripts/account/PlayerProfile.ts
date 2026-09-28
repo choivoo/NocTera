@@ -1,7 +1,7 @@
 /** Persistent account data. Everything here is server-authoritative. */
 import type { StatBlock } from "../data/types";
 
-export const PROFILE_SCHEMA_VERSION = 1;
+export const PROFILE_SCHEMA_VERSION = 2;
 
 export interface CharacterInstance {
   characterId: string;
@@ -95,7 +95,66 @@ export interface PlayerProfile {
   daily: { day: number; progress: Record<string, number>; claimed: boolean };
   weekly: { week: number; bossClears: number };
 
-  settings: { uiPreset: "AUTO" | "COMPACT" | "PHONE" | "FOLD_EXPANDED" | "WINDOWS"; hudDetail: boolean; cameraShake: boolean; bgmVolume: number };
+  settings: Settings;
+  coop: { groupId: string | null };
+  exploration: { treasures: string[]; motes: string[]; puzzles: string[] };
+  titleSeen: boolean;
+}
+
+export type UiPresetSetting = "AUTO" | "COVER" | "COMPACT" | "PHONE" | "FOLD_EXPANDED" | "WINDOWS";
+
+/** HUD edit-mode data: every element has a normalized anchor + offset + scale (future JSON UI edit mode reads this). */
+export interface HudElementLayout {
+  anchor: "left" | "right" | "top" | "bottom" | "top_left" | "top_right" | "bottom_left" | "bottom_right" | "center";
+  offset: [number, number];
+  scale: number;
+  visible: boolean;
+}
+
+export interface Settings {
+  uiPreset: UiPresetSetting;
+  hudDetail: boolean;
+  cameraShake: boolean;
+  bgmVolume: number;
+  hudScale: number; // 80..120 (%)
+  buttonSize: number; // 80..140 (%)
+  buttonOpacity: number; // 30..100 (%)
+  damageNumbers: boolean;
+  damageNumberSize: 0 | 1 | 2;
+  cameraSensitivity: number; // 50..150 (%) — cutscene/ult camera ease speed
+  aimAssist: number; // 0..100 (%)
+  ultCinematic: boolean;
+  hudLayout: Record<string, HudElementLayout>;
+}
+
+export const DEFAULT_HUD_LAYOUT: Record<string, HudElementLayout> = {
+  party: { anchor: "left", offset: [4, -10], scale: 1, visible: true },
+  quest: { anchor: "top", offset: [0, 6], scale: 1, visible: true },
+  combat: { anchor: "bottom_right", offset: [-8, -8], scale: 1, visible: true },
+  boss: { anchor: "top", offset: [0, 18], scale: 1, visible: true },
+  minimap: { anchor: "top_left", offset: [6, 6], scale: 1, visible: true },
+};
+
+export function defaultSettings(): Settings {
+  return {
+    uiPreset: "AUTO",
+    hudDetail: true,
+    cameraShake: true,
+    bgmVolume: 1,
+    hudScale: 100,
+    buttonSize: 100,
+    buttonOpacity: 85,
+    damageNumbers: true,
+    damageNumberSize: 1,
+    cameraSensitivity: 100,
+    aimAssist: 70,
+    ultCinematic: true,
+    hudLayout: structuredCloneLayout(),
+  };
+}
+
+function structuredCloneLayout(): Record<string, HudElementLayout> {
+  return JSON.parse(JSON.stringify(DEFAULT_HUD_LAYOUT));
 }
 
 export function emptyPity(): PityState {
@@ -127,7 +186,10 @@ export function createProfile(playerId: string, name: string, now: number): Play
     gachaHistory: [],
     daily: { day: 0, progress: {}, claimed: false },
     weekly: { week: 0, bossClears: 0 },
-    settings: { uiPreset: "AUTO", hudDetail: true, cameraShake: true, bgmVolume: 1 },
+    settings: defaultSettings(),
+    coop: { groupId: null },
+    exploration: { treasures: [], motes: [], puzzles: [] },
+    titleSeen: false,
   };
 }
 
@@ -139,7 +201,7 @@ export function migrateProfile(raw: any, playerId: string, now: number): PlayerP
   const base = createProfile(playerId, raw?.name ?? "Resonator", now);
   if (!raw || typeof raw !== "object") return base;
   const merged: any = { ...base, ...raw };
-  for (const k of ["currency", "flux", "story", "daily", "weekly", "settings"] as const) {
+  for (const k of ["currency", "flux", "story", "daily", "weekly", "settings", "coop", "exploration"] as const) {
     merged[k] = { ...(base as any)[k], ...(raw[k] ?? {}) };
   }
   if (!Array.isArray(merged.party) || merged.party.length !== 4) {
@@ -147,6 +209,8 @@ export function migrateProfile(raw: any, playerId: string, now: number): PlayerP
     while (p.length < 4) p.push(null);
     merged.party = p;
   }
+  // v1 → v2: expanded settings (UI scale, touch, damage numbers, HUD layout), co-op, exploration.
+  merged.settings.hudLayout = { ...structuredCloneLayout(), ...(raw.settings?.hudLayout ?? {}) };
   merged.schema = PROFILE_SCHEMA_VERSION;
   merged.playerId = playerId;
   return merged as PlayerProfile;

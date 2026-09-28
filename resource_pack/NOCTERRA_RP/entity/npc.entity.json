@@ -1,0 +1,36 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "noct:npc",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "guild": "textures/noct/entity/npc_guild",
+        "weapon_lab": "textures/noct/entity/npc_weapon_lab",
+        "upgrade": "textures/noct/entity/npc_upgrade",
+        "artifact_lab": "textures/noct/entity/npc_artifact_lab",
+        "shop": "textures/noct/entity/npc_shop",
+        "gacha": "textures/noct/entity/npc_gacha",
+        "craft": "textures/noct/entity/npc_craft",
+        "training": "textures/noct/entity/npc_training",
+        "coop": "textures/noct/entity/npc_coop"
+      },
+      "geometry": {
+        "default": "geometry.noct.enemy_humanoid"
+      },
+      "animations": {
+        "idle": "animation.noct.enemy.idle"
+      },
+      "scripts": {
+        "animate": [
+          "idle"
+        ]
+      },
+      "render_controllers": [
+        "controller.render.noct.npc"
+      ]
+    }
+  }
+}
