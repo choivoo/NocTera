@@ -20,14 +20,14 @@ export function questSignal(s: Session, sig: QuestSignal): void {
   const p = s.player;
   if (res.completed) {
     const c = res.completed;
-    sound(p, "noct.gacha.gold");
+    sound(p, "nocterra.gacha.five_star");
     playAnim(p, "victory");
     p.onScreenDisplay.setTitle("§6§lQUEST COMPLETE", { subtitle: `§f${c.title}`, fadeInDuration: 6, stayDuration: 60, fadeOutDuration: 12 });
     const r = c.reward;
     p.sendMessage(`§6[QUEST] §f${c.title} — Astrum +${r.astrum ?? 0}, Credit +${r.credit ?? 0}${r.signal ? `, Signal +${r.signal}` : ""}`);
     for (const f of c.unlocks ?? []) p.sendMessage(`§b[NEXUS] §f신규 기능 해금 — §l${FEATURE_NAME[f] ?? f}`);
     if (c.chapterEnd) void chapterEnd(s, c.chapterEnd);
-  } else sound(p, "noct.ui.confirm", 1.3);
+  } else sound(p, "nocterra.ui.confirm", 1.3);
   system.runTimeout(() => p.isValid && presentStep(s), res.completed ? (res.completed.chapterEnd ? 200 : 70) : 20);
 }
 
@@ -36,7 +36,7 @@ async function chapterEnd(s: Session, chapter: number): Promise<void> {
   const c = { ...p.location };
   s.busyUntil = system.currentTick + 160;
   await playCutscene(p, [
-    { at: 1, fade: { in: 0.6, hold: 0.8, out: 1.0 }, sound: "noct.gacha.gold" },
+    { at: 1, fade: { in: 0.6, hold: 0.8, out: 1.0 }, sound: "nocterra.gacha.five_star" },
     { at: 10, camera: { pos: orbit(c, 0, 5, 3), facing: { x: c.x, y: c.y + 1.4, z: c.z } }, title: `§6§lCHAPTER ${chapter}`, subtitle: "§fFALLEN NIGHT — CLEAR" },
     { at: 12, camera: { pos: orbit(c, 180, 8, 6), facing: { x: c.x, y: c.y + 1.4, z: c.z }, ease: 6 } },
     { at: 90, title: "§b§lTO BE CONTINUED", subtitle: "§7CHAPTER 2 — 준비 중" },

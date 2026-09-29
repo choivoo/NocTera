@@ -1,0 +1,1635 @@
+{
+  "format_version": "1.20.20",
+  "sound_definitions": {
+    "nocterra.hit.slash": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.hit.heavy": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.hit.magic": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.hit.shot": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.hit.rifle": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.hit.punch": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.switch": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.dodge": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/phantom/swoop1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/phantom/swoop2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/phantom/swoop3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.perfect": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/block/bell/bell_use01",
+          "volume": 1
+        },
+        {
+          "name": "sounds/block/bell/bell_use02",
+          "volume": 1
+        },
+        {
+          "name": "sounds/block/bell/bell_use01",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.telegraph": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/ravager/roar1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/ravager/roar2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/ravager/roar3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.break": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/anvil_land",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.reaction": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/orb",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.levelup": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/levelup",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.charge": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/block/beacon/activate",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.five_star": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/toast",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.four_star": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/block/end_portal/endportal",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.three_star": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/block/amethyst/shimmer",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.sting": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/levelup",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.gacha.shatter": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/glass1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/random/glass2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/random/glass3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.ui.open": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/item/book/open_flip1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/book/open_flip2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/book/open_flip3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.ui.confirm": {
+      "category": "ui",
+      "sounds": [
+        {
+          "name": "sounds/random/click",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.beacon": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/block/beacon/power1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/block/beacon/power2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/block/beacon/power3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.eiden.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.aria.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/cast1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/cast2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.lumia.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/irongolem/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/irongolem/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.kael.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.seria.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/crossbow/shoot1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/crossbow/shoot3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.rin.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.vela.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.zeon.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/fireworks/blast1",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.mirel.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack01": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack02": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack03": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack04": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack05": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.attack06": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/random/hurt",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.skill": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/evocation_illager/prepare_attack2",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.ultimate": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/mob/enderdragon/growl1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/mob/enderdragon/growl3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.hurt": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/damage/hit1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/damage/hit3",
+          "volume": 1
+        }
+      ]
+    },
+    "nocterra.nox.switch_in": {
+      "category": "player",
+      "sounds": [
+        {
+          "name": "sounds/item/trident/return1",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return2",
+          "volume": 1
+        },
+        {
+          "name": "sounds/item/trident/return3",
+          "volume": 1
+        }
+      ]
+    }
+  }
+}

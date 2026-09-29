@@ -28,7 +28,7 @@
           "range": 3.6,
           "arc": 130,
           "hitstop": 4,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 8,
@@ -39,7 +39,7 @@
           "range": 3.6,
           "arc": 130,
           "hitstop": 4,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 8,
@@ -50,7 +50,7 @@
           "range": 3.8,
           "arc": 150,
           "hitstop": 5,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 10,
@@ -61,7 +61,7 @@
           "range": 4.2,
           "arc": 180,
           "hitstop": 7,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:fire_burst",
           "animation": "finisher",
           "breakDmg": 18,
@@ -97,7 +97,7 @@
         {
           "type": "fx",
           "particle": "noct:fire_burst",
-          "sound": "noct.kael.skill"
+          "sound": "nocterra.kael.skill"
         }
       ]
     },
@@ -123,7 +123,7 @@
         {
           "type": "fx",
           "particle": "noct:solar_blast",
-          "sound": "noct.kael.ultimate"
+          "sound": "nocterra.kael.ultimate"
         }
       ]
     },
@@ -249,9 +249,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.kael.attack",
-    "hurt": "noct.kael.hurt",
-    "skill": "noct.kael.skill",
-    "ultimate": "noct.kael.ultimate"
+    "attack": "nocterra.kael.attack01",
+    "hurt": "nocterra.kael.hurt",
+    "skill": "nocterra.kael.skill",
+    "ultimate": "nocterra.kael.ultimate"
   }
 }

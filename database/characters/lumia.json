@@ -29,7 +29,7 @@
           "range": 9,
           "arc": 20,
           "hitstop": 2,
-          "sound": "noct.hit.magic",
+          "sound": "nocterra.hit.magic",
           "particle": "noct:light_orb",
           "animation": "attack1",
           "breakDmg": 4,
@@ -40,7 +40,7 @@
           "range": 9,
           "arc": 20,
           "hitstop": 2,
-          "sound": "noct.hit.magic",
+          "sound": "nocterra.hit.magic",
           "particle": "noct:light_orb",
           "animation": "attack2",
           "breakDmg": 4,
@@ -51,7 +51,7 @@
           "range": 10,
           "arc": 30,
           "hitstop": 2,
-          "sound": "noct.hit.magic",
+          "sound": "nocterra.hit.magic",
           "particle": "noct:light_orb",
           "animation": "attack3",
           "breakDmg": 6,
@@ -84,7 +84,7 @@
         {
           "type": "fx",
           "particle": "noct:halo",
-          "sound": "noct.lumia.skill"
+          "sound": "nocterra.lumia.skill"
         }
       ]
     },
@@ -119,7 +119,7 @@
         {
           "type": "fx",
           "particle": "noct:eden",
-          "sound": "noct.lumia.ultimate"
+          "sound": "nocterra.lumia.ultimate"
         }
       ]
     },
@@ -220,9 +220,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.lumia.attack",
-    "hurt": "noct.lumia.hurt",
-    "skill": "noct.lumia.skill",
-    "ultimate": "noct.lumia.ultimate"
+    "attack": "nocterra.lumia.attack01",
+    "hurt": "nocterra.lumia.hurt",
+    "skill": "nocterra.lumia.skill",
+    "ultimate": "nocterra.lumia.ultimate"
   }
 }

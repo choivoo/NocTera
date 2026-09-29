@@ -127,6 +127,19 @@ if (pe) {
   for (const k of ["noct:char", "noct:anim"]) if (!props[k]?.client_sync) err(`BP player.json missing client_sync property ${k}`);
 }
 
+// Real-Bedrock ids: particles must exist in vanilla (or our RP), every nocterra.* sound must be defined.
+{
+  const vanillaParticles = new Set(JSON.parse(fs.readFileSync("tools/vanilla/particle_ids.json", "utf8")));
+  const fx = fs.readFileSync("scripts/audio/Fx.ts", "utf8");
+  for (const [, v] of fx.matchAll(/"noct:[a-z_]+": "(minecraft:[a-z_]+)"/g)) if (!vanillaParticles.has(v)) err(`particle ${v} does not exist in Bedrock`);
+  const defs = get(`${RP}/sounds/sound_definitions.json`)?.sound_definitions ?? {};
+  const used = new Set();
+  for (const f of [...walk("scripts", ".ts"), ...walk("database", ".json")]) for (const m of fs.readFileSync(f, "utf8").matchAll(/["'`](nocterra\.[a-z0-9_.]+)["'`]/g)) used.add(m[1]);
+  for (const id of used) if (!defs[id]) err(`sound ${id} used but not defined in sound_definitions.json`);
+  const vanillaSounds = new Set(JSON.parse(fs.readFileSync("tools/vanilla/sound_events.json", "utf8")));
+  for (const m of fs.readFileSync("scripts/audio/Fx.ts", "utf8").matchAll(/playSound\("([a-z._]+)"/g)) if (!vanillaSounds.has(m[1])) err(`vanilla sound ${m[1]} missing`);
+}
+
 for (const w of warn) console.warn(`WARN  ${w}`);
 for (const e of errors) console.error(`ERROR ${e}`);
 console.log(`[validate] ${json.size} JSON files, ${charIds.size} characters, ${weaponIds.size} weapons, ${enemyIds.size} enemies — ${errors.length} errors, ${warn.length} warnings`);

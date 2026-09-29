@@ -131,6 +131,13 @@
   "animation.noct.kael.secondary": {
    "loop": true,
    "bones": {
+    "head": {
+     "scale": [
+      1.06,
+      1.06,
+      1.06
+     ]
+    },
     "noct_hair": {
      "rotation": [
       "math.sin(q.anim_time * 150) * 4 + q.modified_move_speed * 25",

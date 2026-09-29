@@ -2,7 +2,7 @@
 
 ## Requirements
 - Node 20+
-- Bedrock 1.26.30+ (client or Dedicated Server) with `@minecraft/server` 2.10.0 / `@minecraft/server-ui` 2.2.0. The player entity override is based on the 1.26 vanilla player.
+- Bedrock **1.26.50+** recommended (Script API 2.10 ships with the 1.26.5x stable line); pack min_engine 1.26.30 (client or Dedicated Server) with `@minecraft/server` 2.10.0 / `@minecraft/server-ui` 2.2.0. The player entity override is based on the 1.26 vanilla player.
 
 ## Commands
 | Command | What it does |
@@ -12,7 +12,7 @@
 | `npm test` | unit tests + Vertical Slice A/B simulations (mock engine, restart via a second process) |
 | `npm run build` | regenerate registry and assets, bundle to `behavior_pack/NOCTERRA_BP/scripts/main.js` |
 | `npm run package` | build, then zip both packs to `builds/NOCTERRA_v<ver>.mcaddon` |
-| `npm run check` | all of the above except package |
+| `npm run check` | typecheck, API audit, validate, rig QA, tests, build |
 
 ## Dedicated server
 1. Copy `behavior_pack/NOCTERRA_BP` to `<bds>/behavior_packs/` and `resource_pack/NOCTERRA_RP` to `<bds>/resource_packs/`.

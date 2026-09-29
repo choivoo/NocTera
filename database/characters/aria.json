@@ -28,7 +28,7 @@
           "range": 4,
           "arc": 40,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 4,
           "arc": 40,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 4.4,
           "arc": 60,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 4,
@@ -61,7 +61,7 @@
           "range": 4.8,
           "arc": 90,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "finisher",
           "breakDmg": 8,
@@ -94,7 +94,7 @@
         {
           "type": "fx",
           "particle": "noct:cyclone",
-          "sound": "noct.aria.skill"
+          "sound": "nocterra.aria.skill"
         }
       ]
     },
@@ -130,7 +130,7 @@
         {
           "type": "fx",
           "particle": "noct:tempest",
-          "sound": "noct.aria.ultimate"
+          "sound": "nocterra.aria.ultimate"
         }
       ]
     },
@@ -237,9 +237,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.aria.attack",
-    "hurt": "noct.aria.hurt",
-    "skill": "noct.aria.skill",
-    "ultimate": "noct.aria.ultimate"
+    "attack": "nocterra.aria.attack01",
+    "hurt": "nocterra.aria.hurt",
+    "skill": "nocterra.aria.skill",
+    "ultimate": "nocterra.aria.ultimate"
   }
 }

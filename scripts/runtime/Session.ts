@@ -70,6 +70,7 @@ export class Session {
   lastHitUntil = 0;
   inCombatUntil = 0;
   busyUntil = 0; // cutscene / gacha lock: inputs ignored
+  lockId: string | null = null; // Target Lock
   setBonusUntil = new Map<string, number>(); // 4pc timed set bonuses
   private statCache = new Map<string, { at: number; stats: FinalStats }>();
 

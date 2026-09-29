@@ -37,7 +37,7 @@ function reward(s: Session, r: Cost, label: string): void {
   grant(s.profile, r);
   addNexusExp(s.profile, 60);
   game().save.saveNow(s.id);
-  sound(s.player, "noct.gacha.purple");
+  sound(s.player, "nocterra.gacha.four_star");
   s.player.onScreenDisplay.setTitle(" ", { subtitle: `§e${label}  §6✦${r.astrum ?? 0}`, fadeInDuration: 2, stayDuration: 30, fadeOutDuration: 8 });
 }
 
@@ -93,7 +93,7 @@ function tickPlayer(s: Session, t: number): void {
     if (dist(pos, { x: base.x + pad[0], y: base.y, z: base.z + pad[2] }) < 1.2) {
       const nr = { id: pz.id, next: idx + 1, until: idx === 0 ? t + pz.timeLimit * 20 : cur!.until };
       puzzleRuns.set(s.id, nr);
-      sound(p, "noct.gacha.blue", 1 + idx * 0.2);
+      sound(p, "nocterra.gacha.three_star", 1 + idx * 0.2);
       if (nr.next >= pz.pads.length) {
         puzzleRuns.delete(s.id);
         ex.puzzles.push(pz.id);

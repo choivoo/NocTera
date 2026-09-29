@@ -1,5 +1,52 @@
 # Changelog
 
+## 1.0.1 — Real-device stabilization release
+
+This is a stabilization release, not a content release. **Every item is SIMULATION or STATIC VERIFIED and UNVERIFIED ON DEVICE** (see docs/AUDIT_1.0.1.md and docs/DEVICE_TEST.md).
+
+### Bedrock compatibility
+- `tools/audit-api.mjs` checks manifest ↔ typings versions, min_engine ↔ the player.json format, that the mock is a subset of the real API, and early-execution rules.
+- Particle and sound ids are validated against Mojang's vanilla lists. This fixed 1 invalid particle and 5 invalid sound events.
+- Audio is restructured: every sound is a replaceable `nocterra.*` event in RP `sound_definitions.json` (122 events, per-character attack01–06/skill/ultimate/hurt/switch_in, gacha five_star/sting/shatter).
+- Engine registries are typed (no `any`).
+
+### Player model safety
+- Character motion is disabled in first person and during swim, sleep, ride, glide and crawl (vanilla keeps those poses).
+- `tools/qa-rig.mjs`: per-character bones, textures, animations, pivots, floating-weapon connectivity, detached limbs, scale, grounding, facing, UV bounds and animation uniqueness.
+- Proportions pass: anime head scale; Seria (longer blade, GLACIA ornaments), Nox (slimmer, asymmetric sash, Umbra glow), Kael (broader, giant greatsword, mechanical arm, shoulder plates), Lumia (slender, robe train).
+
+### Mobile combat and UX
+- Aim Assist 2.0 for all ranged characters: cone + distance + current-target score, line-of-sight raycast (no targeting through walls), strength setting.
+- Target Lock (setting): acquires the nearest visible enemy, turns attacks toward it, releases on death or lost sight. HUD shows ◎.
+- Hits land on the animation impact frame. Dodge cancels attack recovery.
+- HUD Density MINIMAL / STANDARD / FULL, Safe Area SMALL / MEDIUM / LARGE, Graphics PERFORMANCE / BALANCED / QUALITY.
+
+### Performance
+- ParticleBudgetManager: 40 / 80 / 140 per second (the lowest preset among players wins), rings scaled by preset.
+- Damage-number entity pool with reuse, 4-tick coalescing on the same target, per-preset caps, and TTL cleanup.
+- Enemy AI budget: engaged or near every tick, medium every 3 ticks, far every 10 ticks.
+
+### Save and transaction hardening
+- Save schema v3 (migration from v1/v2).
+- Bootstrap state machine (created → starter_granted → ready / recovery). A failed first join rolls back and retries.
+- Gacha transactions `TX-<account>-<time>-<seq>`: CREATED → CURRENCY_RESERVED → ROLLED → REWARD_GRANTED → COMMITTED. Snapshot rollback on any failure, idempotent request ids, and crash recovery on login.
+- Elite/boss rewards save immediately. Reconnect resets camera, animation and input locks.
+- Bosses: duplicate-spawn guard, arena leash (26 blocks), reset after 30 s abandoned.
+- Error log (last 20, persisted, no device data). Boot is module-isolated.
+
+### Visual polish
+- Portraits v2 and 6 element icons.
+- 5★ sequence: purple detection → gold shift → sting → flash → signature reveal (edge crystals, silhouette, shatter). Seria, Kael, Lumia and Nox each have their own reveal.
+
+### Dev tools
+- `/noct:noct selftest`: PASS/WARN/FAIL for profile, save, player override, registered items/entities, rig resources, UI resources, banners, quests, bosses, modules and errors.
+- `/noct:noct report`: version, API, schema, character, party, quest, UI/graphics presets, FX/pool stats, modules and recent errors. Saved to the world.
+- docs/DEVICE_TEST.md: a 25-step Galaxy Z Fold checklist with expected results.
+
+### Tests
+- 50 automated tests (was 36). New: hardening (tx crash at every state, recovery, bootstrap failure, save stress), runtime QA (aim/LOS, lock, damage pool, boss leash/reset/no-dup, reconnect mid-ultimate), dev tools, and the UI QA matrix.
+
+
 ## 1.0.0 — Release build: Character design + Mobile UI/UX
 
 Built on top of 0.2 without resetting anything. Save schema 1 → 2 migrates automatically. See docs/AUDIT.md.

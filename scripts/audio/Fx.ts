@@ -6,7 +6,6 @@
  * low-end phones.
  */
 import { system, type Dimension, type Player, type Vector3 } from "@minecraft/server";
-import { Config } from "../data/registry";
 
 // REPLACE_ME: swap to custom noct:* particles as RP assets are authored.
 const PARTICLES: Record<string, string> = {
@@ -20,7 +19,7 @@ const PARTICLES: Record<string, string> = {
   "noct:halo": "minecraft:totem_particle",
   "noct:eden": "minecraft:totem_particle",
   "noct:void_slash": "minecraft:portal_reverse_particle",
-  "noct:shadow_puff": "minecraft:large_smoke_particle",
+  "noct:shadow_puff": "minecraft:basic_smoke_particle",
   "noct:void_field": "minecraft:portal_directional",
   "noct:spark_tracer": "minecraft:electric_spark_particle",
   "noct:spark_burst": "minecraft:electric_spark_particle",
@@ -47,52 +46,44 @@ const PARTICLES: Record<string, string> = {
   "noct:lava_pillar": "minecraft:lava_particle",
 };
 
-// REPLACE_ME: custom noct.* sound events in NOCTERRA_RP/sounds/sound_definitions.json.
-const SOUNDS: Record<string, string> = {
-  "noct.hit.slash": "random.hurt",
-  "noct.hit.heavy": "mob.irongolem.hit",
-  "noct.hit.magic": "mob.evocation_illager.cast_spell",
-  "noct.hit.shot": "crossbow.shoot",
-  "noct.hit.rifle": "firework.blast",
-  "noct.hit.punch": "mob.player.hurt",
-  "noct.skill": "mob.evocation_illager.prepare_attack",
-  "noct.ultimate": "mob.enderdragon.growl",
-  "noct.switch": "item.trident.return",
-  "noct.dodge": "mob.phantom.swoop",
-  "noct.perfect": "block.bell.hit",
-  "noct.telegraph": "mob.ravager.roar",
-  "noct.break": "random.anvil_land",
-  "noct.reaction": "random.orb",
-  "noct.levelup": "random.levelup",
-  "noct.gacha.charge": "block.beacon.activate",
-  "noct.gacha.gold": "ui.toast.challenge_complete",
-  "noct.gacha.purple": "block.end_portal.spawn",
-  "noct.gacha.blue": "block.amethyst_block.chime",
-  "noct.ui.open": "item.book.page_turn",
-  "noct.ui.confirm": "random.click",
-  "noct.beacon": "block.beacon.power_select",
+/** Graphics presets (NOCTERRA's own FX only — Minecraft video settings are never touched). */
+export type GraphicsPreset = "PERFORMANCE" | "BALANCED" | "QUALITY";
+export const GRAPHICS: Record<GraphicsPreset, { particlesPerSecond: number; dmgNumbers: number; fxLifetime: number; rings: number }> = {
+  PERFORMANCE: { particlesPerSecond: 40, dmgNumbers: 3, fxLifetime: 0.6, rings: 0.5 },
+  BALANCED: { particlesPerSecond: 80, dmgNumbers: 6, fxLifetime: 1, rings: 1 },
+  QUALITY: { particlesPerSecond: 140, dmgNumbers: 10, fxLifetime: 1.3, rings: 1.25 },
 };
 
-let budget = 0;
-let budgetTick = -1;
+/** ParticleBudgetManager: a rolling 20-tick window shared by the whole server (the phone renders them all). */
+class ParticleBudget {
+  preset: GraphicsPreset = "BALANCED";
+  private windowStart = -1;
+  private used = 0;
+  dropped = 0;
+  take(n: number): number {
+    const t = system.currentTick;
+    if (t - this.windowStart >= 20) {
+      this.windowStart = t;
+      this.used = 0;
+    }
+    const cap = GRAPHICS[this.preset].particlesPerSecond;
+    const ok = Math.max(0, Math.min(n, cap - this.used));
+    this.used += ok;
+    this.dropped += n - ok;
+    return ok;
+  }
+}
+export const particleBudget = new ParticleBudget();
 
 function resolveSound(id: string): string {
-  if (SOUNDS[id]) return SOUNDS[id];
-  // Character sounds (noct.seria.skill) fall back to generic slot sounds.
-  const slot = id.split(".").pop() ?? "";
-  if (slot === "skill") return SOUNDS["noct.skill"];
-  if (slot === "ultimate") return SOUNDS["noct.ultimate"];
-  if (slot === "attack") return SOUNDS["noct.hit.slash"];
-  return "random.click";
+  // Legacy noct.* ids resolve to their nocterra.* event.
+  return id.startsWith("noct.") ? `nocterra.${id.slice(5)}` : id;
 }
 
 export function particle(dim: Dimension, id: string, at: Vector3, count = 1): void {
-  if (budgetTick !== system.currentTick) {
-    budgetTick = system.currentTick;
-    budget = Config.performance.particleBudgetPerTick;
-  }
   const real = PARTICLES[id] ?? id;
-  for (let i = 0; i < count && budget > 0; i++, budget--) {
+  const allowed = particleBudget.take(count);
+  for (let i = 0; i < allowed; i++) {
     try {
       dim.spawnParticle(real, count === 1 ? at : { x: at.x + (Math.random() - 0.5) * 1.5, y: at.y + Math.random(), z: at.z + (Math.random() - 0.5) * 1.5 });
     } catch {
@@ -102,6 +93,7 @@ export function particle(dim: Dimension, id: string, at: Vector3, count = 1): vo
 }
 
 export function ring(dim: Dimension, id: string, center: Vector3, radius: number, points = 12): void {
+  points = Math.max(4, Math.round(points * GRAPHICS[particleBudget.preset].rings));
   for (let i = 0; i < points; i++) {
     const a = (i / points) * Math.PI * 2;
     particle(dim, id, { x: center.x + Math.cos(a) * radius, y: center.y + 0.2, z: center.z + Math.sin(a) * radius });

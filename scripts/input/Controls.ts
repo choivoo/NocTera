@@ -6,7 +6,7 @@
  * to a glowing frame on Ultimate Ready / QTE, co-op-locked slots dim.
  * Left-click on an enemy also performs ATK (keyboard/mouse).
  */
-import { ItemLockMode, ItemStack, system, world, EntityComponentTypes, type Player } from "@minecraft/server";
+import { type ItemComponentRegistry, ItemLockMode, ItemStack, system, world, EntityComponentTypes, type Player } from "@minecraft/server";
 import { game } from "../runtime/Game";
 import { dodge, normalAttack, switchTo, useSkill, useUltimate } from "../combat/CombatRuntime";
 import { openMainMenu } from "../ui/Menus";
@@ -93,9 +93,9 @@ export function dispatch(player: Player, action: string): void {
 }
 
 /** Must be called from system.beforeEvents.startup. */
-export function registerControlComponent(registry: { registerCustomComponent(name: string, c: any): void }): void {
+export function registerControlComponent(registry: ItemComponentRegistry): void {
   registry.registerCustomComponent("noct:control", {
-    onUse(ev: { source: Player }, params: { params: unknown }) {
+    onUse(ev, params) {
       const action = (params?.params as { action?: string })?.action;
       if (action) dispatch(ev.source, action);
     },

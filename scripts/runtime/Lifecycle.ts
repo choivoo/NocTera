@@ -2,7 +2,8 @@
 import { system, world, EntityComponentTypes, type Player } from "@minecraft/server";
 import { game } from "./Game";
 import { Session } from "./Session";
-import { bootstrapAccount, onLogin } from "../account/AccountService";
+import { runBootstrap, onLogin } from "../account/AccountService";
+import { recordError } from "../core/ErrorLog";
 import { bus } from "../core/EventBus";
 import { giveControls } from "../input/Controls";
 import { tickSession } from "../combat/CombatRuntime";
@@ -21,19 +22,63 @@ function join(player: Player): void {
   const g = game();
   // Both the reload scan and playerSpawn can reach here for the same player.
   if (g.sessions.has(player.id)) return;
-  const [profile, isNew] = g.save.load(player.id, player.name);
+  let profile;
+  let isNew = false;
+  try {
+    [profile, isNew] = g.save.load(player.id, player.name);
+  } catch (e) {
+    recordError("join.load", e);
+    player.sendMessage("§c[NOCTERRA] 프로필 로드 실패 — /noct:noct report 로 오류를 확인하세요. 재접속 시 다시 시도합니다.");
+    return;
+  }
   const now = g.clock.now();
-  const starter = bootstrapAccount(profile, now);
-  onLogin(profile, now);
-  if (starter) startQuest(profile, FIRST_QUEST);
+  // Crash recovery before anything else touches currency.
+  const tx = g.gacha.recover(profile);
+  if (tx !== "none") log.warn(`${player.name}: pending gacha tx ${tx}`);
+  const boot = runBootstrap(profile, now, (p) => {
+    startQuest(p, FIRST_QUEST);
+  });
+  if (!boot.ok) recordError("join.bootstrap", profile.bootstrap.lastError);
+  try {
+    onLogin(profile, now);
+  } catch (e) {
+    recordError("join.onLogin", e);
+  }
   const s = new Session(player, profile);
   g.sessions.set(player.id, s);
-  restoreGroup(s);
   g.save.saveNow(player.id);
-  giveControls(player);
+  // Reconnect safety: never inherit a camera/animation/lock state from a dropped session.
+  resetClientState(s);
+  try {
+    restoreGroup(s);
+    giveControls(player);
+  } catch (e) {
+    recordError("join.controls", e);
+  }
   bus.emit("profile:loaded", { playerId: player.id, isNew });
-  log.info(`${player.name} joined (new=${isNew}, chars=${Object.keys(profile.characters).length})`);
-  void intro(s, starter);
+  log.info(`${player.name} joined (new=${isNew}, stage=${profile.bootstrap.stage}, chars=${Object.keys(profile.characters).length})`);
+  intro(s, boot.starter).catch((e) => {
+    recordError("join.title", e);
+    s.busyUntil = 0; // never trap the player behind a failed title/loading screen
+    resetClientState(s);
+  });
+}
+
+/** Clears camera, fades, animation codes and input locks (join, respawn, recovery). */
+export function resetClientState(s: Session): void {
+  const p = s.player;
+  try {
+    p.camera.clear();
+  } catch {
+    /* ignore */
+  }
+  try {
+    p.setProperty("noct:anim", 0);
+  } catch {
+    /* ignore */
+  }
+  s.busyUntil = 0;
+  showCharacter(p, s.activeId);
 }
 
 async function intro(s: Session, firstTime: boolean): Promise<void> {
@@ -61,7 +106,7 @@ export function registerLifecycle(): void {
     else {
       giveControls(player);
       const s = game().session(player);
-      if (s) showCharacter(player, s.activeId);
+      if (s) resetClientState(s);
     }
   });
   world.beforeEvents.playerLeave.subscribe(({ player }) => {
@@ -85,7 +130,7 @@ export function registerLifecycle(): void {
       try {
         tickSession(s);
       } catch (e) {
-        log.error(`tick ${s.id}: ${e}`);
+        recordError("combat.tick", e);
       }
     }
     g.save.tick();

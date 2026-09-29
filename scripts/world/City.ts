@@ -109,7 +109,7 @@ export function registerCity(): void {
     const tag = target.getTags().find((t: string) => t.startsWith("npc:"));
     const s = game().session(player);
     if (!s || !tag) return;
-    sound(player, "noct.ui.open");
+    sound(player, "nocterra.ui.open");
     void openFor(s, tag.slice(4));
   });
 }

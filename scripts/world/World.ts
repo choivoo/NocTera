@@ -9,6 +9,7 @@ import { particle, sound } from "../audio/Fx";
 import { Enemies } from "../data/registry";
 import { logger } from "../core/Logger";
 import { groupSize } from "../coop/CoopManager";
+import { guarded } from "../core/ErrorLog";
 
 const log = logger("world");
 export const Region = astera;
@@ -83,7 +84,7 @@ export function teleportToBeacon(s: Session, id: string): boolean {
     if (!p.isValid) return;
     p.teleport(resolve(b.offset), { dimension: overworld() });
     healParty(s);
-    sound(p, "noct.beacon");
+    sound(p, "nocterra.beacon");
   }, 6);
   return true;
 }
@@ -123,7 +124,7 @@ function worldTick(): void {
       if (fresh) {
         s.profile.unlockedBeacons.push(b.id);
         p.onScreenDisplay.setTitle("§bNEXUS BEACON", { subtitle: `§f${b.name} 활성화`, fadeInDuration: 5, stayDuration: 40, fadeOutDuration: 10 });
-        sound(p, "noct.beacon");
+        sound(p, "nocterra.beacon");
         g.save.saveNow(s.id);
       }
       if (flags.lastBeacon !== b.id) {
@@ -180,6 +181,16 @@ export function spawnBoss(id: string, s: Session): boolean {
   if (!def) return false;
   const dim = s.player.dimension;
   const pos = b ? resolve(b.offset, dim) : { x: s.player.location.x + 6, y: s.player.location.y, z: s.player.location.z };
+  // Reconnect / re-present guard: never spawn a second copy of a live boss.
+  if (enemies.findBoss(id, pos)) return true;
+  try {
+    for (const ex of dim.getEntities({ type: def.entity, location: pos, maxDistance: 64 })) {
+      enemies.register(ex);
+      return true;
+    }
+  } catch {
+    /* unloaded */
+  }
   const e = dim.spawnEntity(def.entity, pos);
   e.addTag("boss");
   const players = Math.max(groupSize(s), [...game().sessions.values()].filter((x) => dist(x.player.location, pos) < 64).length);
@@ -188,5 +199,5 @@ export function spawnBoss(id: string, s: Session): boolean {
 }
 
 export function registerWorld(): void {
-  system.runInterval(worldTick, 20);
+  system.runInterval(guarded("world.tick", worldTick), 20);
 }

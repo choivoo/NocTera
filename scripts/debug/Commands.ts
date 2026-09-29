@@ -3,7 +3,7 @@
  * Registered through the stable CustomCommandRegistry with Admin permission,
  * so in production only operators can run them.
  */
-import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, type Player, type CustomCommandOrigin } from "@minecraft/server";
+import { type CustomCommandRegistry, CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system, type Player, type CustomCommandOrigin } from "@minecraft/server";
 import { game } from "../runtime/Game";
 import { Characters, Banners, Enemies } from "../data/registry";
 import { obtainCharacter, addCharacterExp } from "../character/CharacterManager";
@@ -19,10 +19,13 @@ import { respawnNpcs } from "../world/City";
 import { showcase } from "../camera/Showcase";
 import { playAnim, type AnimName } from "../character/CharacterVisual";
 import { groupSize, characterAllowance } from "../coop/CoopManager";
+import { buildReport } from "./Report";
+import { formatChecks, runSelfTest } from "./SelfTest";
+import { clearErrors } from "../core/ErrorLog";
 
-const SUBS = ["debug", "givechar", "level", "astrum", "banner", "boss", "quest", "tp", "reset", "setup", "spawn", "imprint", "save", "stats", "unlock", "npc", "preview", "anim", "coop"];
+const SUBS = ["debug", "givechar", "level", "astrum", "banner", "boss", "quest", "tp", "reset", "setup", "spawn", "imprint", "save", "stats", "unlock", "npc", "preview", "anim", "coop", "report", "selftest", "clearerrors"];
 
-export function registerCommands(registry: any): void {
+export function registerCommands(registry: CustomCommandRegistry): void {
   registry.registerEnum("noct:sub", SUBS);
   registry.registerCommand(
     {
@@ -49,7 +52,10 @@ export function registerCommands(registry: any): void {
 function run(player: Player, sub: string, arg?: string, value?: number): void {
   const g = game();
   const s = g.session(player);
-  if (!s) return player.sendMessage("§cno session");
+  if (!s) {
+    if (sub === "selftest") return player.sendMessage(formatChecks(runSelfTest(null)));
+    return player.sendMessage("§cno session (join failed?) — try /noct:noct selftest");
+  }
   const p = s.profile;
   const now = g.clock.now();
   const say = (m: string) => player.sendMessage(`§8[noct] §f${m}`);
@@ -124,6 +130,17 @@ function run(player: Player, sub: string, arg?: string, value?: number): void {
       break;
     case "anim":
       playAnim(player, (arg ?? "select") as AnimName);
+      break;
+    case "report":
+      for (const l of buildReport(s).split("\n")) player.sendMessage(`§7${l}`);
+      say("saved to world property noct:last_report");
+      break;
+    case "selftest":
+      player.sendMessage(formatChecks(runSelfTest(s)));
+      break;
+    case "clearerrors":
+      clearErrors();
+      say("error log cleared");
       break;
     case "coop":
       say(`group=${p.coop.groupId} size=${groupSize(s)} allowance=${characterAllowance(groupSize(s))}`);

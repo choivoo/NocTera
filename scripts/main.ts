@@ -16,6 +16,8 @@ import { registerQuestRuntime } from "./quest/QuestRuntime";
 import { registerDungeons } from "./dungeon/DungeonManager";
 import { Characters, Banners, Enemies } from "./data/registry";
 import { logger } from "./core/Logger";
+import { initErrorLog } from "./core/ErrorLog";
+import { markModule } from "./debug/Modules";
 
 import { VERSION } from "./version";
 import { registerCity } from "./world/City";
@@ -25,22 +27,47 @@ export { VERSION };
 const log = logger("boot");
 
 system.beforeEvents.startup.subscribe((ev) => {
-  registerControlComponent(ev.itemComponentRegistry);
-  registerCommands(ev.customCommandRegistry);
+  try {
+    registerControlComponent(ev.itemComponentRegistry);
+    markModule("control-component", true);
+  } catch (e) {
+    markModule("control-component", false, e);
+  }
+  try {
+    registerCommands(ev.customCommandRegistry);
+    markModule("commands", true);
+  } catch (e) {
+    markModule("commands", false, e);
+  }
 });
 
 world.afterEvents.worldLoad.subscribe(() => {
+  initErrorLog(
+    () => world.getDynamicProperty("noct:errors") as string | undefined,
+    (json) => world.setDynamicProperty("noct:errors", json),
+  );
   initGame(new DynamicPropertyStorage());
-  registerEnemyEvents();
-  registerControlEvents();
-  registerWorld();
-  registerQuestRuntime();
-  registerDungeons();
-  registerCity();
-  registerExploration();
-  registerDamageNumbers();
-  registerLifecycle();
-  registerHud(() => game().sessions.values());
+  const mods: [string, () => void][] = [
+    ["enemies", registerEnemyEvents],
+    ["controls", registerControlEvents],
+    ["world", registerWorld],
+    ["quests", registerQuestRuntime],
+    ["dungeons", registerDungeons],
+    ["city", registerCity],
+    ["exploration", registerExploration],
+    ["damage-numbers", registerDamageNumbers],
+    ["lifecycle", registerLifecycle],
+    ["hud", () => registerHud(() => game().sessions.values())],
+  ];
+  // One failing module must not stop the rest from booting (reported via /noct:noct report).
+  for (const [name, fn] of mods) {
+    try {
+      fn();
+      markModule(name, true);
+    } catch (e) {
+      markModule(name, false, e);
+    }
+  }
   log.info(`NOCTERRA ${VERSION} — ${Characters.size} characters, ${Banners.size} banners, ${Enemies.size} enemies`);
 });
 

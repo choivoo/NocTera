@@ -19,8 +19,10 @@ import { addDailyProgress } from "../account/Progression";
 import { imprintFourPiece } from "../artifact/ImprintRuntime";
 import { playAnim, showCharacter, type AnimName } from "../character/CharacterVisual";
 import { playUltimateCinematic } from "../camera/UltimateCinematic";
+import artData from "../../database/art/characters.json";
 import { allowedSlots } from "../coop/CoopManager";
 import { spawnDamageNumber } from "../ui/DamageNumbers";
+import { faceTarget, hasLineOfSight, pickTarget, updateLock } from "./Targeting";
 import { defenseBonus, offenseBonus, passiveValue } from "../character/Passives";
 
 const C = () => Config.combat;
@@ -45,12 +47,14 @@ function targetsFor(s: Session, e: { range: number; arc?: number; radius?: numbe
     const arc = e.arc ?? 60;
     const inRange = enemiesNear(s, pos, e.range + 0.8);
     list = inRange.filter((en) => dist(pos, en.location) < 1.2 || angleTo(pos, view, en.location) <= arc / 2);
-    // Touch aim-assist: narrow ranged attacks snap to the nearest enemy in a 70° cone.
-    const assist = (35 * s.profile.settings.aimAssist) / 70;
-    if (list.length === 0 && arc <= 30 && assist > 0) {
-      const assisted = inRange.filter((en) => angleTo(pos, view, en.location) <= assist);
-      assisted.sort((a, b) => dist(pos, a.location) - dist(pos, b.location));
-      list = assisted.slice(0, 1);
+    // Aim Assist 2.0 (ranged): best candidate by angle + distance + current target, with line of sight.
+    if (arc <= 30) {
+      const assist = (35 * s.profile.settings.aimAssist) / 70;
+      const visible = list.filter((en) => hasLineOfSight(s, en));
+      if (visible.length === 0) {
+        const t = pickTarget(s, e.range + 0.8, assist);
+        list = t ? [t] : [];
+      } else list = visible;
     }
   }
   // Nearest first; cap hits per action for performance.
@@ -99,7 +103,7 @@ function gainGauge(s: Session, rt: CharRuntime, amount: number): void {
     s.invalidateStats();
     s.player.onScreenDisplay.setTitle(" ", { subtitle: `§b${m.state.name.toUpperCase()}`, fadeInDuration: 2, stayDuration: 20, fadeOutDuration: 6 });
     ring(s.player.dimension, "noct:frost_burst", s.player.location, 2.5, 16);
-    sound(s.player, "noct.perfect", 0.8);
+    sound(s.player, "nocterra.perfect", 0.8);
   }
 }
 
@@ -162,7 +166,7 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
   if (res.crit) particle(dim, "noct:slash_arc", at);
   if (el.reaction) {
     particle(dim, "noct:reaction", at, 3);
-    worldSound(dim, "noct.reaction", at, 1.2);
+    worldSound(dim, "nocterra.reaction", at, 1.2);
     if (el.reaction.id === "SPREAD" && el.consumed) {
       for (const other of enemiesNear(s, target.location, 4)) {
         if (other.id === target.id) continue;
@@ -180,7 +184,7 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
   }
   if (broke) {
     particle(dim, "noct:break", at, 4);
-    worldSound(dim, "noct.break", at);
+    worldSound(dim, "nocterra.break", at);
     bus.emit("combat:break", { playerId: s.id, targetId: target.id });
     markQte(s, "break");
   }
@@ -206,7 +210,7 @@ export function hitEnemy(s: Session, target: Entity, o: HitOptions): number {
     /* entity gone */
   }
 
-  spawnDamageNumber(s, dim, target.location, { amount: res.amount, crit: res.crit, reaction: el.reaction?.name ?? null, element: o.element, kind: "hit" });
+  spawnDamageNumber(s, dim, target.location, { amount: res.amount, crit: res.crit, reaction: el.reaction?.name ?? null, element: o.element, kind: "hit" }, target.id);
   if (broke) {
     spawnDamageNumber(s, dim, target.location, { amount: 0, crit: false, reaction: null, element: null, kind: "break" });
     s.player.onScreenDisplay.setTitle("§e§lBREAK", { subtitle: "", fadeInDuration: 0, stayDuration: 8, fadeOutDuration: 6 });
@@ -239,7 +243,7 @@ function markQte(s: Session, trigger: "frozen" | "break" | "airborne" | "shocked
     const q = getCharacter(rt.id).qte;
     if (q?.trigger === trigger && rt.qteReadyUntil <= t) {
       rt.qteReadyUntil = t + 60;
-      sound(s.player, "noct.perfect", 1.6, 0.6);
+      sound(s.player, "nocterra.perfect", 1.6, 0.6);
     }
   }
 }
@@ -387,6 +391,9 @@ function canAct(s: Session): CharRuntime | null {
   if (t < s.busyUntil) return null;
   const rt = s.active;
   if (!rt || rt.hp <= 0) return null;
+  // Target Lock: attacks and skills are corrected toward the locked enemy.
+  const locked = updateLock(s);
+  if (locked) faceTarget(s, locked);
   return rt;
 }
 
@@ -405,15 +412,25 @@ export function normalAttack(s: Session): void {
   const view = s.player.getViewDirection();
   const fxAt = { x: s.player.location.x + view.x * 1.5, y: s.player.location.y + 1.2, z: s.player.location.z + view.z * 1.5 };
   particle(s.player.dimension, step.hit.particle, fxAt);
-  let landed = 0;
-  for (const target of targets) {
-    if (hitEnemy(s, target, { mult: step.hit.mult * scale, element, breakDmg: step.hit.breakDmg ?? 4, kind: "normal", knockback: step.finisher ? 0.5 : 0.08 })) landed++;
-  }
-  if (landed > 0) {
-    gainEnergy(s, rt, C().energyPerHit);
-    gainGauge(s, rt, def.mechanic.gainPerHit * (step.finisher ? 2 : 1));
-    if (step.finisher && s.profile.settings.cameraShake) shake(s, 0.08);
-  }
+  // Damage lands on the animation's impact frame (character tempo), not on the tap frame.
+  const tempo = (artData as Record<string, { motion?: { tempo?: number } }>)[rt.id]?.motion?.tempo ?? 1;
+  const impact = Math.max(1, Math.min(5, Math.round((3.6 / tempo) * (step.finisher ? 1.3 : 1))));
+  const hitNow = () => {
+    let landed = 0;
+    for (const target of targets) {
+      if (hitEnemy(s, target, { mult: step.hit.mult * scale, element, breakDmg: step.hit.breakDmg ?? 4, kind: "normal", knockback: step.finisher ? 0.5 : 0.08, charId: rt.id })) landed++;
+    }
+    if (landed > 0) {
+      gainEnergy(s, rt, C().energyPerHit);
+      gainGauge(s, rt, def.mechanic.gainPerHit * (step.finisher ? 2 : 1));
+      if (step.finisher && s.profile.settings.cameraShake) shake(s, 0.08);
+    }
+  };
+  system.runTimeout(() => {
+    // Cancelled if the player switched character or dodged out of the swing.
+    if (!s.player.isValid || s.activeId !== rt.id || s.dodge.lastDodgeTick > t) return;
+    hitNow();
+  }, impact);
 }
 
 export function useSkill(s: Session): void {
@@ -485,6 +502,7 @@ export function dodge(s: Session): void {
   if (t < s.dodge.cooldownUntil) return;
   s.dodge.lastDodgeTick = t;
   s.dodge.iframesUntil = t + C().dodgeIframes;
+  rt.combo.cancelRecovery(); // dodge-cancel: next attack is available immediately
   s.dodge.cooldownUntil = t + Math.round(cd);
   const v = s.player.getVelocity();
   const moving = Math.hypot(v.x, v.z) > 0.05;
@@ -497,7 +515,7 @@ export function dodge(s: Session): void {
   }
   particle(s.player.dimension, "noct:shadow_puff", s.player.location);
   playAnim(s.player, "dodge");
-  sound(s.player, "noct.dodge");
+  sound(s.player, "nocterra.dodge");
 }
 
 /** Called by EnemyRuntime when an attack is dodged inside the perfect window. */
@@ -508,7 +526,7 @@ export function onPerfectDodge(s: Session): void {
   s.dodge.iframesUntil = t + 20;
   particle(s.player.dimension, "noct:perfect_dodge", s.player.location);
   playAnim(s.player, "perfect");
-  sound(s.player, "noct.perfect", 1.4);
+  sound(s.player, "nocterra.perfect", 1.4);
   s.player.onScreenDisplay.setTitle("§b§lPERFECT", { subtitle: "§7COUNTER READY", fadeInDuration: 0, stayDuration: 10, fadeOutDuration: 5 });
   try {
     // Brief cold edge flash — reads as time-slow without covering the fight.
@@ -563,7 +581,7 @@ export function switchTo(s: Session, slot: number): void {
   s.invalidateStats();
   if (fromId) s.chars.get(fromId)?.combo.reset();
   const def = getCharacter(targetId);
-  sound(p, "noct.switch", qte ? 1.5 : 1.1);
+  sound(p, "nocterra.switch", qte ? 1.5 : 1.1);
   p.onScreenDisplay.setTitle(" ", { subtitle: `${qte ? "§e§lQTE  " : "§f"}${def.name}`, fadeInDuration: 0, stayDuration: 10, fadeOutDuration: 5 });
   system.runTimeout(() => {
     if (!p.isValid) return;

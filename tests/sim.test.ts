@@ -33,3 +33,5 @@ test("Vertical Slice A end-to-end (mock engine, two processes = server restart)"
 test("Vertical Slice B: gacha → obtain → party → field → persist", () => runSlice("slice-b"));
 test("Vertical Slice C: full Chapter 1 → rewards → unlocks → persist", () => runSlice("slice-c"));
 test("UI QA: HUD fits COVER / PHONE / FOLD_EXPANDED / WINDOWS at 80–120% scale", () => runSlice("ui-qa", true));
+test("Runtime QA: aim assist/LOS, target lock, dmg pool, boss leash/reset, reconnect", () => runSlice("runtime-qa", true));
+test("Dev tools: /noct:noct selftest (no FAIL on clean install) + report", () => runSlice("devtools", true));

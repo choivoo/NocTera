@@ -89,8 +89,8 @@ async function run() {
     const hound3 = m.overworld.spawnEntity("noct:frost_mite", { x: 3, y: 64, z: 0.5 }); // on the firing line
     const st3 = enemies.state(hound3 as any)!;
     m.tap(p, "attack");
-    m.advance(2);
-    assert.ok(st3.hp < st3.maxHp, "Rin's shots land");
+    m.advance(5);
+    assert.ok(st3.hp < st3.maxHp, "Rin's shots land (on the impact frame)");
     for (let i = 0; i < 400 && (hound.isValid || hound2.isValid || hound3.isValid); i++) {
       m.tap(p, "attack");
       if (i % 20 === 0) m.tap(p, "skill");

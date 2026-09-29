@@ -1,7 +1,7 @@
 /** Persistent account data. Everything here is server-authoritative. */
 import type { StatBlock } from "../data/types";
 
-export const PROFILE_SCHEMA_VERSION = 2;
+export const PROFILE_SCHEMA_VERSION = 3;
 
 export interface CharacterInstance {
   characterId: string;
@@ -99,6 +99,30 @@ export interface PlayerProfile {
   coop: { groupId: string | null };
   exploration: { treasures: string[]; motes: string[]; puzzles: string[] };
   titleSeen: boolean;
+  /** First-join / recovery state machine (see AccountService.bootstrap). */
+  bootstrap: BootstrapState;
+  /** Gacha transaction log (see GachaService). */
+  gachaTx: { seq: number; pending: GachaTxRecord | null; committed: string[] };
+}
+
+export type BootstrapStage = "created" | "starter_granted" | "ready" | "recovery";
+export interface BootstrapState {
+  stage: BootstrapStage;
+  attempts: number;
+  lastError: string | null;
+  migratedFrom: number | null;
+}
+
+export type GachaTxState = "CREATED" | "CURRENCY_RESERVED" | "ROLLED" | "REWARD_GRANTED" | "COMMITTED" | "ROLLED_BACK";
+export interface GachaTxRecord {
+  id: string;
+  state: GachaTxState;
+  banner: string;
+  count: number;
+  price: { signal: number; astrum: number };
+  /** Pre-transaction snapshot of every field a pull can change (for rollback). */
+  snapshot: string;
+  results?: { itemId: string; rarity: number }[];
 }
 
 export type UiPresetSetting = "AUTO" | "COVER" | "COMPACT" | "PHONE" | "FOLD_EXPANDED" | "WINDOWS";
@@ -125,6 +149,10 @@ export interface Settings {
   aimAssist: number; // 0..100 (%)
   ultCinematic: boolean;
   hudLayout: Record<string, HudElementLayout>;
+  safeArea: "SMALL" | "MEDIUM" | "LARGE";
+  hudDensity: "MINIMAL" | "STANDARD" | "FULL";
+  graphics: "PERFORMANCE" | "BALANCED" | "QUALITY";
+  targetLock: boolean;
 }
 
 export const DEFAULT_HUD_LAYOUT: Record<string, HudElementLayout> = {
@@ -150,6 +178,10 @@ export function defaultSettings(): Settings {
     aimAssist: 70,
     ultCinematic: true,
     hudLayout: structuredCloneLayout(),
+    safeArea: "MEDIUM",
+    hudDensity: "STANDARD",
+    graphics: "BALANCED",
+    targetLock: false,
   };
 }
 
@@ -190,6 +222,8 @@ export function createProfile(playerId: string, name: string, now: number): Play
     coop: { groupId: null },
     exploration: { treasures: [], motes: [], puzzles: [] },
     titleSeen: false,
+    bootstrap: { stage: "created", attempts: 0, lastError: null, migratedFrom: null },
+    gachaTx: { seq: 0, pending: null, committed: [] },
   };
 }
 
@@ -201,7 +235,7 @@ export function migrateProfile(raw: any, playerId: string, now: number): PlayerP
   const base = createProfile(playerId, raw?.name ?? "Resonator", now);
   if (!raw || typeof raw !== "object") return base;
   const merged: any = { ...base, ...raw };
-  for (const k of ["currency", "flux", "story", "daily", "weekly", "settings", "coop", "exploration"] as const) {
+  for (const k of ["currency", "flux", "story", "daily", "weekly", "settings", "coop", "exploration", "bootstrap", "gachaTx"] as const) {
     merged[k] = { ...(base as any)[k], ...(raw[k] ?? {}) };
   }
   if (!Array.isArray(merged.party) || merged.party.length !== 4) {
@@ -211,6 +245,11 @@ export function migrateProfile(raw: any, playerId: string, now: number): PlayerP
   }
   // v1 → v2: expanded settings (UI scale, touch, damage numbers, HUD layout), co-op, exploration.
   merged.settings.hudLayout = { ...structuredCloneLayout(), ...(raw.settings?.hudLayout ?? {}) };
+  // v2 → v3: safe area / density / graphics / target lock, bootstrap state, gacha tx log.
+  const from = typeof raw.schema === "number" ? raw.schema : 1;
+  if (from < PROFILE_SCHEMA_VERSION) merged.bootstrap.migratedFrom = from;
+  // Pre-v3 accounts that already have their starter kit are fully bootstrapped.
+  if (!raw.bootstrap && raw.story?.flags?.starterGranted) merged.bootstrap.stage = "ready";
   merged.schema = PROFILE_SCHEMA_VERSION;
   merged.playerId = playerId;
   return merged as PlayerProfile;

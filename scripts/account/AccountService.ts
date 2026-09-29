@@ -6,6 +6,35 @@ import { grant } from "./Wallet";
 import { refreshFlux, rollDaily } from "./Progression";
 import { QUESTS } from "../quest/QuestManager";
 
+/**
+ * First-join bootstrap as a small state machine:
+ *   created → starter_granted → ready        (normal)
+ *   any failure → recovery (profile restored to the pre-step snapshot, retried next join)
+ * Every step is all-or-nothing: a crash or exception mid-step can never grant the
+ * starter kit twice or leave half an account.
+ */
+export function runBootstrap(p: PlayerProfile, now: number, afterStarter?: (p: PlayerProfile) => void): { starter: boolean; ok: boolean } {
+  p.bootstrap.attempts++;
+  let starter = false;
+  if (p.bootstrap.stage === "ready") return { starter, ok: true };
+  const snapshot = JSON.stringify(p);
+  try {
+    starter = bootstrapAccount(p, now);
+    p.bootstrap.stage = "starter_granted";
+    afterStarter?.(p);
+    p.bootstrap.stage = "ready";
+    p.bootstrap.lastError = null;
+    return { starter, ok: true };
+  } catch (e) {
+    const restored = JSON.parse(snapshot) as PlayerProfile;
+    for (const k of Object.keys(p) as (keyof PlayerProfile)[]) delete (p as any)[k];
+    Object.assign(p, restored);
+    p.bootstrap.stage = "recovery";
+    p.bootstrap.lastError = String(e instanceof Error ? e.message : e).slice(0, 200);
+    return { starter: false, ok: false };
+  }
+}
+
 /** Gives a fresh account its starter kit. Idempotent via a story flag. */
 export function bootstrapAccount(p: PlayerProfile, now: number): boolean {
   if (p.story.flags.starterGranted) return false;

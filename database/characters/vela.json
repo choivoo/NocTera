@@ -29,7 +29,7 @@
           "range": 3,
           "arc": 90,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 4,
@@ -40,7 +40,7 @@
           "range": 3,
           "arc": 90,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 4,
@@ -51,7 +51,7 @@
           "range": 3,
           "arc": 100,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 4,
@@ -62,7 +62,7 @@
           "range": 3.2,
           "arc": 140,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "finisher",
           "breakDmg": 8,
@@ -94,7 +94,7 @@
         {
           "type": "fx",
           "particle": "noct:shield",
-          "sound": "noct.vela.skill"
+          "sound": "nocterra.vela.skill"
         }
       ]
     },
@@ -226,9 +226,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.vela.attack",
-    "hurt": "noct.vela.hurt",
-    "skill": "noct.vela.skill",
-    "ultimate": "noct.vela.ultimate"
+    "attack": "nocterra.vela.attack01",
+    "hurt": "nocterra.vela.hurt",
+    "skill": "nocterra.vela.skill",
+    "ultimate": "nocterra.vela.ultimate"
   }
 }

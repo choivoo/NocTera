@@ -112,6 +112,10 @@ export class Entity {
     this.effects.push(e);
   }
   applyKnockback() {}
+  rotation = { x: 0, y: 0 };
+  setRotation(r: any) {
+    this.rotation = r;
+  }
   applyImpulse() {}
   teleport(loc: any) {
     this.location = { ...loc };
@@ -158,7 +162,10 @@ export class Player extends Entity {
     this.name = name;
   }
   override getViewDirection() {
-    return this.view;
+    if (this.rotation.x === 0 && this.rotation.y === 0) return this.view;
+    const yaw = (this.rotation.y * Math.PI) / 180;
+    const pitch = (this.rotation.x * Math.PI) / 180;
+    return { x: -Math.sin(yaw) * Math.cos(pitch), y: -Math.sin(pitch), z: Math.cos(yaw) * Math.cos(pitch) };
   }
   getVelocity() {
     return { x: 0, y: 0, z: 0 };
@@ -201,6 +208,11 @@ export class Dimension {
   }
   spawnParticle() {}
   playSound() {}
+  /** Test hook: blocks listed here make raycasts hit (walls). */
+  walls: ((from: any, dir: any, max: number) => boolean) | null = null;
+  getBlockFromRay(from: any, dir: any, o: any = {}) {
+    return this.walls?.(from, dir, o.maxDistance ?? 999) ? { block: {}, faceLocation: from } : undefined;
+  }
   fills = 0;
   fillBlocks() {
     this.fills++;
@@ -235,6 +247,11 @@ export const world = {
   getDefaultSpawnLocation: () => ({ x: 0, y: 64, z: 0 }),
   playSound() {},
 };
+
+// Type registries: in the mock every packaged id is "registered" (mirrors a correctly imported pack).
+import { RESOURCES } from "../../scripts/data/resources.gen";
+export const ItemTypes = { get: (id: string) => ((RESOURCES.items as readonly string[]).includes(id) ? { id } : undefined) };
+export const EntityTypes = { get: (id: string) => ((RESOURCES.entities as readonly string[]).includes(id) ? { id } : undefined) };
 
 export class BlockVolume {
   constructor(public from: any, public to: any) {}

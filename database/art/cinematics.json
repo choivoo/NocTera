@@ -1,53 +1,795 @@
 {
   "_doc": "Ultimate cinematics. Positions are [right, up, forward] relative to the caster's facing. `impact` = tick when the ultimate's effects resolve. Keep total ≤ 60 ticks (3 s).",
   "seria": {
-    "length": 52, "impact": 40,
+    "length": 52,
+    "impact": 40,
     "shots": [
-      { "at": 0, "fade": [0.1, 0.05, 0.35], "tint": [0.55, 0.8, 1.0], "cam": [0.6, 1.65, 1.4], "look": [0, 1.6, 0], "ease": 0.2, "sound": "noct.seria.ultimate", "title": "§b§lEND OF WINTER" },
-      { "at": 8, "particles": [["noct:frost_burst", [0, 1, 0], 8]], "cam": [1.2, 1.9, 2.2], "look": [0, 2.2, 0], "ease": 0.5 },
-      { "at": 16, "particles": [["noct:ice_trail", [-2, 3, 3], 4], ["noct:ice_trail", [2, 3.5, 3], 4], ["noct:ice_trail", [0, 4, 5], 4]] },
-      { "at": 24, "cam": [4, 5, -5], "look": [0, 1, 5], "ease": 0.6, "particles": [["noct:frost_burst", [0, 7, 5], 10]] },
-      { "at": 34, "particles": [["noct:giant_ice_sword", [0, 6, 5], 1], ["noct:ice_trail", [0, 3, 5], 6]], "sound": "noct.hit.heavy" },
-      { "at": 40, "particles": [["noct:giant_ice_sword", [0, 0.5, 5], 1], ["noct:frost_burst", [0, 0.5, 5], 14]], "shake": 0.45 },
-      { "at": 44, "ring": ["noct:frost_burst", [0, 0.2, 5], 6] }
-    ]
+      {
+        "at": 0,
+        "fade": [
+          0.1,
+          0.05,
+          0.35
+        ],
+        "tint": [
+          0.55,
+          0.8,
+          1.0
+        ],
+        "cam": [
+          0.6,
+          1.65,
+          1.4
+        ],
+        "look": [
+          0,
+          1.6,
+          0
+        ],
+        "ease": 0.2,
+        "sound": "nocterra.seria.ultimate",
+        "title": "§b§lEND OF WINTER"
+      },
+      {
+        "at": 8,
+        "particles": [
+          [
+            "noct:frost_burst",
+            [
+              0,
+              1,
+              0
+            ],
+            8
+          ]
+        ],
+        "cam": [
+          1.2,
+          1.9,
+          2.2
+        ],
+        "look": [
+          0,
+          2.2,
+          0
+        ],
+        "ease": 0.5
+      },
+      {
+        "at": 16,
+        "particles": [
+          [
+            "noct:ice_trail",
+            [
+              -2,
+              3,
+              3
+            ],
+            4
+          ],
+          [
+            "noct:ice_trail",
+            [
+              2,
+              3.5,
+              3
+            ],
+            4
+          ],
+          [
+            "noct:ice_trail",
+            [
+              0,
+              4,
+              5
+            ],
+            4
+          ]
+        ]
+      },
+      {
+        "at": 24,
+        "cam": [
+          4,
+          5,
+          -5
+        ],
+        "look": [
+          0,
+          1,
+          5
+        ],
+        "ease": 0.6,
+        "particles": [
+          [
+            "noct:frost_burst",
+            [
+              0,
+              7,
+              5
+            ],
+            10
+          ]
+        ]
+      },
+      {
+        "at": 34,
+        "particles": [
+          [
+            "noct:giant_ice_sword",
+            [
+              0,
+              6,
+              5
+            ],
+            1
+          ],
+          [
+            "noct:ice_trail",
+            [
+              0,
+              3,
+              5
+            ],
+            6
+          ]
+        ],
+        "sound": "nocterra.hit.heavy"
+      },
+      {
+        "at": 40,
+        "particles": [
+          [
+            "noct:giant_ice_sword",
+            [
+              0,
+              0.5,
+              5
+            ],
+            1
+          ],
+          [
+            "noct:frost_burst",
+            [
+              0,
+              0.5,
+              5
+            ],
+            14
+          ]
+        ],
+        "shake": 0.45
+      },
+      {
+        "at": 44,
+        "ring": [
+          "noct:frost_burst",
+          [
+            0,
+            0.2,
+            5
+          ],
+          6
+        ]
+      }
+    ],
+    "reveal": {
+      "tint": [
+        0.55,
+        0.82,
+        1.0
+      ],
+      "edges": "noct:frost_burst",
+      "shatter": "noct:ice_burst",
+      "sound": "nocterra.gacha.shatter"
+    }
   },
   "kael": {
-    "length": 50, "impact": 38,
+    "length": 50,
+    "impact": 38,
     "shots": [
-      { "at": 0, "fade": [0.1, 0.05, 0.3], "tint": [1.0, 0.35, 0.1], "cam": [1.4, 1.2, 2.2], "look": [0, 1.4, 0], "ease": 0.2, "sound": "noct.kael.ultimate", "title": "§c§lSOLAR RUPTURE" },
-      { "at": 6, "particles": [["noct:fire_burst", [0.8, 2, 0.5], 6]] },
-      { "at": 14, "cam": [0.3, 0.6, 3.2], "look": [0, 3, 0], "ease": 0.6, "particles": [["noct:fire_burst", [0.6, 3.2, 0], 8]] },
-      { "at": 26, "particles": [["noct:fire_burst", [0, 3.5, 0], 10]], "shake": 0.15 },
-      { "at": 38, "cam": [5, 4, -3], "look": [0, 0, 1], "ease": 0.25, "particles": [["noct:solar_blast", [0, 0.2, 1.5], 1]], "shake": 0.5 },
-      { "at": 42, "ring": ["noct:fire_burst", [0, 0.2, 1.5], 5] },
-      { "at": 46, "ring": ["noct:lava_pillar", [0, 0.2, 1.5], 7] }
-    ]
+      {
+        "at": 0,
+        "fade": [
+          0.1,
+          0.05,
+          0.3
+        ],
+        "tint": [
+          1.0,
+          0.35,
+          0.1
+        ],
+        "cam": [
+          1.4,
+          1.2,
+          2.2
+        ],
+        "look": [
+          0,
+          1.4,
+          0
+        ],
+        "ease": 0.2,
+        "sound": "nocterra.kael.ultimate",
+        "title": "§c§lSOLAR RUPTURE"
+      },
+      {
+        "at": 6,
+        "particles": [
+          [
+            "noct:fire_burst",
+            [
+              0.8,
+              2,
+              0.5
+            ],
+            6
+          ]
+        ]
+      },
+      {
+        "at": 14,
+        "cam": [
+          0.3,
+          0.6,
+          3.2
+        ],
+        "look": [
+          0,
+          3,
+          0
+        ],
+        "ease": 0.6,
+        "particles": [
+          [
+            "noct:fire_burst",
+            [
+              0.6,
+              3.2,
+              0
+            ],
+            8
+          ]
+        ]
+      },
+      {
+        "at": 26,
+        "particles": [
+          [
+            "noct:fire_burst",
+            [
+              0,
+              3.5,
+              0
+            ],
+            10
+          ]
+        ],
+        "shake": 0.15
+      },
+      {
+        "at": 38,
+        "cam": [
+          5,
+          4,
+          -3
+        ],
+        "look": [
+          0,
+          0,
+          1
+        ],
+        "ease": 0.25,
+        "particles": [
+          [
+            "noct:solar_blast",
+            [
+              0,
+              0.2,
+              1.5
+            ],
+            1
+          ]
+        ],
+        "shake": 0.5
+      },
+      {
+        "at": 42,
+        "ring": [
+          "noct:fire_burst",
+          [
+            0,
+            0.2,
+            1.5
+          ],
+          5
+        ]
+      },
+      {
+        "at": 46,
+        "ring": [
+          "noct:lava_pillar",
+          [
+            0,
+            0.2,
+            1.5
+          ],
+          7
+        ]
+      }
+    ],
+    "reveal": {
+      "tint": [
+        1.0,
+        0.4,
+        0.1
+      ],
+      "edges": "noct:fire_burst",
+      "shatter": "noct:solar_blast",
+      "sound": "nocterra.hit.heavy"
+    }
   },
   "lumia": {
-    "length": 50, "impact": 34,
+    "length": 50,
+    "impact": 34,
     "shots": [
-      { "at": 0, "fade": [0.1, 0.05, 0.4], "tint": [1.0, 0.95, 0.7], "cam": [0, 1.8, 3.2], "look": [0, 1.5, 0], "ease": 0.2, "sound": "noct.lumia.ultimate", "title": "§e§lEDEN" },
-      { "at": 10, "cam": [0, 9, 1], "look": [0, 0, 0.5], "ease": 1.0, "ring": ["noct:halo", [0, 0.2, 0], 3] },
-      { "at": 20, "ring": ["noct:halo", [0, 0.2, 0], 6] },
-      { "at": 28, "particles": [["noct:eden", [0, 5, 0], 16]] },
-      { "at": 34, "ring": ["noct:heal", [0, 1, 0], 4] }
-    ]
+      {
+        "at": 0,
+        "fade": [
+          0.1,
+          0.05,
+          0.4
+        ],
+        "tint": [
+          1.0,
+          0.95,
+          0.7
+        ],
+        "cam": [
+          0,
+          1.8,
+          3.2
+        ],
+        "look": [
+          0,
+          1.5,
+          0
+        ],
+        "ease": 0.2,
+        "sound": "nocterra.lumia.ultimate",
+        "title": "§e§lEDEN"
+      },
+      {
+        "at": 10,
+        "cam": [
+          0,
+          9,
+          1
+        ],
+        "look": [
+          0,
+          0,
+          0.5
+        ],
+        "ease": 1.0,
+        "ring": [
+          "noct:halo",
+          [
+            0,
+            0.2,
+            0
+          ],
+          3
+        ]
+      },
+      {
+        "at": 20,
+        "ring": [
+          "noct:halo",
+          [
+            0,
+            0.2,
+            0
+          ],
+          6
+        ]
+      },
+      {
+        "at": 28,
+        "particles": [
+          [
+            "noct:eden",
+            [
+              0,
+              5,
+              0
+            ],
+            16
+          ]
+        ]
+      },
+      {
+        "at": 34,
+        "ring": [
+          "noct:heal",
+          [
+            0,
+            1,
+            0
+          ],
+          4
+        ]
+      }
+    ],
+    "reveal": {
+      "tint": [
+        1.0,
+        0.95,
+        0.7
+      ],
+      "edges": "noct:halo",
+      "shatter": "noct:eden",
+      "sound": "nocterra.gacha.sting"
+    }
   },
   "nox": {
-    "length": 54, "impact": 30,
+    "length": 54,
+    "impact": 30,
     "shots": [
-      { "at": 0, "fade": [0.15, 0.1, 0.4], "tint": [0.15, 0.0, 0.25], "cam": [0.15, 1.62, 0.9], "look": [0, 1.62, 0], "ease": 0.15, "sound": "noct.nox.ultimate", "title": "§5§lEVENT HORIZON" },
-      { "at": 10, "cam": [2.5, 2.2, 3], "look": [0, 1.5, 4], "ease": 0.4, "particles": [["noct:void_field", [0, 1.5, 4], 12]] },
-      { "at": 20, "particles": [["noct:void_slash", [0, 1.5, 4], 10]] },
-      { "at": 30, "ring": ["noct:void_field", [0, 1, 4], 5] },
-      { "at": 46, "particles": [["noct:perfect_dodge", [0, 1.5, 4], 1]], "shake": 0.4 }
+      {
+        "at": 0,
+        "fade": [
+          0.15,
+          0.1,
+          0.4
+        ],
+        "tint": [
+          0.15,
+          0.0,
+          0.25
+        ],
+        "cam": [
+          0.15,
+          1.62,
+          0.9
+        ],
+        "look": [
+          0,
+          1.62,
+          0
+        ],
+        "ease": 0.15,
+        "sound": "nocterra.nox.ultimate",
+        "title": "§5§lEVENT HORIZON"
+      },
+      {
+        "at": 10,
+        "cam": [
+          2.5,
+          2.2,
+          3
+        ],
+        "look": [
+          0,
+          1.5,
+          4
+        ],
+        "ease": 0.4,
+        "particles": [
+          [
+            "noct:void_field",
+            [
+              0,
+              1.5,
+              4
+            ],
+            12
+          ]
+        ]
+      },
+      {
+        "at": 20,
+        "particles": [
+          [
+            "noct:void_slash",
+            [
+              0,
+              1.5,
+              4
+            ],
+            10
+          ]
+        ]
+      },
+      {
+        "at": 30,
+        "ring": [
+          "noct:void_field",
+          [
+            0,
+            1,
+            4
+          ],
+          5
+        ]
+      },
+      {
+        "at": 46,
+        "particles": [
+          [
+            "noct:perfect_dodge",
+            [
+              0,
+              1.5,
+              4
+            ],
+            1
+          ]
+        ],
+        "shake": 0.4
+      }
+    ],
+    "reveal": {
+      "tint": [
+        0.2,
+        0.0,
+        0.3
+      ],
+      "edges": "noct:void_field",
+      "shatter": "noct:perfect_dodge",
+      "sound": "nocterra.gacha.shatter"
+    }
+  },
+  "rin": {
+    "length": 30,
+    "impact": 20,
+    "shots": [
+      {
+        "at": 0,
+        "cam": [
+          1.5,
+          1.8,
+          2.5
+        ],
+        "look": [
+          0,
+          1.8,
+          0
+        ],
+        "ease": 0.2,
+        "sound": "nocterra.rin.ultimate",
+        "title": "§e§lDRONE SWARM"
+      },
+      {
+        "at": 12,
+        "particles": [
+          [
+            "noct:drone_deploy",
+            [
+              0,
+              2.5,
+              0
+            ],
+            9
+          ]
+        ]
+      }
     ]
   },
-  "rin": { "length": 30, "impact": 20, "shots": [{ "at": 0, "cam": [1.5, 1.8, 2.5], "look": [0, 1.8, 0], "ease": 0.2, "sound": "noct.rin.ultimate", "title": "§e§lDRONE SWARM" }, { "at": 12, "particles": [["noct:drone_deploy", [0, 2.5, 0], 9]] }] },
-  "aria": { "length": 36, "impact": 22, "shots": [{ "at": 0, "cam": [0, 3, 4], "look": [0, 1.5, 0], "ease": 0.3, "sound": "noct.aria.ultimate", "title": "§a§lTEMPEST DOMAIN" }, { "at": 14, "cam": [0, 7, -4], "look": [0, 2, 0], "ease": 0.5, "ring": ["noct:cyclone", [0, 0.5, 0], 6] }] },
-  "eiden": { "length": 34, "impact": 24, "shots": [{ "at": 0, "cam": [1, 1.2, 2], "look": [0, 1.3, 0], "ease": 0.15, "sound": "noct.eiden.ultimate", "title": "§6§lBLAST FURNACE" }, { "at": 20, "cam": [3, 0.5, 1], "look": [0, 3, 1], "ease": 0.3, "particles": [["noct:fire_burst", [0, 2, 1.5], 10]], "shake": 0.35 }] },
-  "mirel": { "length": 26, "impact": 16, "shots": [{ "at": 0, "cam": [0.35, 1.65, -0.3], "look": [0, 1.6, 12], "ease": 0.3, "sound": "noct.mirel.ultimate", "title": "§b§lDEADEYE" }] },
-  "vela": { "length": 34, "impact": 20, "shots": [{ "at": 0, "fade": [0.1, 0.05, 0.3], "tint": [1.0, 0.95, 0.75], "cam": [0, 2, 3.5], "look": [0, 1.4, 0], "ease": 0.3, "sound": "noct.vela.ultimate", "title": "§f§lOATH OF DAWN" }, { "at": 18, "ring": ["noct:shield", [0, 0.3, 0], 6] }] },
-  "zeon": { "length": 36, "impact": 24, "shots": [{ "at": 0, "fade": [0.08, 0.05, 0.3], "tint": [0.7, 0.75, 1.0], "cam": [1.5, 1.4, 2.5], "look": [0, 2.5, 0], "ease": 0.3, "sound": "noct.zeon.ultimate", "title": "§9§lTHUNDER FIELD" }, { "at": 18, "cam": [5, 6, -4], "look": [0, 0, 0], "ease": 0.5, "ring": ["noct:lightning", [0, 0.5, 0], 7] }] }
+  "aria": {
+    "length": 36,
+    "impact": 22,
+    "shots": [
+      {
+        "at": 0,
+        "cam": [
+          0,
+          3,
+          4
+        ],
+        "look": [
+          0,
+          1.5,
+          0
+        ],
+        "ease": 0.3,
+        "sound": "nocterra.aria.ultimate",
+        "title": "§a§lTEMPEST DOMAIN"
+      },
+      {
+        "at": 14,
+        "cam": [
+          0,
+          7,
+          -4
+        ],
+        "look": [
+          0,
+          2,
+          0
+        ],
+        "ease": 0.5,
+        "ring": [
+          "noct:cyclone",
+          [
+            0,
+            0.5,
+            0
+          ],
+          6
+        ]
+      }
+    ]
+  },
+  "eiden": {
+    "length": 34,
+    "impact": 24,
+    "shots": [
+      {
+        "at": 0,
+        "cam": [
+          1,
+          1.2,
+          2
+        ],
+        "look": [
+          0,
+          1.3,
+          0
+        ],
+        "ease": 0.15,
+        "sound": "nocterra.eiden.ultimate",
+        "title": "§6§lBLAST FURNACE"
+      },
+      {
+        "at": 20,
+        "cam": [
+          3,
+          0.5,
+          1
+        ],
+        "look": [
+          0,
+          3,
+          1
+        ],
+        "ease": 0.3,
+        "particles": [
+          [
+            "noct:fire_burst",
+            [
+              0,
+              2,
+              1.5
+            ],
+            10
+          ]
+        ],
+        "shake": 0.35
+      }
+    ]
+  },
+  "mirel": {
+    "length": 26,
+    "impact": 16,
+    "shots": [
+      {
+        "at": 0,
+        "cam": [
+          0.35,
+          1.65,
+          -0.3
+        ],
+        "look": [
+          0,
+          1.6,
+          12
+        ],
+        "ease": 0.3,
+        "sound": "nocterra.mirel.ultimate",
+        "title": "§b§lDEADEYE"
+      }
+    ]
+  },
+  "vela": {
+    "length": 34,
+    "impact": 20,
+    "shots": [
+      {
+        "at": 0,
+        "fade": [
+          0.1,
+          0.05,
+          0.3
+        ],
+        "tint": [
+          1.0,
+          0.95,
+          0.75
+        ],
+        "cam": [
+          0,
+          2,
+          3.5
+        ],
+        "look": [
+          0,
+          1.4,
+          0
+        ],
+        "ease": 0.3,
+        "sound": "nocterra.vela.ultimate",
+        "title": "§f§lOATH OF DAWN"
+      },
+      {
+        "at": 18,
+        "ring": [
+          "noct:shield",
+          [
+            0,
+            0.3,
+            0
+          ],
+          6
+        ]
+      }
+    ]
+  },
+  "zeon": {
+    "length": 36,
+    "impact": 24,
+    "shots": [
+      {
+        "at": 0,
+        "fade": [
+          0.08,
+          0.05,
+          0.3
+        ],
+        "tint": [
+          0.7,
+          0.75,
+          1.0
+        ],
+        "cam": [
+          1.5,
+          1.4,
+          2.5
+        ],
+        "look": [
+          0,
+          2.5,
+          0
+        ],
+        "ease": 0.3,
+        "sound": "nocterra.zeon.ultimate",
+        "title": "§9§lTHUNDER FIELD"
+      },
+      {
+        "at": 18,
+        "cam": [
+          5,
+          6,
+          -4
+        ],
+        "look": [
+          0,
+          0,
+          0
+        ],
+        "ease": 0.5,
+        "ring": [
+          "noct:lightning",
+          [
+            0,
+            0.5,
+            0
+          ],
+          7
+        ]
+      }
+    ]
+  },
+  "_reveal_doc": "5★ reveal profiles: tint = screen color, edges = particle formed at the frame edges, shatter = burst when the silhouette breaks."
 }

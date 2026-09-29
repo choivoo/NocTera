@@ -96,3 +96,65 @@ export function glassPanel(size, color, alpha = 190) {
     return [...mix([10, 12, 22], c, 0.08 + (y / size) * 0.06), alpha];
   });
 }
+
+// ───────── Element icons (original 12×12 motifs, drawn with a glow) ─────────
+export const ELEMENT_GLYPH = {
+  IGNIS: [".....#......", "....##......", "....###.....", "...####..#..", "..#####.##..", "..########..", ".##########.", ".####..####.", ".###....###.", ".###....###.", "..###..###..", "...######..."],
+  GLACIA: [".....##.....", "..#..##..#..", "...#.##.#...", "....####....", "#..######..#", "############", "############", "#..######..#", "....####....", "...#.##.#...", "..#..##..#..", ".....##....."],
+  VOLT: [".......###..", "......###...", ".....###....", "....###.....", "...#######..", "..#######...", ".....###....", "....###.....", "...###......", "..##........", ".##.........", "#..........."],
+  AER: ["....#####...", "..##.....#..", ".#...###..#.", "#...#...#..#", "#..#..#..#.#", "#..#.#.#.#.#", "#..#..#..#.#", "#...#...#..#", ".#...###..#.", "..##.....#..", "....#####...", "............"],
+  LUX: [".....##.....", ".....##.....", "#....##....#", ".#..####..#.", "...######...", "############", "############", "...######...", ".#..####..#.", "#....##....#", ".....##.....", ".....##....."],
+  UMBRA: ["....#####...", "..###...##..", ".###......#.", ".##.........", "###.........", "###.........", "###.........", "###.........", ".##.........", ".###......#.", "..###...##..", "....#####..."],
+};
+export function elementIcon(size, element, color) {
+  const g = ELEMENT_GLYPH[element];
+  const c = hex(color);
+  const s = size / 12;
+  return png(size, size, (x, y) => {
+    const gx = Math.floor(x / s), gy = Math.floor(y / s);
+    if (g[gy]?.[gx] === "#") {
+      const edge = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => g[gy + dy]?.[gx + dx] !== "#");
+      return [...(edge ? c : mix(c, [255, 255, 255], 0.45)), 255];
+    }
+    // soft glow halo
+    let near = 0;
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) if (g[gy + dy]?.[gx + dx] === "#") near++;
+    return near ? [...c, 40 + near * 12] : [0, 0, 0, 0];
+  });
+}
+
+/** Portrait v2: head + shoulders on transparent background, element motif top-right. */
+export function portraitV2(size, pal, element, elementColor) {
+  const base = portraitPixels(size, pal, elementColor);
+  const g = ELEMENT_GLYPH[element];
+  const gs = Math.max(1, Math.floor(size / 48));
+  const ox = size - 12 * gs - Math.floor(size / 32), oy = Math.floor(size / 32);
+  const ec = hex(elementColor);
+  return png(size, size, (x, y) => {
+    const gx = Math.floor((x - ox) / gs), gy = Math.floor((y - oy) / gs);
+    if (gx >= 0 && gy >= 0 && gx < 12 && gy < 12 && g[gy][gx] === "#") return [...ec, 255];
+    return base(x, y);
+  });
+}
+function portraitPixels(size, pal, elementColor) {
+  const P = Object.fromEntries(Object.entries(pal).map(([k, v]) => [k, hex(v)]));
+  const ring = hex(elementColor);
+  const u = size / 32;
+  return (x, y) => {
+    const gx = x / u, gy = y / u;
+    let col = null;
+    // shoulders / coat with collar and accent trim
+    if (gy > 23 && Math.abs(gx - 16) < 13 - (32 - gy) * 0.25) col = gy > 24 && Math.abs(gx - 16) < 2.8 ? P.inner : Math.abs(gx - 16) > 11 - (32 - gy) * 0.25 ? P.accent : P.coat;
+    if (gy > 19 && gy <= 24 && Math.abs(gx - 16) < 2.4) col = mix(P.skin, [0, 0, 0], 0.15);
+    if (gy > 4 && gy < 23 && Math.abs(gx - 16) < 9) col = P.hair; // hair back
+    if (gy > 7 && gy < 20.5 && Math.abs(gx - 16) < 6.4 - Math.max(0, gy - 16) * 0.7) col = P.skin; // face (anime chin)
+    if (gy > 4 && gy < 10 + Math.sin(gx * 1.4) * 1.1 && Math.abs(gx - 16) < 8) col = P.hair; // fringe
+    if (gy > 3 && gy < 5.5 && Math.abs(gx - 16) < 6) col = mix(P.hair, [255, 255, 255], 0.25); // hair highlight
+    if (gy > 12.6 && gy < 15.6 && (Math.abs(gx - 13) < 1.3 || Math.abs(gx - 19) < 1.3)) col = gy < 13.6 ? mix(P.eye, [255, 255, 255], 0.6) : P.eye;
+    if (gy > 17.4 && gy < 18 && Math.abs(gx - 16) < 0.8) col = mix(P.skin, [160, 60, 70], 0.5);
+    if (gy > 26.5 && gy < 28 && Math.abs(gx - 16) < 1) col = P.glow;
+    if (!col) return [0, 0, 0, 0];
+    // rim light in element color on the silhouette edge
+    return [...col, 255];
+  };
+}

@@ -22,6 +22,11 @@ export class ComboTracker {
     return { hit, step: this.index, finisher: this.index === this.hits.length - 1 };
   }
 
+  /** Attack-cancel: clears recovery but keeps the combo step (dodge → continue combo). */
+  cancelRecovery(): void {
+    this.lockedUntil = 0;
+  }
+
   reset(): void {
     this.index = -1;
     this.lastTick = -Infinity;

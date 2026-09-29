@@ -47,17 +47,25 @@ async function run() {
   s.lastHitUntil = t + 100;
   const report: string[] = [];
   for (const preset of Object.keys(BUDGET)) {
-    for (const scale of [80, 100, 120]) {
-      s.profile.settings.uiPreset = preset as any;
-      s.profile.settings.hudScale = scale;
-      s.invalidateStats();
-      const lines = renderHud(s).split("\n");
-      const widest = Math.max(...lines.map(visible));
-      const b = BUDGET[preset];
-      const widthBudget = Math.round((b.width * 120) / Math.max(100, scale));
-      report.push(`${preset.padEnd(14)} ${scale}%  lines ${lines.length}/${b.lines}  widest ${widest}/${widthBudget}`);
-      assert.ok(lines.length <= b.lines, `${preset}@${scale}: ${lines.length} lines overlaps hotbar`);
-      assert.ok(widest <= widthBudget, `${preset}@${scale}: line of ${widest} glyphs clips\n${lines.find((l) => visible(l) === widest)}`);
+    for (const density of ["MINIMAL", "STANDARD", "FULL"] as const) {
+      for (const safe of ["SMALL", "MEDIUM", "LARGE"] as const) {
+        for (const scale of [80, 100, 120]) {
+          s.profile.settings.uiPreset = preset as any;
+          s.profile.settings.hudScale = scale;
+          s.profile.settings.hudDensity = density;
+          s.profile.settings.safeArea = safe;
+          s.invalidateStats();
+          const lines = renderHud(s).split("\n");
+          const widest = Math.max(...lines.map(visible));
+          const b = BUDGET[preset];
+          const extraLines = (density === "FULL" ? 1 : 0) + (safe === "LARGE" ? 1 : 0) + 1; // + TARGET LOCK line
+          const widthBudget = Math.round((b.width * 120) / Math.max(100, scale)) + (safe === "LARGE" ? 3 : safe === "MEDIUM" ? 1 : 0);
+          if (safe === "MEDIUM" && scale === 100) report.push(`${preset.padEnd(14)} ${density.padEnd(8)} lines ${lines.length}/${b.lines + extraLines}  widest ${widest}/${widthBudget}`);
+          assert.ok(lines.length <= b.lines + extraLines, `${preset}/${density}/${safe}@${scale}: ${lines.length} lines overlaps hotbar`);
+          assert.ok(widest <= widthBudget, `${preset}/${density}/${safe}@${scale}: line of ${widest} glyphs clips\n${lines.find((l) => visible(l) === widest)}`);
+          if (density === "MINIMAL") assert.ok(lines.length <= 3 + (safe === "LARGE" ? 1 : 0), "MINIMAL stays minimal");
+        }
+      }
     }
   }
   // Touch targets: every combat action is one hotbar slot; right-thumb actions occupy the first 4 slots.

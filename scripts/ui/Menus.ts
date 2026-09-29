@@ -38,7 +38,7 @@ const locked = (s: Session, f: string) => !isUnlocked(s.profile, f);
 
 export async function openMainMenu(s: Session): Promise<void> {
   menuTransition(s);
-  sound(s.player, "noct.ui.open");
+  sound(s.player, "nocterra.ui.open");
   const p = s.profile;
   const flux = refreshFlux(p, game().clock.now());
   const items: [string, string, (s: Session) => Promise<void>, string?][] = [
@@ -123,7 +123,7 @@ export async function openCharacter(s: Session, id: string, roster?: string[], s
     .button("§l무기  §r§7WEAPON", ICON("weapon"))
     .button("§l기억각인  §r§7IMPRINT", ICON("imprint"))
     .button("§l특성  §r§7TALENT", ICON("talent"))
-    .button("§l공명 · 프로필  §r§7RESONANCE", ICON("resonance"))
+    .button("§l공명 · 프로필  §r§7RESONANCE", ICON(`element_${d.element.toLowerCase()}`))
     .button("§l레벨업\n§r§7EXP 데이터 사용", ICON("levelup"))
     .button("§l돌파  §r§7ASCEND", ICON("ascend"));
   const list = roster ?? Object.keys(p.characters);
@@ -161,7 +161,7 @@ function levelUp(s: Session, id: string): void {
     s.player.sendMessage("§cEXP 데이터 / Credit 부족 (EXP 던전: Data Archive)");
     return;
   } else addCharacterExp(p, id, 800);
-  sound(s.player, "noct.levelup");
+  sound(s.player, "nocterra.levelup");
   s.invalidateStats();
   save(s);
 }
@@ -176,7 +176,7 @@ function doAscend(s: Session, id: string): void {
     s.player.sendMessage(`§c돌파 불가: ${err === "level" ? `레벨 ${levelCap(inst.ascension)} 필요` : err === "cost" ? `재료 부족 — Credit ${fmt(cost.credit ?? 0)}, ${mats}` : err}`);
     return;
   }
-  sound(s.player, "noct.gacha.purple");
+  sound(s.player, "nocterra.gacha.four_star");
   s.player.onScreenDisplay.setTitle("§b§lASCENSION", { subtitle: `§f돌파 ${inst.ascension} — Lv.${levelCap(inst.ascension)}`, fadeInDuration: 4, stayDuration: 30, fadeOutDuration: 8 });
   s.invalidateStats();
   save(s);
@@ -224,7 +224,7 @@ async function openTalents(s: Session, id: string): Promise<void> {
     const err = upgradeTalent(s.profile, id, kind);
     if (err) s.player.sendMessage(`§c특성 강화 불가: ${err === "ascension" ? "돌파 단계 부족" : err === "cost" ? "재료 부족" : err}`);
     else {
-      sound(s.player, "noct.levelup");
+      sound(s.player, "nocterra.levelup");
       save(s);
     }
   }
@@ -267,14 +267,14 @@ async function openWeaponScreen(s: Session, id: string): Promise<void> {
     if (w.level >= cap) s.player.sendMessage("§c돌파가 필요합니다 (ASCEND).");
     else if (spend(p, { credit: 3000, materials: { weapon_alloy: 2 } })) {
       w.level = Math.min(cap, w.level + 5);
-      sound(s.player, "noct.levelup");
+      sound(s.player, "nocterra.levelup");
     } else s.player.sendMessage("§c재료 부족");
   } else if (sel === 1 && w) {
     const cap = [20, 40, 50, 60, 70, 80, 90][w.ascension];
     if (w.ascension >= 6 || w.level < cap) s.player.sendMessage("§c최대 레벨 도달 후 돌파할 수 있습니다.");
     else if (spend(p, { credit: 10000 * (w.ascension + 1), materials: { rift_core: w.ascension + 1 } })) {
       w.ascension++;
-      sound(s.player, "noct.gacha.purple");
+      sound(s.player, "nocterra.gacha.four_star");
     } else s.player.sendMessage("§c재료 부족");
   } else if (sel === 2) await openWeaponSelect(s, id);
   else return;
@@ -484,7 +484,7 @@ async function openEvent(s: Session): Promise<void> {
     p.daily.claimed = true;
     grant(p, { astrum: DAILY_REWARD_ASTRUM });
     save(s);
-    sound(s.player, "noct.gacha.gold");
+    sound(s.player, "nocterra.gacha.five_star");
     return openEvent(s);
   }
   return openMainMenu(s);
@@ -533,10 +533,16 @@ async function settingsDisplay(s: Session): Promise<void> {
     .toggle("퀘스트 트래커", { defaultValue: st.hudDetail })
     .toggle("데미지 숫자", { defaultValue: st.damageNumbers })
     .dropdown("데미지 숫자 크기", ["작게", "보통", "크게"], { defaultValueIndex: st.damageNumberSize })
-    .toggle("궁극기 컷신", { defaultValue: st.ultCinematic });
+    .toggle("궁극기 컷신", { defaultValue: st.ultCinematic })
+    .dropdown("HUD Density", ["MINIMAL", "STANDARD", "FULL"], { defaultValueIndex: ["MINIMAL", "STANDARD", "FULL"].indexOf(st.hudDensity) })
+    .dropdown("Safe Area §7(펀치홀 · 둥근 모서리 · 제스처)", ["SMALL", "MEDIUM", "LARGE"], { defaultValueIndex: ["SMALL", "MEDIUM", "LARGE"].indexOf(st.safeArea) })
+    .dropdown("Graphics §7(NOCTERRA 이펙트만 · MC 설정은 변경 안 함)", ["PERFORMANCE", "BALANCED", "QUALITY"], { defaultValueIndex: ["PERFORMANCE", "BALANCED", "QUALITY"].indexOf(st.graphics) });
   const r = await showForm(s.player, f);
   if (r.canceled || !r.formValues) return;
   const v = r.formValues;
+  st.hudDensity = (["MINIMAL", "STANDARD", "FULL"] as const)[v[6] as number];
+  st.safeArea = (["SMALL", "MEDIUM", "LARGE"] as const)[v[7] as number];
+  st.graphics = (["PERFORMANCE", "BALANCED", "QUALITY"] as const)[v[8] as number];
   st.uiPreset = PRESET_LIST[v[0] as number];
   st.hudScale = v[1] as number;
   st.hudDetail = v[2] as boolean;
@@ -554,10 +560,13 @@ async function settingsControl(s: Session): Promise<void> {
     .slider("Touch Button Opacity (%) §8— HUD 편집 데이터", 30, 100, { valueStep: 5, defaultValue: st.buttonOpacity })
     .slider("Camera Sensitivity (%) §8— 컷신/쇼케이스 카메라 속도", 50, 150, { valueStep: 10, defaultValue: st.cameraSensitivity })
     .slider("Aim Assist (%) §8— 원거리 자동 조준 각도", 0, 100, { valueStep: 10, defaultValue: st.aimAssist })
-    .toggle("카메라 흔들림", { defaultValue: st.cameraShake });
+    .toggle("카메라 흔들림", { defaultValue: st.cameraShake })
+    .toggle("Target Lock §7(가까운 적 자동 고정 · 공격 방향 보정)", { defaultValue: st.targetLock });
   const r = await showForm(s.player, f);
   if (r.canceled || !r.formValues) return;
   const v = r.formValues;
+  st.targetLock = v[5] as boolean;
+  if (!st.targetLock) s.lockId = null;
   st.buttonSize = v[0] as number;
   st.buttonOpacity = v[1] as number;
   st.cameraSensitivity = v[2] as number;
@@ -620,7 +629,7 @@ async function openShop(s: Session): Promise<void> {
     if (spend(s.profile, { credit: it.cost })) grant(s.profile, { materials: it.gives });
     else s.player.sendMessage("§cCredit 부족");
   }
-  sound(s.player, "noct.ui.confirm");
+  sound(s.player, "nocterra.ui.confirm");
   save(s);
   return openShop(s);
 }

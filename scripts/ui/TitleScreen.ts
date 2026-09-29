@@ -53,7 +53,7 @@ export async function titleFlow(s: Session, firstTime: boolean): Promise<void> {
   await showForm(p, title); // any close also starts (never trap the player)
   system.clearRun(riftFx);
   if (!p.isValid) return;
-  sound(p, "noct.gacha.charge");
+  sound(p, "nocterra.gacha.charge");
 
   // ── LOADING ──
   const tip = tips[Math.floor(Math.random() * tips.length)];

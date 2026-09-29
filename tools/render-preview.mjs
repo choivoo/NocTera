@@ -32,9 +32,18 @@ order.forEach((id, idx) => {
   const pal = art[id].palette;
   const ox = (idx % 5) * CW * S + (CW * S) / 2;
   const oy = Math.floor(idx / 5) * CH * S + CH * S - 20;
+  // Head-descendant bones get the anime head scale applied by the "secondary" animation.
+  const parent = Object.fromEntries(geo.bones.map((b) => [b.name, b.parent]));
+  const underHead = (n) => (n === "head" ? true : parent[n] ? underHead(parent[n]) : false);
+  const headPivot = geo.bones.find((b) => b.name === "head").pivot;
+  const hs = art[id].body.headScale ?? 1;
   for (const b of geo.bones) for (const c of b.cubes ?? []) {
     const col = colorFor(pal, c.uv.north.uv);
-    const [x0, y0, z0] = c.origin, [sx, sy, sz] = c.size;
+    let [x0, y0, z0] = c.origin, [sx, sy, sz] = c.size;
+    if (underHead(b.name)) {
+      x0 = headPivot[0] + (x0 - headPivot[0]) * hs; y0 = headPivot[1] + (y0 - headPivot[1]) * hs; z0 = headPivot[2] + (z0 - headPivot[2]) * hs;
+      sx *= hs; sy *= hs; sz *= hs;
+    }
     // sample the cube volume surface densely and splat with z-buffer + simple lighting per face
     const faces = [[0, 1, 2, [0, 0, -1]], [0, 1, 2, [0, 0, 1]], [1, 2, 0, [-1, 0, 0]], [1, 2, 0, [1, 0, 0]], [0, 2, 1, [0, 1, 0]]];
     for (const [, , , n] of faces) {

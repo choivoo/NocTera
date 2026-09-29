@@ -159,6 +159,12 @@ function extraCubes(extras, half, top, legH) {
       case "shield_back": break;
       case "shoulder_cape": out.push(cube([-half - 0.5, top - 10, 2], [half * 2 + 1, 10, 0.6], "inner", { rotation: [8, 0, 0], pivot: [0, top, 2] })); break;
       case "big_gauntlets": break;
+      case "glacia_ornament": out.push(cube([-1, top - 4, -2.9], [2, 2, 0.8], "glow", { rotation: [0, 0, 45], pivot: [0, top - 3, -2.5] }), cube([-half - 0.8, top + 7, -1], [1, 3, 1], "glow")); break;
+      case "asym_sash": out.push(cube([-half, legH + 3, -2.4], [half * 2, 1.4, 4.8], "accent", { rotation: [0, 0, 28], pivot: [0, legH + 6, 0] }), cube([half - 1, legH - 6, 2.2], [1.4, 9, 0.6], "accent")); break;
+      case "umbra_glow": out.push(cube([-half - 0.2, legH + 8, -2.35], [0.5, 4, 0.3], "glow"), cube([half - 0.3, legH + 8, -2.35], [0.5, 4, 0.3], "glow")); break;
+      case "mech_arm": out.push(cube([half, top - 12, -2], [3.6, 7, 4], "metal"), cube([half + 3.4, top - 10, -0.5], [0.6, 3, 1], "accent"), cube([half, top - 9, -2.2], [3.6, 0.8, 4.4], "accent")); break;
+      case "shoulder_plate": out.push(cube([-half - 4, top - 3, -2.6], [5, 2.5, 5.2], "metal"), cube([half - 1, top - 3, -2.6], [5, 2.5, 5.2], "metal")); break;
+      case "robe_train": out.push(cube([-half - 0.6, 0, 1.5], [half * 2 + 1.2, legH - 1, 1.2], "coat", { rotation: [6, 0, 0], pivot: [0, legH, 2] })); break;
     }
   }
   return out;
@@ -170,9 +176,9 @@ function weaponCubes(model, side, half, top) {
   const blade = (len, wdt, mat = "metal") => [cube([hx - wdt / 2, hy - 0.5, -1 - len], [wdt, 1, len], mat), cube([hx - wdt / 2 - 0.1, hy - 0.2, -1 - len], [0.3, 0.4, len], "glow")];
   switch (model) {
     case "longsword":
-      return side === "r" ? [...blade(17, 1.4), cube([hx - 2, hy - 0.8, -1.8], [4, 1.6, 1], "accent"), cube([hx - 0.5, hy - 0.5, -1], [1, 1, 3], "inner")] : [];
+      return side === "r" ? [...blade(20, 1.6), cube([hx - 2.4, hy - 0.8, -1.8], [4.8, 1.6, 1], "accent"), cube([hx - 0.6, hy - 1.2, -2.2], [1.2, 2.4, 1.2], "glow"), cube([hx - 0.5, hy - 0.5, -1], [1, 1, 3], "inner")] : [];
     case "greatsword":
-      return side === "r" ? [cube([hx - 1.6, hy - 0.8, -24], [3.2, 1.6, 21], "metal"), cube([hx - 1.7, hy - 0.2, -24], [0.5, 1.2, 21], "accent"), cube([hx - 3, hy - 1, -3.5], [6, 2, 1.5], "inner"), cube([hx - 0.6, hy - 0.6, -2], [1.2, 1.2, 4], "dark")] : [];
+      return side === "r" ? [cube([hx - 2, hy - 0.9, -28], [4, 1.8, 25], "metal"), cube([hx - 1.7, hy - 0.2, -24], [0.5, 1.2, 21], "accent"), cube([hx - 3, hy - 1, -3.5], [6, 2, 1.5], "inner"), cube([hx - 0.6, hy - 0.6, -2], [1.2, 1.2, 4], "dark")] : [];
     case "dual_blades":
       return [cube([hx - 0.4, hy - 9, -0.4], [0.8, 9, 1.6], "metal"), cube([hx - 0.45, hy - 9, 0.9], [0.9, 9, 0.3], "accent"), cube([hx - 1.2, hy - 0.5, -1], [2.4, 1, 2], "inner")];
     case "dual_pistols":
@@ -345,9 +351,11 @@ function charAnimations(id, a) {
   const run = RUN_POSE[a.motion.run] ?? {};
   A.run = { loop: true, bones: Object.fromEntries(Object.entries(run).map(([b, r]) => [b, { rotation: [`${r[0]} * math.min(1, q.modified_move_speed * 2.5)`, r[1], r[2]] }])) };
   A.air = { loop: true, bones: { rightArm: { rotation: [-40, 0, 25] }, leftArm: { rotation: [-40, 0, -25] }, rightLeg: { rotation: [-20, 0, 0] }, leftLeg: { rotation: [15, 0, 0] } } };
+  const hs = a.body.headScale ?? 1.12;
   A.secondary = {
     loop: true,
     bones: {
+      head: { scale: [hs, hs, hs] },
       noct_hair: { rotation: [`math.sin(q.anim_time * 150) * 4 + q.modified_move_speed * 25`, 0, 0] },
       noct_coat: { rotation: [`math.sin(q.anim_time * 110) * 3 + q.modified_move_speed * 30`, 0, 0] },
       noct_extra: { rotation: [`math.sin(q.anim_time * 170) * 2`, 0, 0] },
@@ -458,7 +466,10 @@ for (const [cid, c] of Object.entries(acs)) {
   }
 }
 write(`${RP}/animation_controllers/noct_char.ac.json`, { format_version: "1.10.0", animation_controllers: acs });
-d.scripts.animate = [...d.scripts.animate, ...order.map((id, i) => ({ [`ctrl_${id}`]: `q.property('noct:char') == ${i + 1}` }))];
+// Safety gate: character motion never runs in first person (the vanilla FP arm shares bone
+// names) nor while vanilla owns the pose (swimming, sleeping, riding, gliding, crawling).
+const SAFE = "!variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling";
+d.scripts.animate = [...d.scripts.animate, ...order.map((id, i) => ({ [`ctrl_${id}`]: `q.property('noct:char') == ${i + 1} && ${SAFE}` }))];
 // Vanilla third-person rendering only when no NOCTERRA character is active.
 d.render_controllers = d.render_controllers.map((rc) => {
   const [k, v] = Object.entries(rc)[0];

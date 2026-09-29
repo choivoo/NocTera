@@ -173,6 +173,13 @@
   "animation.noct.nox.secondary": {
    "loop": true,
    "bones": {
+    "head": {
+     "scale": [
+      1.14,
+      1.14,
+      1.14
+     ]
+    },
     "noct_hair": {
      "rotation": [
       "math.sin(q.anim_time * 150) * 4 + q.modified_move_speed * 25",

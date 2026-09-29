@@ -28,7 +28,7 @@
           "range": 22,
           "arc": 6,
           "hitstop": 1,
-          "sound": "noct.hit.rifle",
+          "sound": "nocterra.hit.rifle",
           "particle": "noct:ice_tracer",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 22,
           "arc": 6,
           "hitstop": 1,
-          "sound": "noct.hit.rifle",
+          "sound": "nocterra.hit.rifle",
           "particle": "noct:ice_tracer",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 24,
           "arc": 6,
           "hitstop": 3,
-          "sound": "noct.hit.rifle",
+          "sound": "nocterra.hit.rifle",
           "particle": "noct:ice_tracer",
           "animation": "finisher",
           "breakDmg": 8,
@@ -77,7 +77,7 @@
         {
           "type": "fx",
           "particle": "noct:ice_burst",
-          "sound": "noct.mirel.skill"
+          "sound": "nocterra.mirel.skill"
         }
       ]
     },
@@ -105,7 +105,7 @@
         {
           "type": "fx",
           "particle": "noct:scope",
-          "sound": "noct.mirel.ultimate"
+          "sound": "nocterra.mirel.ultimate"
         }
       ]
     },
@@ -210,9 +210,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.mirel.attack",
-    "hurt": "noct.mirel.hurt",
-    "skill": "noct.mirel.skill",
-    "ultimate": "noct.mirel.ultimate"
+    "attack": "nocterra.mirel.attack01",
+    "hurt": "nocterra.mirel.hurt",
+    "skill": "nocterra.mirel.skill",
+    "ultimate": "nocterra.mirel.ultimate"
   }
 }

@@ -28,7 +28,7 @@
           "range": 3.2,
           "arc": 90,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 3.2,
           "arc": 90,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 3.4,
           "arc": 110,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 4,
@@ -61,7 +61,7 @@
           "range": 3.4,
           "arc": 110,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack4",
           "breakDmg": 4,
@@ -72,7 +72,7 @@
           "range": 4,
           "arc": 160,
           "hitstop": 5,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:frost_burst",
           "animation": "finisher",
           "breakDmg": 10,
@@ -107,7 +107,7 @@
         {
           "type": "fx",
           "particle": "noct:ice_trail",
-          "sound": "noct.seria.skill"
+          "sound": "nocterra.seria.skill"
         }
       ]
     },
@@ -142,7 +142,7 @@
         {
           "type": "fx",
           "particle": "noct:giant_ice_sword",
-          "sound": "noct.seria.ultimate"
+          "sound": "nocterra.seria.ultimate"
         }
       ]
     },
@@ -271,9 +271,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.seria.attack",
-    "hurt": "noct.seria.hurt",
-    "skill": "noct.seria.skill",
-    "ultimate": "noct.seria.ultimate"
+    "attack": "nocterra.seria.attack01",
+    "hurt": "nocterra.seria.hurt",
+    "skill": "nocterra.seria.skill",
+    "ultimate": "nocterra.seria.ultimate"
   }
 }

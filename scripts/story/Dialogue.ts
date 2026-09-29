@@ -55,7 +55,7 @@ export async function playDialogue(s: Session, id: string): Promise<number[] | n
       const icon = isChar ? PORTRAIT(charId) : ICON("dialogue");
       if (l.choices) l.choices.forEach((c, k) => f.button(`${k === 0 ? "§f" : "§7"}> ${c}`, k === 0 ? icon : undefined));
       else f.button("§7▶  계속", icon);
-      sound(player, "noct.ui.confirm", 1.2, 0.5);
+      sound(player, "nocterra.ui.confirm", 1.2, 0.5);
       const r = await showForm(player, f);
       if (r.canceled) return null;
       if (l.choices) picks.push(r.selection ?? 0);

@@ -28,7 +28,7 @@
           "range": 2.4,
           "arc": 70,
           "hitstop": 2,
-          "sound": "noct.hit.punch",
+          "sound": "nocterra.hit.punch",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 6,
@@ -39,7 +39,7 @@
           "range": 2.4,
           "arc": 70,
           "hitstop": 2,
-          "sound": "noct.hit.punch",
+          "sound": "nocterra.hit.punch",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 6,
@@ -50,7 +50,7 @@
           "range": 2.4,
           "arc": 70,
           "hitstop": 2,
-          "sound": "noct.hit.punch",
+          "sound": "nocterra.hit.punch",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 7,
@@ -61,7 +61,7 @@
           "range": 2.4,
           "arc": 70,
           "hitstop": 2,
-          "sound": "noct.hit.punch",
+          "sound": "nocterra.hit.punch",
           "particle": "noct:slash_arc",
           "animation": "attack4",
           "breakDmg": 7,
@@ -72,7 +72,7 @@
           "range": 2.8,
           "arc": 120,
           "hitstop": 5,
-          "sound": "noct.hit.heavy",
+          "sound": "nocterra.hit.heavy",
           "particle": "noct:slash_arc",
           "animation": "finisher",
           "breakDmg": 16,
@@ -104,7 +104,7 @@
         {
           "type": "fx",
           "particle": "noct:fire_burst",
-          "sound": "noct.eiden.skill"
+          "sound": "nocterra.eiden.skill"
         }
       ]
     },
@@ -274,9 +274,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.eiden.attack",
-    "hurt": "noct.eiden.hurt",
-    "skill": "noct.eiden.skill",
-    "ultimate": "noct.eiden.ultimate"
+    "attack": "nocterra.eiden.attack01",
+    "hurt": "nocterra.eiden.hurt",
+    "skill": "nocterra.eiden.skill",
+    "ultimate": "nocterra.eiden.ultimate"
   }
 }

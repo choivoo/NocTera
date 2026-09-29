@@ -28,7 +28,7 @@
           "range": 2.8,
           "arc": 80,
           "hitstop": 1,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 2.8,
           "arc": 80,
           "hitstop": 1,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 2.8,
           "arc": 90,
           "hitstop": 1,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 4,
@@ -61,7 +61,7 @@
           "range": 2.8,
           "arc": 90,
           "hitstop": 1,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack4",
           "breakDmg": 4,
@@ -72,7 +72,7 @@
           "range": 3,
           "arc": 120,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack4",
           "breakDmg": 4,
@@ -83,7 +83,7 @@
           "range": 3.2,
           "arc": 200,
           "hitstop": 4,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:void_slash",
           "animation": "finisher",
           "breakDmg": 8,
@@ -118,7 +118,7 @@
         {
           "type": "fx",
           "particle": "noct:shadow_puff",
-          "sound": "noct.nox.skill"
+          "sound": "nocterra.nox.skill"
         }
       ]
     },
@@ -149,7 +149,7 @@
         {
           "type": "fx",
           "particle": "noct:void_field",
-          "sound": "noct.nox.ultimate"
+          "sound": "nocterra.nox.ultimate"
         }
       ]
     },
@@ -282,9 +282,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.nox.attack",
-    "hurt": "noct.nox.hurt",
-    "skill": "noct.nox.skill",
-    "ultimate": "noct.nox.ultimate"
+    "attack": "nocterra.nox.attack01",
+    "hurt": "nocterra.nox.hurt",
+    "skill": "nocterra.nox.skill",
+    "ultimate": "nocterra.nox.ultimate"
   }
 }

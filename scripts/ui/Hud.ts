@@ -15,6 +15,7 @@ import { isPlaying } from "../camera/Cutscene";
 import { refreshHotbar } from "../input/Controls";
 import { allowedSlots } from "../coop/CoopManager";
 import { dist } from "../core/Vec";
+import { particleBudget } from "../audio/Fx";
 
 const ARROWS = ["↑", "↗", "→", "↘", "↓", "↙", "←", "↖"];
 
@@ -32,12 +33,45 @@ export function markerText(s: Session): string {
   return `§e${arrow} §f${d < 1000 ? Math.round(d) + "m" : (d / 1000).toFixed(1) + "km"}`;
 }
 
+/** Left margin (glyphs) and top padding (lines) per Safe Area setting: keeps the panel off
+ *  rounded corners, the punch-hole camera (landscape left edge) and gesture areas. */
+export const SAFE_AREA = { SMALL: { left: 0, top: 0 }, MEDIUM: { left: 1, top: 0 }, LARGE: { left: 3, top: 1 } } as const;
+
 export function renderHud(s: Session): string {
   const t = system.currentTick;
   const preset = presetFor(s.player, s.profile);
-  const spec = PRESETS[preset];
+  const density = s.profile.settings.hudDensity ?? "STANDARD";
+  const spec = { ...PRESETS[preset] };
+  if (density === "FULL") spec.detail = true;
+  if (density === "MINIMAL") (spec.detail = false), (spec.names = false);
   const p = s.profile;
   const lines: string[] = [];
+  const out = () => {
+    const sa = SAFE_AREA[p.settings.safeArea ?? "MEDIUM"];
+    const pad = " ".repeat(sa.left);
+    return [...Array(sa.top).fill(""), ...lines.map((l) => pad + l)].join("\n");
+  };
+
+  if (density === "MINIMAL") {
+    // Minimal combat HUD: one party line + one resource line.
+    const party = p.party.map((id, i) => {
+      if (!id) return "";
+      const rt = s.chars.get(id);
+      if (!rt) return "";
+      const def = getCharacter(id);
+      const tag = rt.hp <= 0 ? "§4✖" : rt.qteReadyUntil > t && i !== p.activeSlot ? "§e!" : rt.energy >= (def.kit.ultimate.energyCost ?? 60) ? "§6✦" : "";
+      return `${i === p.activeSlot ? "§f§l" : "§7"}${i + 1}${ELEMENT_COLOR[def.element]}${def.name[0]}${tag}`;
+    });
+    lines.push(party.filter(Boolean).join(" §8· "));
+    const rt = s.active;
+    if (rt) {
+      const def = getCharacter(rt.id);
+      const st = s.stats(rt.id, t);
+      lines.push(`${bar(rt.hp, st.maxHp, scaled(6, p), "§a")} ${rt.energy >= (def.kit.ultimate.energyCost ?? 60) ? "§6✦" : ""}${s.lockId ? " §c◎" : ""}`);
+    }
+    if (s.lastHitUntil > t && s.lastHit) lines.push(s.lastHit);
+    return out();
+  }
 
   if (spec.detail || p.settings.hudDetail) {
     const q = progressText(p);
@@ -75,8 +109,10 @@ export function renderHud(s: Session): string {
     const st = s.stats(rt.id, t);
     const cap = def.kit.ultimate.energyCost ?? 60;
     const inst = p.characters[rt.id];
-    const shield = rt.shield > 0 && rt.shieldUntil > t ? ` §f⛨${rt.shield}` : "";
-    lines.push(`§7Lv.${inst.level} §fHP ${bar(rt.hp, st.maxHp, scaled(spec.bar, p), "§a")} §f${rt.hp}${spec.detail ? `/${st.maxHp}` : ""}${shield}`);
+    const shield = rt.shield > 0 && rt.shieldUntil > t ? ` §f⛨${rt.shield >= 10000 ? `${Math.floor(rt.shield / 1000)}k` : rt.shield}` : "";
+    // Narrow screens never show "/max" (the bar already conveys it) — keeps COVER inside its budget.
+    const narrow = preset === "COVER" || preset === "COMPACT";
+    lines.push(`§7Lv.${inst.level} §fHP ${bar(rt.hp, st.maxHp, scaled(spec.bar, p), "§a")} §f${rt.hp}${spec.detail && !narrow ? `/${st.maxHp}` : ""}${shield}`);
     const ult = rt.energy >= cap ? "§6§l✦ULT" : `§7ULT ${bar(rt.energy, cap, scaled(Math.max(4, spec.bar / 2), p), "§6")}`;
     const skillCd = rt.skillReadyAt > t && rt.skillCharges <= 0 ? `§7SK ${Math.ceil((rt.skillReadyAt - t) / 20)}s` : "§bSK ●";
     let mech = "";
@@ -90,12 +126,18 @@ export function renderHud(s: Session): string {
       if (sw || buffs.length) lines.push(`${sw}§3${buffs.map((b) => `▲${b}`).join(" ")}`);
     }
   }
+  if (s.lockId) lines.push("§c◎ §fTARGET LOCK");
   if (s.lastHitUntil > t && s.lastHit) lines.push(s.lastHit);
-  return lines.join("\n");
+  return out();
 }
 
 export function registerHud(sessions: () => Iterable<Session>): void {
   system.runInterval(() => {
+    // Global FX budget follows the lowest Graphics preset among online players.
+    const order = ["PERFORMANCE", "BALANCED", "QUALITY"] as const;
+    let low = 2;
+    for (const s of sessions()) low = Math.min(low, order.indexOf(s.profile.settings.graphics ?? "BALANCED"));
+    particleBudget.preset = order[Math.max(0, low)];
     for (const s of sessions()) {
       if (!s.player.isValid || isPlaying(s.player) || system.currentTick < s.busyUntil) continue;
       try {

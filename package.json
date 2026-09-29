@@ -1,13 +1,13 @@
 {
   "name": "nocterra",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NOCTERRA \u2014 Minecraft Bedrock subculture gacha action RPG",
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "build": "node tools/build.mjs",
     "validate": "node tools/validate.mjs",
     "test": "tsx --test tests/*.test.ts",
-    "check": "npm run typecheck && npm run validate && npm test && npm run build",
+    "check": "npm run typecheck && node tools/audit-api.mjs && npm run validate && node tools/qa-rig.mjs && npm test && npm run build",
     "package": "node tools/build.mjs --package",
     "preview": "node tools/render-preview.mjs"
   },

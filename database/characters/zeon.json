@@ -28,7 +28,7 @@
           "range": 4.2,
           "arc": 40,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 4.2,
           "arc": 40,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 4.2,
           "arc": 60,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack3",
           "breakDmg": 4,
@@ -61,7 +61,7 @@
           "range": 4.4,
           "arc": 60,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:slash_arc",
           "animation": "attack4",
           "breakDmg": 4,
@@ -72,7 +72,7 @@
           "range": 4.8,
           "arc": 100,
           "hitstop": 2,
-          "sound": "noct.hit.slash",
+          "sound": "nocterra.hit.slash",
           "particle": "noct:spark_burst",
           "animation": "finisher",
           "breakDmg": 8,
@@ -103,7 +103,7 @@
         {
           "type": "fx",
           "particle": "noct:lightning",
-          "sound": "noct.zeon.skill"
+          "sound": "nocterra.zeon.skill"
         }
       ]
     },
@@ -234,9 +234,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.zeon.attack",
-    "hurt": "noct.zeon.hurt",
-    "skill": "noct.zeon.skill",
-    "ultimate": "noct.zeon.ultimate"
+    "attack": "nocterra.zeon.attack01",
+    "hurt": "nocterra.zeon.hurt",
+    "skill": "nocterra.zeon.skill",
+    "ultimate": "nocterra.zeon.ultimate"
   }
 }

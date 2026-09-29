@@ -19,6 +19,7 @@ import { addCharacterExp } from "../character/CharacterManager";
 import { addDailyProgress, addNexusExp } from "../account/Progression";
 import { grant } from "../account/Wallet";
 import { bus } from "../core/EventBus";
+import { guarded } from "../core/ErrorLog";
 import { rollImprint } from "../artifact/ImprintGen";
 import { partyMembers } from "../party/PartyManager";
 import { playAnim } from "../character/CharacterVisual";
@@ -26,6 +27,9 @@ import { playAnim } from "../character/CharacterVisual";
 interface Tracked {
   entity: Entity;
   state: EnemyState;
+  home: Vector3;
+  lastEngaged: number;
+  nextThink: number;
   marks: { tick: number; center: Vector3; radius: number; mult: number }[];
   attackCount: number;
 }
@@ -51,7 +55,7 @@ class EnemyRuntimeImpl {
     const existing = this.tracked.get(e.id);
     if (existing) return existing.state;
     const st = new EnemyState(def, scale);
-    this.tracked.set(e.id, { entity: e, state: st, marks: [], attackCount: 0 });
+    this.tracked.set(e.id, { entity: e, state: st, marks: [], attackCount: 0, home: { ...e.location }, lastEngaged: system.currentTick, nextThink: 0 });
     try {
       e.nameTag = nameplate(st, system.currentTick);
     } catch {
@@ -80,7 +84,7 @@ class EnemyRuntimeImpl {
     const at = { ...e.location };
     const dim = e.dimension;
     particle(dim, "noct:rift", { x: at.x, y: at.y + 1, z: at.z }, 6);
-    worldSound(dim, def.tier === "boss" ? "noct.gacha.gold" : "noct.break", at, 0.8);
+    worldSound(dim, def.tier === "boss" ? "nocterra.gacha.five_star" : "nocterra.break", at, 0.8);
     try {
       e.remove();
     } catch {
@@ -106,16 +110,20 @@ class EnemyRuntimeImpl {
   onPhase(e: Entity, st: EnemyState): void {
     const dim = e.dimension;
     ring(dim, "noct:perfect_dodge", e.location, 4, 12);
-    worldSound(dim, "noct.telegraph", e.location, 0.6);
+    worldSound(dim, "nocterra.telegraph", e.location, 0.6);
     for (const s of game().sessions.values()) {
       if (dist(s.player.location, e.location) > 48) continue;
       s.player.onScreenDisplay.setTitle(`§c${st.def.name.toUpperCase()}`, { subtitle: `§7PHASE ${st.phase}${st.phase === 3 ? " — §4RAMPAGE" : ""}`, fadeInDuration: 4, stayDuration: 30, fadeOutDuration: 8 });
     }
   }
 
+  /**
+   * Update budget (called every tick):
+   *   engaged (attacking / recently hit / boss in fight) → every tick
+   *   near  < 16 blocks → every tick · medium < 32 → every 3 ticks · far → every 10 ticks
+   */
   tick(): void {
     const t = system.currentTick;
-    const perf = Config.performance;
     const sessions = [...game().sessions.values()];
     for (const [id, tr] of this.tracked) {
       const e = tr.entity;
@@ -123,7 +131,7 @@ class EnemyRuntimeImpl {
         this.tracked.delete(id);
         continue;
       }
-      // Nearest player (sessions are few; enemies are the bounded set).
+      if (t < tr.nextThink) continue;
       let near: Session | undefined;
       let nd = Infinity;
       for (const s of sessions) {
@@ -131,19 +139,61 @@ class EnemyRuntimeImpl {
         const d = dist(s.player.location, e.location);
         if (d < nd) (nd = d), (near = s);
       }
-      const far = nd > perf.aiFarDistance;
-      if (far && t % perf.aiFarIntervalTicks !== 0) continue;
+      const st = tr.state;
+      const engaged = !!st.pendingImpact || tr.marks.length > 0 || (st.lastHitBy !== null && t - tr.lastEngaged < 100);
+      if (st.lastHitBy && nd < 24) tr.lastEngaged = t;
+      tr.nextThink = t + (engaged || nd < 16 ? 1 : nd < 32 ? 3 : 10);
       if (t % 10 === 0) {
         try {
-          e.nameTag = nameplate(tr.state, t);
+          e.nameTag = nameplate(st, t);
         } catch {
           /* ignore */
         }
       }
-      if (tr.state.def.tier === "boss" && t % 10 === 0) this.syncBossBar(e, tr.state);
-      if (!near || far) continue;
+      if (st.def.tier === "boss") {
+        if (t % 10 === 0) this.syncBossBar(e, st);
+        this.bossArena(tr, nd, t);
+      }
+      if (!near || nd > Config.performance.aiFarDistance) continue;
       this.think(tr, near, nd, t);
     }
+  }
+
+  /** Arena leash + reset when abandoned (no duplicate rewards: state is reset, not respawned). */
+  private bossArena(tr: Tracked, nearestPlayer: number, t: number): void {
+    const e = tr.entity;
+    const st = tr.state;
+    if (dist(e.location, tr.home) > 26) {
+      try {
+        e.teleport(tr.home);
+      } catch {
+        /* ignore */
+      }
+      st.pendingImpact = null;
+      tr.marks = [];
+    }
+    if (nearestPlayer < 48) {
+      tr.lastEngaged = Math.max(tr.lastEngaged, t - 1);
+      return;
+    }
+    if (t - tr.lastEngaged > 600 && (st.hp < st.maxHp || st.phase !== 1)) {
+      st.hp = st.maxHp;
+      st.phase = 1;
+      st.breakGauge = st.def.breakGauge;
+      st.brokenUntil = 0;
+      st.aura = null;
+      st.pendingImpact = null;
+      tr.marks = [];
+      this.syncBossBar(e, st);
+    }
+  }
+
+  /** Existing live boss of this type near a point (reconnect / quest re-present guard). */
+  findBoss(enemyId: string, near: Vector3, radius = 64): Entity | undefined {
+    for (const tr of this.tracked.values()) {
+      if (tr.state.def.id === enemyId && tr.entity.isValid && dist(tr.entity.location, near) < radius) return tr.entity;
+    }
+    return undefined;
   }
 
   private think(tr: Tracked, s: Session, d: number, t: number): void {
@@ -195,7 +245,7 @@ class EnemyRuntimeImpl {
           /* ignore */
         }
       }
-      worldSound(e.dimension, "noct.telegraph", e.location, 0.7);
+      worldSound(e.dimension, "nocterra.telegraph", e.location, 0.7);
       st.nextAttackTick = t + Math.round(def.attack.cooldown * rage);
       return;
     }
@@ -205,7 +255,7 @@ class EnemyRuntimeImpl {
       st.nextAttackTick = t + Math.round(def.attack.cooldown * rage);
       // Telegraph: flash + sound so mobile players can read the timing.
       particle(e.dimension, "noct:telegraph", { x: e.location.x, y: e.location.y + 2.2, z: e.location.z });
-      worldSound(e.dimension, "noct.telegraph", e.location, def.tier === "boss" ? 0.7 : 1.6);
+      worldSound(e.dimension, "nocterra.telegraph", e.location, def.tier === "boss" ? 0.7 : 1.6);
       try {
         const dir = flatDir(sub(s.player.location, e.location));
         e.applyKnockback({ x: -dir.x * 0.05, z: -dir.z * 0.05 }, 0); // wind-up lean
@@ -255,7 +305,7 @@ function reward(s: Session, def: EnemyDef, scale: number): void {
     if (gained > 0) {
       const inst = p.characters[id];
       s.player.onScreenDisplay.setTitle(" ", { subtitle: `§a${getCharacter(id).name} Lv.${inst.level}`, fadeInDuration: 2, stayDuration: 20, fadeOutDuration: 6 });
-      sound(s.player, "noct.levelup");
+      sound(s.player, "nocterra.levelup");
       s.invalidateStats();
     }
   }
@@ -279,7 +329,9 @@ function reward(s: Session, def: EnemyDef, scale: number): void {
     p.weekly.bossClears++;
     playAnim(s.player, "victory");
   }
-  game().save.markDirty(p.playerId);
+  // Elite/boss drops are currency + item grants → critical save; normal kills use the dirty queue.
+  if (def.tier === "normal") game().save.markDirty(p.playerId);
+  else game().save.saveNow(p.playerId);
   bus.emit("combat:kill", { playerId: s.id, characterId: s.activeId ?? "", enemyType: def.id, exp });
 }
 
@@ -288,5 +340,5 @@ export function registerEnemyEvents(): void {
     if (entity.isValid && enemies.isEnemy(entity)) enemies.register(entity);
   });
   world.beforeEvents.entityRemove.subscribe(({ removedEntity }) => enemies.forget(removedEntity.id));
-  system.runInterval(() => enemies.tick(), Config.performance.aiNearIntervalTicks);
+  system.runInterval(guarded("enemies.tick", () => enemies.tick()), 1);
 }

@@ -97,7 +97,7 @@ function clear(s: Session, run: Run): void {
     game().save.saveNow(s.id);
     const secs = Math.round((system.currentTick - run.startedAt) / 20);
     s.player.onScreenDisplay.setTitle("§6§lCLEAR", { subtitle: `§7${run.def.name} — ${secs}s`, fadeInDuration: 5, stayDuration: 50, fadeOutDuration: 10 });
-    sound(s.player, "noct.gacha.gold");
+    sound(s.player, "nocterra.gacha.five_star");
     playAnim(s.player, "victory");
     questSignal(s, { type: "dungeon", dungeon: run.def.id });
   }

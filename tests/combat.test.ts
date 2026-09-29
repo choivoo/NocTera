@@ -77,3 +77,13 @@ test("enemy break + phases", () => {
   assert.equal(e.updatePhase(), true);
   assert.equal(e.phase, 2);
 });
+
+test("dodge-cancel clears attack recovery but keeps the combo step", () => {
+  const combo = new ComboTracker(getCharacter("kael").kit.normal.hits);
+  combo.attack(0);
+  assert.equal(combo.attack(1), null, "in recovery");
+  combo.cancelRecovery();
+  const next = combo.attack(2);
+  assert.ok(next);
+  assert.equal(next!.step, 1, "combo continues after cancel");
+});

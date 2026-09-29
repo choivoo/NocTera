@@ -138,6 +138,13 @@
   "animation.noct.mirel.secondary": {
    "loop": true,
    "bones": {
+    "head": {
+     "scale": [
+      1.12,
+      1.12,
+      1.12
+     ]
+    },
     "noct_hair": {
      "rotation": [
       "math.sin(q.anim_time * 150) * 4 + q.modified_move_speed * 25",

@@ -61,34 +61,34 @@
     "animate": [
      "root",
      {
-      "ctrl_seria": "q.property('noct:char') == 1"
+      "ctrl_seria": "q.property('noct:char') == 1 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_kael": "q.property('noct:char') == 2"
+      "ctrl_kael": "q.property('noct:char') == 2 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_lumia": "q.property('noct:char') == 3"
+      "ctrl_lumia": "q.property('noct:char') == 3 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_nox": "q.property('noct:char') == 4"
+      "ctrl_nox": "q.property('noct:char') == 4 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_rin": "q.property('noct:char') == 5"
+      "ctrl_rin": "q.property('noct:char') == 5 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_aria": "q.property('noct:char') == 6"
+      "ctrl_aria": "q.property('noct:char') == 6 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_eiden": "q.property('noct:char') == 7"
+      "ctrl_eiden": "q.property('noct:char') == 7 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_mirel": "q.property('noct:char') == 8"
+      "ctrl_mirel": "q.property('noct:char') == 8 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_vela": "q.property('noct:char') == 9"
+      "ctrl_vela": "q.property('noct:char') == 9 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      },
      {
-      "ctrl_zeon": "q.property('noct:char') == 10"
+      "ctrl_zeon": "q.property('noct:char') == 10 && !variable.is_first_person && !q.is_swimming && !q.is_sleeping && !q.is_riding && !q.is_gliding && !q.is_crawling"
      }
     ],
     "variables": {

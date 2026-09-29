@@ -28,7 +28,7 @@
           "range": 14,
           "arc": 10,
           "hitstop": 0,
-          "sound": "noct.hit.shot",
+          "sound": "nocterra.hit.shot",
           "particle": "noct:spark_tracer",
           "animation": "attack1",
           "breakDmg": 4,
@@ -39,7 +39,7 @@
           "range": 14,
           "arc": 10,
           "hitstop": 0,
-          "sound": "noct.hit.shot",
+          "sound": "nocterra.hit.shot",
           "particle": "noct:spark_tracer",
           "animation": "attack2",
           "breakDmg": 4,
@@ -50,7 +50,7 @@
           "range": 14,
           "arc": 10,
           "hitstop": 0,
-          "sound": "noct.hit.shot",
+          "sound": "nocterra.hit.shot",
           "particle": "noct:spark_tracer",
           "animation": "attack3",
           "breakDmg": 4,
@@ -61,7 +61,7 @@
           "range": 14,
           "arc": 16,
           "hitstop": 2,
-          "sound": "noct.hit.shot",
+          "sound": "nocterra.hit.shot",
           "particle": "noct:spark_burst",
           "animation": "finisher",
           "breakDmg": 6,
@@ -112,7 +112,7 @@
         {
           "type": "fx",
           "particle": "noct:spark_burst",
-          "sound": "noct.rin.skill"
+          "sound": "nocterra.rin.skill"
         }
       ]
     },
@@ -135,7 +135,7 @@
         {
           "type": "fx",
           "particle": "noct:drone_deploy",
-          "sound": "noct.rin.ultimate"
+          "sound": "nocterra.rin.ultimate"
         }
       ]
     },
@@ -259,9 +259,9 @@
     "placeholder": true
   },
   "sounds": {
-    "attack": "noct.rin.attack",
-    "hurt": "noct.rin.hurt",
-    "skill": "noct.rin.skill",
-    "ultimate": "noct.rin.ultimate"
+    "attack": "nocterra.rin.attack01",
+    "hurt": "nocterra.rin.hurt",
+    "skill": "nocterra.rin.skill",
+    "ultimate": "nocterra.rin.ultimate"
   }
 }
