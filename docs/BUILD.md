@@ -12,6 +12,7 @@
 | `npm test` | unit tests + Vertical Slice A/B simulations (mock engine, restart via a second process) |
 | `npm run build` | regenerate registry and assets, bundle to `behavior_pack/NOCTERRA_BP/scripts/main.js` |
 | `npm run package` | build, then zip both packs to `builds/NOCTERRA_v<ver>.mcaddon` |
+| `npm run package:android` | build, then write every install format to `builds/v<ver>/` (mcaddon, BP/RP .mcpack, BP/RP .zip, Android manual-install folder + zip) and validate each one (ZIP integrity, manifest at the correct level, no nested folders, UUIDs, BP→RP dependency, versions, required content) |
 | `npm run check` | typecheck, API audit, validate, rig QA, tests, build |
 
 ## Dedicated server
@@ -24,3 +25,6 @@
 
 ## Debug commands (Admin permission)
 `/noct:noct debug | unlock | preview <char> [ticks] | anim <name> | npc | coop | givechar <id> | level [id] [exp] | astrum [n] | banner <id> | boss <frost_devourer|void_seraph> | spawn <enemy> [n] | quest [id] | tp <beacon> | setup | imprint [set] [n] | save | stats | reset confirm`
+
+## Android install
+See [install/INSTALL_ANDROID_KR.md](install/INSTALL_ANDROID_KR.md). Try the per-pack `.mcpack` files first; fall back to manual folder install.

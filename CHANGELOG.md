@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1-installfix1 — Android installability (packaging only)
+Game code, data and save format are unchanged. The packs are still version 1.0.1.
+- `npm run package:android` writes the `.mcaddon`, `NOCTERRA_BP/RP_v1.0.1.mcpack` (manifest at the archive root), `NOCTERRA_BP/RP_v1.0.1.zip` (one folder level), `NOCTERRA_ANDROID_MANUAL_INSTALL/` and its `.zip`.
+- Every artifact is validated automatically: ZIP integrity, manifest location, nested-folder errors, UUIDs, BP→RP dependency and version, file names and extensions, required BP/RP content, and identical manifests across formats.
+- `docs/install/INSTALL_ANDROID_KR.md` covers the three install methods (A: mcaddon, B: separate mcpacks, C: manual folder install via External storage, with Scoped Storage caveats), pack activation, and troubleshooting.
+
+
 ## 1.0.1 — Real-device stabilization release
 
 This is a stabilization release, not a content release. **Every item is SIMULATION or STATIC VERIFIED and UNVERIFIED ON DEVICE** (see docs/AUDIT_1.0.1.md and docs/DEVICE_TEST.md).

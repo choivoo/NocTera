@@ -9,7 +9,8 @@
     "test": "tsx --test tests/*.test.ts",
     "check": "npm run typecheck && node tools/audit-api.mjs && npm run validate && node tools/qa-rig.mjs && npm test && npm run build",
     "package": "node tools/build.mjs --package",
-    "preview": "node tools/render-preview.mjs"
+    "preview": "node tools/render-preview.mjs",
+    "package:android": "npm run build && node tools/package-android.mjs"
   },
   "repository": {
     "type": "git",
